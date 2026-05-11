@@ -1,5 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import {Image} from 'astro:assets';
+import heroAurora from '@/assets/renders/hero-nebula-aurora.jpeg';
 import StatsSection from '@/components/sections/StatsSection';
 import PourQuiSection from '@/components/sections/PourQuiSection';
 import WhyMoodlSection from '@/components/sections/WhyMoodlSection';
@@ -16,14 +18,27 @@ import FinalCTASection from '@/components/sections/FinalCTASection';
   canonical="https://moodl.fr/"
 >
   <section class="relative min-h-screen flex items-center pt-32 pb-24 overflow-hidden">
+    <!-- Image hero : Nebula sous aurores boréales -->
+    <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
+      <Image
+        src={heroAurora}
+        alt=""
+        width={2400}
+        height={1600}
+        quality={85}
+        format="webp"
+        loading="eager"
+        class="w-full h-full object-cover scale-105 hero-zoom"
+      />
+      <!-- Overlay assombrissant pour la lisibilité du texte -->
+      <div class="absolute inset-0 bg-gradient-to-b from-background/55 via-background/35 to-background"></div>
+      <!-- Voile lime subtil pour cohérence palette -->
+      <div class="absolute inset-0" style="background: radial-gradient(ellipse 80% 60% at 50% 80%, hsl(150 100% 50% / 0.10), transparent 65%);"></div>
+    </div>
+    <!-- Grille technique : signature architecte -->
     <div
       aria-hidden="true"
-      class="absolute inset-0 pointer-events-none"
-      style="background: radial-gradient(ellipse 80% 60% at 50% 20%, hsl(150 100% 50% / 0.08), transparent 60%), radial-gradient(ellipse 60% 50% at 80% 80%, hsl(43 70% 62% / 0.07), transparent 55%), radial-gradient(ellipse 60% 50% at 15% 75%, hsl(150 100% 50% / 0.05), transparent 50%);"
-    ></div>
-    <div
-      aria-hidden="true"
-      class="absolute inset-0 pointer-events-none opacity-[0.04]"
+      class="absolute inset-0 pointer-events-none opacity-[0.04] text-foreground"
       style="background-image: linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px); background-size: 64px 64px;"
     ></div>
 
@@ -99,5 +114,12 @@ import FinalCTASection from '@/components/sections/FinalCTASection';
   @keyframes heroGlow {
     0%, 100% { opacity: 0.4; }
     50% { opacity: 0.7; }
+  }
+  .hero-zoom {
+    animation: heroZoom 18s ease-in-out infinite alternate;
+  }
+  @keyframes heroZoom {
+    0% { transform: scale(1.05); }
+    100% { transform: scale(1.12); }
   }
 </style>

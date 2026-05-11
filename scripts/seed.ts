@@ -62,7 +62,7 @@ const lieuxData = [
     loyer_nuit_indicatif: 250,
     roi_indicatif: '14 %+',
     duree_pose: '1 jour — fondations sur plots vissés',
-    image: 'nebula/capsul-1.jpg',
+    image: 'renders/nebula-desert.jpg',
     order: 1,
   },
   {
@@ -78,7 +78,7 @@ const lieuxData = [
     loyer_nuit_indicatif: 280,
     roi_indicatif: '15 %+',
     duree_pose: '2 jours — mise à l\'eau et amarrage',
-    image: 'loveboat/boat-1.jpg',
+    image: 'renders/loveboat-day.jpg',
     order: 2,
   },
   {
@@ -94,7 +94,7 @@ const lieuxData = [
     loyer_nuit_indicatif: 250,
     roi_indicatif: '14 %+',
     duree_pose: '1 jour',
-    image: 'circle/circle-main.png',
+    image: 'renders/circle-exterior.png',
     order: 3,
   },
   {
@@ -110,7 +110,7 @@ const lieuxData = [
     loyer_nuit_indicatif: 200,
     roi_indicatif: '12 %+',
     duree_pose: '1 à 2 jours selon dimension',
-    image: 'nova/nova-main.png',
+    image: 'renders/nova-pergola.jpeg',
     order: 4,
   },
   {
@@ -126,7 +126,7 @@ const lieuxData = [
     loyer_nuit_indicatif: 180,
     roi_indicatif: '11 %+',
     duree_pose: '1 jour',
-    image: 'aframe/aframe-terrace.jpg',
+    image: 'renders/aframe-forest.png',
     order: 5,
   },
 ];
@@ -156,7 +156,7 @@ const programmesData = [
     surface_module_m2: 37,
     capacite: '2 à 4 personnes',
     plu_zonage: 'Zone N (naturelle) — STECAL touristique',
-    image: 'general/moodl-1.png',
+    image: 'renders/nebula-saules.jpeg',
     order: 1,
   },
   {
@@ -183,7 +183,7 @@ const programmesData = [
     surface_module_m2: 32,
     capacite: '2 à 4 personnes',
     plu_zonage: 'Zone Nh — habitations en zone naturelle',
-    image: 'general/moodl-2.jpeg',
+    image: 'renders/aframe-forest.png',
     order: 2,
   },
   {
@@ -210,7 +210,7 @@ const programmesData = [
     surface_module_m2: 45,
     capacite: '2 à 6 personnes',
     plu_zonage: 'Zone UA — habitat amarré, AOT lac',
-    image: 'general/moodl-3.jpeg',
+    image: 'renders/loveboat-night-drone.jpg',
     order: 3,
   },
 ];
