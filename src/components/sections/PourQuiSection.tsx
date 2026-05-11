@@ -13,7 +13,7 @@ const profiles = [
       "Vous arrivez, c'est prêt",
       'Loué pour vous quand vous partez',
     ],
-    ctaLabel: 'Voir les adresses disponibles',
+    ctaLabel: 'Voir les lieux disponibles',
     ctaHref: '/programmes',
   },
   {
@@ -49,8 +49,8 @@ export default function PourQuiSection() {
               Pour qui ?
             </p>
             <h2 className="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
-              Deux usages.{' '}
-              <span className="font-serif-italic text-secondary">Un seul produit.</span>
+              Deux profils.{' '}
+              <span className="font-serif-italic text-secondary">Un même rêve.</span>
             </h2>
           </div>
         </ScrollReveal>

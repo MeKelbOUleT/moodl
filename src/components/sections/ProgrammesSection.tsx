@@ -4,7 +4,7 @@ import { NavLink } from '@/components/NavLink';
 
 const programmes = [
   {
-    slug: 'dordogne',
+    slug: 'domaine-perigord-nebula',
     name: 'Domaine du Périgord',
     region: 'Dordogne',
     lots: 8,
@@ -12,7 +12,7 @@ const programmes = [
     coords: { x: 38, y: 58 },
   },
   {
-    slug: 'ardeche',
+    slug: 'plateau-ardeche-aframe',
     name: "Plateau de l'Ardèche",
     region: 'Ardèche',
     lots: 6,
@@ -20,7 +20,7 @@ const programmes = [
     coords: { x: 56, y: 62 },
   },
   {
-    slug: 'lac-annecy',
+    slug: 'rivage-lac-annecy-loveboat',
     name: 'Rivage du Lac',
     region: "Lac d'Annecy",
     lots: 4,
