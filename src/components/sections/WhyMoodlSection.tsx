@@ -14,14 +14,14 @@ const piliers = [
   {
     roman: 'III',
     title: 'Le geste',
-    line1: 'Dessiner pour cette parcelle précisément.',
+    line1: 'Composer un hameau de 4 à 8 habitats pour cette parcelle précisément.',
     line2: 'Orientation, lumière, matière, vue. Atelier français, savoir signé.',
   },
   {
     roman: 'IV',
     title: 'La main',
-    line1: 'Accueillir, entretenir, mettre en ligne, reverser.',
-    line2: "Toute l'année, sans bouger de chez vous.",
+    line1: 'Vos clés, les nôtres si vous voulez.',
+    line2: 'Accueil, ménage, mise en ligne, reportings — à la carte. Vous gardez la main si vous préférez.',
   },
 ];
 
@@ -62,7 +62,7 @@ export default function WhyMoodlSection() {
           {/* Citation en serif — note d'atelier */}
           <div className="relative inline-block mx-auto max-w-2xl">
             <p className="font-serif-italic text-lg md:text-xl lg:text-2xl text-foreground/85 leading-relaxed">
-              «&nbsp;Trouver l'adresse. Convaincre la mairie. Dessiner l'habitat. Confier les clés. Personne ne fait les quatre — sauf nous, et c'est ce qui change tout.&nbsp;»
+              «&nbsp;Trouver l'adresse. Convaincre la mairie. Dessiner le hameau. Tenir la maison à votre place — si vous voulez. Personne ne fait les quatre. Sauf nous.&nbsp;»
             </p>
             <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground mt-5">
               Note d'atelier — 2026
