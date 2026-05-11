@@ -25,15 +25,14 @@ import FinalCTASection from '@/components/sections/FinalCTASection';
         alt=""
         width={2400}
         height={1600}
-        quality={85}
+        quality={88}
         format="webp"
         loading="eager"
-        class="w-full h-full object-cover scale-105 hero-zoom"
+        class="w-full h-full object-cover object-[center_30%] scale-105 hero-zoom"
+        style="filter: brightness(1.15) saturate(1.1);"
       />
-      <!-- Overlay assombrissant gradué : laisse respirer l'aurora en haut, assombrit le bas pour lisibilité -->
-      <div class="absolute inset-0 bg-gradient-to-b from-background/20 via-background/40 to-background/95"></div>
-      <!-- Vignette centrale subtile pour focus sur le texte -->
-      <div class="absolute inset-0" style="background: radial-gradient(ellipse 70% 50% at 50% 55%, hsl(210 38% 6% / 0.45), transparent 70%);"></div>
+      <!-- Overlay graduel : très léger en haut (laisser briller l'aurora), opaque en bas pour la lisibilité texte -->
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/30 to-background"></div>
     </div>
     <!-- Grille technique : signature architecte -->
     <div
