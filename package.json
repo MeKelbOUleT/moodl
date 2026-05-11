@@ -12,7 +12,8 @@
     "astro": "astro",
     "studio": "sanity dev",
     "studio:deploy": "sanity deploy",
-    "studio:build": "sanity build"
+    "studio:build": "sanity build",
+    "seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.4",
@@ -47,5 +48,9 @@
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.0",
     "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "dotenv": "^17.4.2",
+    "tsx": "^4.21.0"
   }
 }
