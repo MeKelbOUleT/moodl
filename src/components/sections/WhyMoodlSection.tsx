@@ -1,70 +1,110 @@
-import {MapPin, FileCheck, Compass, KeyRound} from 'lucide-react';
-import ScrollReveal from '@/components/ScrollReveal';
-
-const pillars = [
+const piliers = [
   {
-    icon: MapPin,
-    title: "L'adresse",
-    text: "Sélectionnée un par un. Vue, accès, voisinage, environnement. La rareté est dans le terrain, pas dans la cabane.",
+    roman: 'I',
+    title: "L'œil",
+    line1: 'Trouver le terrain qui chante.',
+    line2: 'Vue, accès, voisinage, silence — quatre critères, des mois de recherche.',
   },
   {
-    icon: FileCheck,
-    title: "L'urbanisme",
-    text: "Autorisations en mairie, viabilisation, déclarations. On absorbe les 18 mois de paperasse à votre place.",
+    roman: 'II',
+    title: 'Le sésame',
+    line1: 'Convertir une zone naturelle en autorisation.',
+    line2: 'PLU, STECAL, AOT. 18 mois de paperasse absorbés à votre place.',
   },
   {
-    icon: Compass,
-    title: "L'architecture",
-    text: "Habitat dessiné pour ce terrain précis — orientation, lumière, matière. Atelier français, savoir-faire signé.",
+    roman: 'III',
+    title: 'Le geste',
+    line1: 'Dessiner pour cette parcelle précisément.',
+    line2: 'Orientation, lumière, matière, vue. Atelier français, savoir signé.',
   },
   {
-    icon: KeyRound,
-    title: "L'intendance",
-    text: "Accueil, ménage, photos, mise en ligne, reportings. Vous arrivez, c'est prêt. Vous partez, ça se loue.",
+    roman: 'IV',
+    title: 'La main',
+    line1: 'Accueillir, entretenir, mettre en ligne, reverser.',
+    line2: "Toute l'année, sans bouger de chez vous.",
   },
 ];
 
 export default function WhyMoodlSection() {
   return (
-    <section className="py-24 lg:py-32 bg-background relative">
+    <section className="relative overflow-hidden py-28 lg:py-40 bg-background">
+      {/* Voile lime central — donne une lumière douce */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 50% at 50% 30%, hsl(150 100% 50% / 0.06), transparent 60%), radial-gradient(ellipse 50% 40% at 80% 80%, hsl(43 70% 62% / 0.04), transparent 55%)',
+        }}
+      />
+      {/* Étoiles très fines (suggestion de constellation, signature d'atelier) */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none opacity-30"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle at 12% 22%, hsl(150 100% 50% / 0.4) 0.5px, transparent 1px), radial-gradient(circle at 88% 14%, hsl(43 70% 62% / 0.5) 0.5px, transparent 1px), radial-gradient(circle at 23% 78%, hsl(150 100% 50% / 0.3) 0.5px, transparent 1px), radial-gradient(circle at 75% 88%, hsl(43 70% 62% / 0.4) 0.5px, transparent 1px), radial-gradient(circle at 50% 50%, hsl(150 100% 50% / 0.3) 0.5px, transparent 1px), radial-gradient(circle at 92% 50%, hsl(43 70% 62% / 0.3) 0.5px, transparent 1px)',
+          backgroundSize: '600px 400px',
+        }}
+      />
+
       <div className="container mx-auto px-6 lg:px-8 relative">
-        <ScrollReveal animation="fade-up">
-          <div className="max-w-3xl mb-12 lg:mb-16">
-            <p className="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-5">
-              L'ADN Moodl
+        {/* Eyebrow + Titre + Citation centrée */}
+        <div className="max-w-3xl mx-auto text-center mb-20 lg:mb-28">
+          <p className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6">
+            L'art Moodl
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight mb-10">
+            On a inventé un métier{' '}
+            <span className="font-serif-italic text-secondary whitespace-nowrap">qui n'existait pas</span>.
+          </h2>
+
+          {/* Citation en serif — note d'atelier */}
+          <div className="relative inline-block mx-auto max-w-2xl">
+            <p className="font-serif-italic text-lg md:text-xl lg:text-2xl text-foreground/85 leading-relaxed">
+              «&nbsp;Trouver l'adresse. Convaincre la mairie. Dessiner l'habitat. Confier les clés. Personne ne fait les quatre — sauf nous, et c'est ce qui change tout.&nbsp;»
             </p>
-            <h2 className="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-6">
-              Quatre métiers,{' '}
-              <span className="font-serif-italic text-secondary">un seul interlocuteur</span>.
-            </h2>
-            <p className="text-base lg:text-lg text-muted-foreground leading-relaxed">
-              Là où d'autres vous livrent une cabane, Moodl orchestre toute la chaîne — de la sélection du terrain au premier voyageur. Votre seul travail&nbsp;: choisir, et venir.
+            <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground mt-5">
+              Note d'atelier — 2026
             </p>
           </div>
-        </ScrollReveal>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {pillars.map((pillar, i) => {
-            const Icon = pillar.icon;
-            return (
-              <ScrollReveal key={pillar.title} animation="fade-up" delay={i * 100}>
-                <div className="group h-full bg-card border border-border/60 rounded-2xl p-7 lg:p-8 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_8px_32px_rgba(0,255,128,0.12)]">
-                  <div className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/20">
-                    <Icon className="w-6 h-6 text-primary" strokeWidth={1.5} />
-                  </div>
-                  <p className="text-[11px] uppercase tracking-widest text-muted-foreground mb-2">
-                    {`0${i + 1}`}
-                  </p>
-                  <h3 className="font-display text-xl lg:text-2xl font-bold mb-3 tracking-tight">
-                    {pillar.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm lg:text-base">
-                    {pillar.text}
-                  </p>
-                </div>
-              </ScrollReveal>
-            );
-          })}
+        {/* 4 piliers — numéros romains, pas de cartes */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-14 lg:gap-x-14 max-w-7xl mx-auto">
+          {piliers.map((p) => (
+            <div key={p.roman} className="group relative">
+              {/* Numéro romain en grand, lime/gold alterné via CSS sibling pas possible — on garde lime */}
+              <div className="flex items-baseline gap-3 mb-5">
+                <span className="font-display text-6xl lg:text-7xl font-bold leading-none text-primary/90 group-hover:text-primary transition-colors duration-500">
+                  {p.roman}
+                </span>
+                <span className="w-1.5 h-1.5 rounded-full bg-secondary translate-y-[-12px] shadow-[0_0_8px_hsl(43_70%_62%/0.6)]" />
+              </div>
+
+              {/* Trait fin séparateur */}
+              <div className="h-px w-12 bg-primary/40 group-hover:w-20 group-hover:bg-primary transition-all duration-500 mb-5" />
+
+              <h3 className="font-display text-2xl lg:text-3xl font-bold tracking-tight mb-3">
+                {p.title}
+              </h3>
+              <p className="text-foreground/90 leading-relaxed text-base mb-2">
+                {p.line1}
+              </p>
+              <p className="text-muted-foreground leading-relaxed text-sm">
+                {p.line2}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Ligne de fin — sceau de l'atelier */}
+        <div className="max-w-3xl mx-auto mt-24 lg:mt-32 text-center">
+          <div className="inline-flex items-center gap-4 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+            <span className="h-px w-12 bg-border" />
+            <span>Atelier signé Moodl</span>
+            <span className="h-px w-12 bg-border" />
+          </div>
         </div>
       </div>
     </section>
