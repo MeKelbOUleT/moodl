@@ -1,0 +1,156 @@
+import {defineType, defineField} from 'sanity';
+
+export const articleType = defineType({
+  name: 'article',
+  title: 'Article du Journal',
+  type: 'document',
+  groups: [
+    {name: 'identite', title: 'Identité'},
+    {name: 'contenu', title: 'Contenu'},
+    {name: 'seo', title: 'SEO'},
+  ],
+  fields: [
+    defineField({
+      name: 'title',
+      title: 'Titre',
+      type: 'string',
+      group: 'identite',
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      group: 'identite',
+      options: {source: 'title', maxLength: 96},
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'eyebrow',
+      title: 'Catégorie / sur-titre',
+      type: 'string',
+      group: 'identite',
+      description: 'Ex. Investir, Coulisses, Architecture',
+    }),
+    defineField({
+      name: 'excerpt',
+      title: 'Résumé court',
+      type: 'text',
+      rows: 3,
+      group: 'identite',
+      validation: (r) => r.max(280),
+    }),
+    defineField({
+      name: 'hero_image',
+      title: 'Image de couverture',
+      type: 'image',
+      options: {hotspot: true},
+      group: 'identite',
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'author',
+      title: 'Auteur',
+      type: 'string',
+      group: 'identite',
+      initialValue: 'Atelier Moodl',
+    }),
+    defineField({
+      name: 'published_at',
+      title: 'Date de publication',
+      type: 'datetime',
+      group: 'identite',
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'reading_time_min',
+      title: 'Temps de lecture (minutes)',
+      type: 'number',
+      group: 'identite',
+    }),
+    defineField({
+      name: 'body',
+      title: 'Corps de l\'article',
+      type: 'array',
+      group: 'contenu',
+      of: [
+        {type: 'block'},
+        {
+          type: 'image',
+          options: {hotspot: true},
+          fields: [
+            {name: 'alt', title: 'Texte alternatif', type: 'string'},
+            {name: 'caption', title: 'Légende', type: 'string'},
+          ],
+        },
+        {
+          type: 'object',
+          name: 'callout',
+          title: 'Encart',
+          fields: [
+            {
+              name: 'tone',
+              title: 'Ton',
+              type: 'string',
+              options: {list: ['info', 'avertissement', 'astuce']},
+              initialValue: 'info',
+            },
+            {name: 'text', title: 'Texte', type: 'text'},
+          ],
+        },
+      ],
+    }),
+    defineField({
+      name: 'related_programmes',
+      title: 'Programmes liés',
+      type: 'array',
+      group: 'contenu',
+      of: [{type: 'reference', to: [{type: 'programme'}]}],
+    }),
+    defineField({
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      group: 'contenu',
+      of: [{type: 'string'}],
+      options: {layout: 'tags'},
+    }),
+    defineField({
+      name: 'meta_title',
+      title: 'Meta title',
+      type: 'string',
+      group: 'seo',
+    }),
+    defineField({
+      name: 'meta_description',
+      title: 'Meta description',
+      type: 'text',
+      rows: 3,
+      group: 'seo',
+    }),
+    defineField({
+      name: 'keyword_principal',
+      title: 'Mot-clé principal SEO',
+      type: 'string',
+      group: 'seo',
+    }),
+    defineField({
+      name: 'keyword_cluster',
+      title: 'Cluster de mots-clés',
+      type: 'array',
+      group: 'seo',
+      of: [{type: 'string'}],
+      options: {layout: 'tags'},
+    }),
+  ],
+  preview: {
+    select: {title: 'title', subtitle: 'eyebrow', media: 'hero_image'},
+  },
+  orderings: [
+    {
+      title: 'Date (récent → ancien)',
+      name: 'publishedAtDesc',
+      by: [{field: 'published_at', direction: 'desc'}],
+    },
+  ],
+});

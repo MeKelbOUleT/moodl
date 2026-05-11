@@ -1,0 +1,84 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import ContactForm from '@/components/ContactForm';
+---
+
+<Layout
+  title="Contact — Moodl"
+  description="Planifiez un appel avec un expert Moodl. Découvrez nos adresses disponibles en Dordogne, Ardèche et Lac d'Annecy."
+>
+  <section class="pt-40 pb-12">
+    <div class="container mx-auto px-6 lg:px-8 max-w-4xl">
+      <p class="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-6">
+        Contact
+      </p>
+      <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
+        Parler à un{' '}
+        <span class="font-serif-italic text-secondary">expert</span>.
+      </h1>
+      <p class="text-lg text-muted-foreground leading-relaxed">
+        Réponse sous 24 ouvrées. Pour les dossiers prioritaires, planifiez directement un appel dans le calendrier ci-dessous.
+      </p>
+    </div>
+  </section>
+
+  <section class="pb-24 lg:pb-32">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 max-w-6xl mx-auto">
+        <div class="lg:col-span-7">
+          <ContactForm client:load />
+        </div>
+
+        <aside class="lg:col-span-5 space-y-6">
+          <div class="bg-card border border-border/60 rounded-2xl p-8">
+            <p class="text-xs uppercase tracking-widest text-primary font-medium mb-3">Sur rendez-vous</p>
+            <h3 class="font-display text-2xl font-bold mb-3 tracking-tight">
+              Planifier un appel
+            </h3>
+            <p class="text-muted-foreground leading-relaxed mb-6 text-sm">
+              Créneau de 30 minutes avec un expert Moodl. Sélection de l'adresse, visite virtuelle, projection chiffrée personnalisée.
+            </p>
+            <a
+              href="https://cal.com"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex items-center gap-2 font-medium text-primary hover:text-primary/80 transition-colors"
+            >
+              Voir les créneaux
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <div class="bg-card border border-border/60 rounded-2xl p-8 space-y-5">
+            <h3 class="font-display text-xl font-bold tracking-tight">
+              Coordonnées directes
+            </h3>
+            <div class="space-y-4">
+              <a href="mailto:shelter@moodl.fr" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                </div>
+                <div>
+                  <p class="text-xs uppercase tracking-widest text-muted-foreground">E-mail</p>
+                  <p class="text-sm font-medium group-hover:text-primary transition-colors">shelter@moodl.fr</p>
+                </div>
+              </a>
+              <a href="tel:+33766873040" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </div>
+                <div>
+                  <p class="text-xs uppercase tracking-widest text-muted-foreground">Téléphone</p>
+                  <p class="text-sm font-medium group-hover:text-primary transition-colors">+33 7 66 87 30 40</p>
+                </div>
+              </a>
+            </div>
+            <p class="text-xs text-muted-foreground italic pt-3 border-t border-border/40">
+              Réponses du lundi au vendredi, 9 h - 19 h.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</Layout>

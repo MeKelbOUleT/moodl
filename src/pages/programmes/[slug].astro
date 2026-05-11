@@ -1,0 +1,215 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {sanityClient, urlFor} from '@/sanity/client';
+import {programmesAllQuery, programmeBySlugQuery} from '@/sanity/queries';
+
+export async function getStaticPaths() {
+  try {
+    const programmes = await sanityClient.fetch(programmesAllQuery);
+    return programmes.map((p: any) => ({params: {slug: p.slug}, props: {_id: p._id}}));
+  } catch (e) {
+    console.warn('Sanity non disponible, aucun programme généré.', e);
+    return [];
+  }
+}
+
+const {slug} = Astro.params;
+const programme = await sanityClient.fetch(programmeBySlugQuery, {slug});
+
+if (!programme) {
+  return Astro.redirect('/programmes');
+}
+
+const formatEuro = (n: number) =>
+  new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(n);
+
+const heroUrl = programme.hero_image ? urlFor(programme.hero_image).width(1600).height(900).url() : null;
+const galerie = programme.galerie ?? [];
+const lotsRestants = programme.lots_disponibles ?? 0;
+const lotsTotal = programme.lots_total ?? 0;
+const progress = lotsTotal > 0 ? ((lotsTotal - lotsRestants) / lotsTotal) * 100 : 0;
+const rendementText = programme.rendement_min && programme.rendement_max
+  ? `${programme.rendement_min} — ${programme.rendement_max} %`
+  : programme.rendement_max ? `${programme.rendement_max} %` : '—';
+
+// JSON-LD RealEstateListing (programme = bien immobilier vendu)
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://moodl.fr';
+const listingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: programme.title,
+  description: programme.tagline ?? programme.meta_description,
+  image: heroUrl ? [heroUrl] : undefined,
+  brand: {'@type': 'Brand', name: 'Moodl'},
+  category: 'Real Estate / Tourism investment',
+  offers: programme.prix_total ? {
+    '@type': 'Offer',
+    price: programme.prix_total,
+    priceCurrency: 'EUR',
+    availability: programme.status === 'ouvert' ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder',
+    url: `${siteUrl}/programmes/${programme.slug?.current ?? slug}`,
+    seller: {'@type': 'Organization', name: 'Moodl'},
+  } : undefined,
+  additionalProperty: [
+    programme.region && {'@type': 'PropertyValue', name: 'Région', value: programme.region},
+    programme.surface_terrain_m2 && {'@type': 'PropertyValue', name: 'Surface terrain (m²)', value: programme.surface_terrain_m2},
+    programme.surface_module_m2 && {'@type': 'PropertyValue', name: 'Surface habitat (m²)', value: programme.surface_module_m2},
+    rendementText !== '—' && {'@type': 'PropertyValue', name: 'Rendement annuel net visé (%)', value: rendementText},
+    lotsTotal > 0 && {'@type': 'PropertyValue', name: 'Lots disponibles', value: `${lotsRestants} / ${lotsTotal}`},
+    programme.date_livraison && {'@type': 'PropertyValue', name: 'Livraison', value: programme.date_livraison},
+  ].filter(Boolean),
+};
+---
+
+<Layout
+  title={programme.meta_title ?? `${programme.title} — Moodl`}
+  description={programme.meta_description ?? programme.tagline ?? `${programme.title}, programme Moodl en ${programme.region}.`}
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(listingSchema)} />
+  <!-- HERO -->
+  <section class="relative pt-32 pb-12 overflow-hidden">
+    {heroUrl && (
+      <div class="absolute inset-0">
+        <img src={heroUrl} alt={programme.title} class="w-full h-full object-cover opacity-40" />
+        <div class="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background"></div>
+      </div>
+    )}
+    <div class="container mx-auto px-6 lg:px-8 relative pt-20">
+      <a href="/programmes" class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        Toutes les adresses
+      </a>
+      {programme.eyebrow && (
+        <p class="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-4">{programme.eyebrow}</p>
+      )}
+      <p class="text-sm uppercase tracking-widest text-muted-foreground mb-2">{programme.region}{programme.commune ? ` · ${programme.commune}` : ''}</p>
+      <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6 max-w-3xl">
+        {programme.title}
+      </h1>
+      {programme.tagline && (
+        <p class="font-serif-italic text-2xl text-secondary max-w-2xl mb-8">{programme.tagline}</p>
+      )}
+
+      <!-- KPI bandeau -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6 mt-12">
+        <div class="bg-card/80 backdrop-blur border border-border/60 rounded-2xl p-5">
+          <p class="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">À partir de</p>
+          <p class="font-display text-2xl font-bold">{programme.prix_total ? formatEuro(programme.prix_total) : '—'}</p>
+        </div>
+        <div class="bg-card/80 backdrop-blur border border-border/60 rounded-2xl p-5">
+          <p class="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">Rendement visé</p>
+          <p class="font-display text-2xl font-bold text-primary">{rendementText}</p>
+        </div>
+        <div class="bg-card/80 backdrop-blur border border-border/60 rounded-2xl p-5">
+          <p class="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">Lots restants</p>
+          <p class="font-display text-2xl font-bold">{lotsRestants}<span class="text-muted-foreground text-base font-normal"> / {lotsTotal}</span></p>
+          {lotsTotal > 0 && (
+            <div class="mt-2 h-1 rounded-full bg-muted overflow-hidden">
+              <div class="h-full bg-secondary" style={`width: ${progress}%`}></div>
+            </div>
+          )}
+        </div>
+        <div class="bg-card/80 backdrop-blur border border-border/60 rounded-2xl p-5">
+          <p class="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">Livraison</p>
+          <p class="font-display text-2xl font-bold">{programme.date_livraison ?? '—'}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIE -->
+  {galerie.length > 0 && (
+    <section class="py-16 lg:py-20">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+          {galerie.slice(0, 8).map((img: any) => (
+            <div class="aspect-square rounded-xl overflow-hidden bg-muted">
+              <img src={urlFor(img).width(600).height(600).url()} alt={img.alt ?? ''} class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- DESCRIPTION + SPECS -->
+  <section class="py-20 lg:py-24 bg-muted/20 border-y border-border/60">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 max-w-6xl mx-auto">
+        <div class="lg:col-span-7">
+          <h2 class="font-display text-3xl lg:text-4xl font-bold tracking-tight mb-6">L'adresse</h2>
+          {programme.description && programme.description.length > 0 && (
+            <div class="prose prose-invert max-w-none text-muted-foreground leading-relaxed">
+              {programme.description.map((block: any) => block._type === 'block' && (
+                <p class="mb-4">{block.children?.map((c: any) => c.text).join('')}</p>
+              ))}
+            </div>
+          )}
+          {programme.plu_zonage && (
+            <div class="mt-8 p-5 bg-card border border-border/60 rounded-xl">
+              <p class="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">Zonage PLU</p>
+              <p class="font-medium">{programme.plu_zonage}</p>
+            </div>
+          )}
+        </div>
+
+        <aside class="lg:col-span-5 space-y-6">
+          {programme.caracteristiques && programme.caracteristiques.length > 0 && (
+            <div class="bg-card border border-border/60 rounded-2xl p-6 lg:p-7">
+              <h3 class="font-display text-lg font-bold mb-4">Caractéristiques</h3>
+              <dl class="space-y-3">
+                {programme.caracteristiques.map((c: any) => (
+                  <div class="flex items-start justify-between text-sm border-b border-border/40 pb-2 last:border-0 last:pb-0">
+                    <dt class="text-muted-foreground">{c.label}</dt>
+                    <dd class="font-medium text-right">{c.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )}
+
+          {programme.prestations_incluses && programme.prestations_incluses.length > 0 && (
+            <div class="bg-card border border-border/60 rounded-2xl p-6 lg:p-7">
+              <h3 class="font-display text-lg font-bold mb-4">Prestations incluses</h3>
+              <ul class="space-y-2 text-sm">
+                {programme.prestations_incluses.map((p: string) => (
+                  <li class="flex items-start gap-3">
+                    <span class="font-mono text-xs text-primary mt-1 shrink-0">✓</span>
+                    <span class="text-foreground/85">{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {programme.video_drone_url && (
+            <a href={programme.video_drone_url} target="_blank" rel="noreferrer" class="block bg-card border border-border/60 rounded-2xl p-6 hover:border-primary/40 transition-colors">
+              <p class="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">Vidéo drone</p>
+              <p class="font-medium text-primary">Voir la vidéo →</p>
+            </a>
+          )}
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-24 lg:py-32 text-center">
+    <div class="container mx-auto px-6 lg:px-8 max-w-3xl">
+      <h2 class="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-6">
+        Prêt à réserver <span class="font-serif-italic text-secondary">votre lot</span> ?
+      </h2>
+      <p class="text-lg text-muted-foreground mb-10">
+        {lotsRestants} lots restants. Acompte de réservation 5 000 €, remboursable jusqu'au compromis.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href={programme.calendly_url ?? '/contact'} class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-[0_0_30px_rgba(0,255,128,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300">
+          Planifier un appel expert
+        </a>
+        <a href="/simulateur" class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md border border-border bg-transparent text-foreground font-medium hover:bg-accent hover:text-accent-foreground hover:scale-[1.02] active:scale-[0.98] transition-all duration-300">
+          Simuler ma rentabilité
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

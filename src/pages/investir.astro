@@ -1,0 +1,155 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+const steps = [
+  {num: '01', title: 'Choix de l\'adresse', text: "Vous sélectionnez parmi nos lieux ouverts à la commercialisation. Vue, accès, voisinage, environnement, climat — chaque critère est documenté."},
+  {num: '02', title: 'Réservation', text: 'Acompte de 5 000 € pour bloquer le lot. Compromis chez notaire sous 30 jours, financement bancaire en parallèle si besoin.'},
+  {num: '03', title: 'Pose de l\'habitat', text: 'Préparation du terrain, fondations sur plots vissés, livraison et pose en 1 à 2 jours selon le modèle.'},
+  {num: '04', title: 'Aménagement', text: 'Mobilier, literie, vaisselle, déco. Photos professionnelles drone et intérieur, tournage vidéo signature pour les annonces.'},
+  {num: '05', title: 'Mise en location', text: 'Conciergerie, pricing dynamique, multi-diffusion (Airbnb, Booking, sites partenaires). Premier revenu sous 30 jours.'},
+];
+
+const guarantees = [
+  {title: 'Architecture signée', text: 'Conception par un architecte de résidences de tourisme. Plan masse étudié pour le terrain, intégration paysagère validée en mairie.'},
+  {title: 'Loyer plancher 12 mois', text: "Si l'occupation tombe sous 50 % la première année, Moodl couvre le différentiel jusqu'au plancher contractuel."},
+  {title: 'Reportings mensuels', text: "Tableau de bord propriétaire : taux d'occupation, revenus, charges, photos après chaque ménage. Transparence totale."},
+  {title: 'Conciergerie locale', text: 'Équipe physique sur chaque adresse. Ménage entre chaque séjour, accueil, maintenance, gestion des litiges.'},
+];
+
+const included = [
+  'Parcelle équipée et viabilisée (eau, électricité, fosse autonome)',
+  'Habitat Moodl livré et posé sur plots vissés',
+  'Aménagement intérieur clé en main (mobilier, literie, vaisselle, déco)',
+  'Photos professionnelles drone + intérieur + lifestyle',
+  'Tournage vidéo signature pour les annonces',
+  'Mise en ligne sur Airbnb, Booking, et plateforme propriétaire Moodl',
+  'Conciergerie et ménage entre chaque séjour',
+  'Reporting mensuel détaillé + accès propriétaire',
+  'Pricing dynamique optimisé selon saisonnalité',
+  'Maintenance préventive et corrective des équipements',
+];
+---
+
+<Layout
+  title="Investir — Moodl"
+  description="Programmes d'investissement clé en main : adresse choisie, habitat dessiné, intendance déléguée. 10 à 15 % de rendement annuel net."
+>
+  <!-- HERO -->
+  <section class="relative pt-40 pb-20 lg:pb-24 overflow-hidden">
+    <div
+      aria-hidden="true"
+      class="absolute inset-0 pointer-events-none"
+      style="background: radial-gradient(ellipse 70% 50% at 50% 30%, hsl(150 100% 50% / 0.07), transparent 60%);"
+    ></div>
+    <div class="container mx-auto px-6 lg:px-8 text-center max-w-3xl relative">
+      <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-6">
+        Investir avec Moodl
+      </p>
+      <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
+        Cinq étapes,<br />
+        <span class="font-serif-italic text-secondary">un seul interlocuteur</span>.
+      </h1>
+      <p class="text-lg text-muted-foreground leading-relaxed">
+        De la sélection de l'adresse à la mise en location, Moodl prend en charge la chaîne complète. Vous signez, on s'occupe du reste — et on vous tient informé chaque semaine.
+      </p>
+    </div>
+  </section>
+
+  <!-- ÉTAPES -->
+  <section class="py-20 lg:py-24 bg-muted/30 border-y border-border/60">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="max-w-5xl mx-auto space-y-6">
+        {steps.map((s) => (
+          <article class="flex items-start gap-6 lg:gap-10 bg-card border border-border/60 rounded-2xl p-6 lg:p-8 hover:border-primary/40 transition-colors">
+            <div class="hidden md:flex items-center justify-center shrink-0 w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 font-mono text-primary text-base">
+              {s.num}
+            </div>
+            <div class="flex-1">
+              <span class="md:hidden font-mono text-xs text-primary tracking-widest">{s.num}</span>
+              <h3 class="font-display text-2xl font-bold tracking-tight mb-2 mt-1 md:mt-0">{s.title}</h3>
+              <p class="text-muted-foreground leading-relaxed">{s.text}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- GARANTIES -->
+  <section class="py-24 lg:py-32 bg-background">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="max-w-3xl mb-14">
+        <p class="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-5">
+          Garanties Moodl
+        </p>
+        <h2 class="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
+          Quatre engagements <span class="font-serif-italic text-secondary">contractuels</span>.
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        {guarantees.map((g) => (
+          <div class="h-full bg-card border border-border/60 rounded-2xl p-8 hover:-translate-y-1 hover:shadow-xl transition-all">
+            <h3 class="font-display text-2xl font-bold mb-3 tracking-tight">{g.title}</h3>
+            <p class="text-muted-foreground leading-relaxed">{g.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- INCLUS -->
+  <section class="py-24 lg:py-32 bg-muted/30 border-t border-border/60">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto">
+        <p class="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-5">
+          Inclus dans chaque programme
+        </p>
+        <h2 class="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-12">
+          Tout est compris.{' '}
+          <span class="font-serif-italic text-secondary">Vraiment.</span>
+        </h2>
+
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4">
+          {included.map((item) => (
+            <li class="flex items-start gap-3 pb-4 border-b border-border/40">
+              <span class="font-mono text-xs text-primary mt-1 shrink-0">✓</span>
+              <span class="text-foreground/90">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="py-32 lg:py-40 bg-background relative overflow-hidden border-t border-border/60 text-center">
+    <div
+      aria-hidden="true"
+      class="absolute inset-0 pointer-events-none"
+      style="background: radial-gradient(ellipse 70% 50% at 50% 50%, hsl(150 100% 50% / 0.10), transparent 60%);"
+    ></div>
+    <div class="container mx-auto px-6 lg:px-8 max-w-3xl relative">
+      <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
+        Quatorze lots restants sur l'édition <span class="font-serif-italic text-secondary">2026</span>.
+      </h2>
+      <p class="text-lg lg:text-xl text-muted-foreground mb-10">
+        Premiers arrivés, premiers servis. Acompte de réservation 5 000 €, remboursable jusqu'au compromis.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-[0_0_30px_rgba(0,255,128,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+        >
+          Réserver un lot
+        </a>
+        <a
+          href="/simulateur"
+          class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md border border-border bg-transparent text-foreground font-medium hover:bg-accent hover:text-accent-foreground hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+        >
+          Simuler ma rentabilité
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

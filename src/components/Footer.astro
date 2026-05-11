@@ -1,0 +1,78 @@
+---
+import logoMoodl from '@/assets/logo-moodl.png';
+
+const cols = [
+  {
+    title: 'Programmes',
+    links: [
+      {to: '/programmes', label: 'Tous nos lieux'},
+      {to: '/programmes?region=dordogne', label: 'Dordogne'},
+      {to: '/programmes?region=ardeche', label: 'Ardèche'},
+      {to: '/programmes?region=lac-annecy', label: "Lac d'Annecy"},
+    ],
+  },
+  {
+    title: 'Lieux',
+    links: [
+      {to: '/lieux', label: 'Tous les modèles'},
+      {to: '/lieux/circle', label: 'Circle'},
+      {to: '/lieux/love-boat', label: 'Love Boat'},
+      {to: '/lieux/nova', label: 'Nova'},
+      {to: '/lieux/a-frame', label: 'A-Frame'},
+      {to: '/lieux/nebula', label: 'Nebula'},
+    ],
+  },
+  {
+    title: 'Atelier',
+    links: [
+      {to: '/journal', label: 'Journal'},
+      {to: '/simulateur', label: 'Simulateur'},
+      {to: '/investir', label: 'Investir'},
+      {to: '/contact', label: 'Contact'},
+    ],
+  },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-card border-t border-border/60">
+  <div class="container mx-auto px-6 lg:px-8 py-16 lg:py-20">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+      <div class="space-y-4">
+        <a href="/" class="inline-flex" aria-label="Moodl — Accueil">
+          <img src={logoMoodl.src} alt="Moodl" class="h-10 w-auto" />
+        </a>
+        <p class="text-muted-foreground text-sm leading-relaxed max-w-xs">
+          Atelier qui trouve des lieux et y dessine des séjours pour des voyageurs singuliers et des investisseurs visionnaires.
+        </p>
+        <a href="mailto:shelter@moodl.fr" class="inline-block text-sm text-foreground/85 hover:text-primary transition-colors">
+          shelter@moodl.fr
+        </a>
+      </div>
+
+      {cols.map((col) => (
+        <div>
+          <h3 class="font-display text-sm uppercase tracking-widest mb-4 text-muted-foreground">{col.title}</h3>
+          <ul class="space-y-3">
+            {col.links.map((link) => (
+              <li>
+                <a href={link.to} class="text-foreground/85 hover:text-primary transition-colors">{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="border-t border-border/50 mt-16 pt-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 text-xs text-muted-foreground">
+      <p>© {year} Moodl — Tous droits réservés</p>
+      <div class="flex flex-wrap gap-x-6 gap-y-2">
+        <a href="/mentions-legales" class="hover:text-primary transition-colors">Mentions légales</a>
+        <a href="/cgv" class="hover:text-primary transition-colors">CGV</a>
+        <a href="/confidentialite" class="hover:text-primary transition-colors">Confidentialité</a>
+        <a href="/cookies" class="hover:text-primary transition-colors">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,86 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+const updatedAt = new Date().toLocaleDateString('fr-FR');
+---
+
+<Layout
+  title="Mentions légales — Moodl"
+  description="Informations légales relatives au site moodl.fr conformément à l'article 6 de la LCEN."
+  noIndex={false}
+>
+  <section class="pt-40 pb-24">
+    <div class="container mx-auto px-6 lg:px-8 max-w-3xl">
+      <p class="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-6">
+        Informations légales
+      </p>
+      <h1 class="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-12">
+        Mentions <span class="font-serif-italic text-secondary">légales</span>.
+      </h1>
+
+      <div class="space-y-10 text-foreground/85">
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">Éditeur du site</h2>
+          <p class="leading-relaxed">
+            Moodl — [Forme juridique à compléter : SAS / SARL / EI]<br />
+            Capital social : [à compléter]<br />
+            RCS : [Ville et n° à compléter]<br />
+            SIRET : [à compléter]<br />
+            Numéro de TVA intracommunautaire : [à compléter]<br />
+            Adresse du siège social : [à compléter]
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">Directeur de publication</h2>
+          <p class="leading-relaxed">[Nom du directeur de publication]</p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">Contact</h2>
+          <p class="leading-relaxed">
+            E-mail : <a href="mailto:shelter@moodl.fr" class="text-primary hover:underline">shelter@moodl.fr</a><br />
+            Téléphone : <a href="tel:+33766873040" class="text-primary hover:underline">+33 7 66 87 30 40</a>
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">Hébergeur</h2>
+          <p class="leading-relaxed">
+            Vercel Inc.<br />
+            340 S Lemon Ave #4133, Walnut, CA 91789, USA<br />
+            <a href="https://vercel.com" target="_blank" rel="noreferrer" class="text-primary hover:underline">vercel.com</a>
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">Propriété intellectuelle</h2>
+          <p class="leading-relaxed">
+            L'ensemble des contenus du site (textes, photographies, plans, rendus, logos, marque) sont la propriété exclusive de Moodl ou de leurs auteurs respectifs. Toute reproduction ou diffusion sans autorisation écrite est interdite.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">Données personnelles</h2>
+          <p class="leading-relaxed mb-3">
+            Les informations transmises via le formulaire de contact sont collectées et traitées exclusivement par Moodl pour répondre à vos demandes. Elles ne sont ni vendues ni cédées à des tiers à des fins commerciales.
+          </p>
+          <p class="leading-relaxed">
+            Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement et de portabilité de vos données. Pour exercer ces droits, écrivez à <a href="mailto:shelter@moodl.fr" class="text-primary hover:underline">shelter@moodl.fr</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">Avertissement</h2>
+          <p class="leading-relaxed">
+            Les informations financières présentées sur ce site (rendements, projections, simulateur) ont une vocation pédagogique. Elles ne constituent ni un conseil en investissement, ni une garantie de performance future. Avant tout engagement, consultez un conseiller en gestion de patrimoine et un expert-comptable.
+          </p>
+        </section>
+
+        <p class="text-xs text-muted-foreground italic pt-6 border-t border-border/40">
+          Dernière mise à jour : {updatedAt}.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

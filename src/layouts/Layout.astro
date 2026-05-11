@@ -1,0 +1,120 @@
+---
+import '@/styles/global.css';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer.astro';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonical?: string;
+  noIndex?: boolean;
+  bodyClass?: string;
+}
+
+const {
+  title = 'Moodl — Votre cocon, en pleine nature.',
+  description = "Une adresse choisie en pleine nature, dessinée pour s'y blottir. À habiter, à louer, souvent les deux. 10 à 15 % de rendement annuel quand vous n'y êtes pas.",
+  ogImage,
+  canonical,
+  noIndex = false,
+  bodyClass = '',
+} = Astro.props;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const canonicalUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
+const ogImageUrl = ogImage ?? `${siteUrl}/og-default.jpg`;
+const pathname = Astro.url.pathname;
+
+// JSON-LD Organization (présent sur toutes les pages)
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Moodl',
+  url: siteUrl || 'https://moodl.fr',
+  logo: `${siteUrl}/logo-moodl.png`,
+  description: 'Atelier qui conçoit des cocons en pleine nature — adresse, architecture, urbanisme, intendance. À habiter ou à louer.',
+  email: 'shelter@moodl.fr',
+  telephone: '+33-7-66-87-30-40',
+  sameAs: [
+    'https://moodl.fr',
+  ],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    email: 'shelter@moodl.fr',
+    telephone: '+33-7-66-87-30-40',
+    areaServed: 'FR',
+    availableLanguage: ['French'],
+  },
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Moodl',
+  url: siteUrl || 'https://moodl.fr',
+  inLanguage: 'fr-FR',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${siteUrl}/?s={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#090F15" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonicalUrl} />}
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Moodl" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+
+    <slot name="head" />
+  </head>
+
+  <body class={`bg-background text-foreground min-h-screen ${bodyClass}`}>
+    <Navigation client:load pathname={pathname} />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

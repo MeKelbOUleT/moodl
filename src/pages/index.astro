@@ -1,0 +1,103 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import StatsSection from '@/components/sections/StatsSection';
+import PourQuiSection from '@/components/sections/PourQuiSection';
+import WhyMoodlSection from '@/components/sections/WhyMoodlSection';
+import ModulesBentoSection from '@/components/sections/ModulesBentoSection';
+import ProgrammesSection from '@/components/sections/ProgrammesSection';
+import TestimonialsSection from '@/components/sections/TestimonialsSection';
+import SimulatorTeaserSection from '@/components/sections/SimulatorTeaserSection';
+import FinalCTASection from '@/components/sections/FinalCTASection';
+---
+
+<Layout
+  title="Moodl — Votre cocon, en pleine nature."
+  description="Une adresse choisie en pleine nature, dessinée pour s'y blottir. À habiter, à louer, souvent les deux. 10 à 15 % de rendement annuel quand vous n'y êtes pas."
+  canonical="https://moodl.fr/"
+>
+  <section class="relative min-h-screen flex items-center pt-32 pb-24 overflow-hidden">
+    <div
+      aria-hidden="true"
+      class="absolute inset-0 pointer-events-none"
+      style="background: radial-gradient(ellipse 80% 60% at 50% 20%, hsl(150 100% 50% / 0.08), transparent 60%), radial-gradient(ellipse 60% 50% at 80% 80%, hsl(43 70% 62% / 0.07), transparent 55%), radial-gradient(ellipse 60% 50% at 15% 75%, hsl(150 100% 50% / 0.05), transparent 50%);"
+    ></div>
+    <div
+      aria-hidden="true"
+      class="absolute inset-0 pointer-events-none opacity-[0.04]"
+      style="background-image: linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px); background-size: 64px 64px;"
+    ></div>
+
+    <div class="container mx-auto px-6 lg:px-8 relative">
+      <div class="max-w-5xl mx-auto text-center">
+        <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-8 hero-fade" style="animation-delay: 0ms;">
+          À habiter. À louer. Souvent les deux.
+        </p>
+
+        <h1 class="font-display text-5xl md:text-7xl lg:text-[5.5rem] font-bold leading-[1.05] tracking-tight mb-8 hero-fade" style="animation-delay: 120ms;">
+          Votre cocon,
+          <br />
+          <span class="relative inline-block">
+            <span class="relative z-10 font-serif-italic text-secondary">en pleine nature.</span>
+            <span aria-hidden="true" class="absolute inset-0 blur-3xl bg-primary/30 -z-10 hero-glow"></span>
+          </span>
+        </h1>
+
+        <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed hero-fade" style="animation-delay: 240ms;">
+          Une adresse choisie, un habitat dessiné pour s'y blottir, une intendance qui veille sur tout. Vous y passez vos week-ends. Vous le louez le reste du temps — <span class="text-foreground font-medium">10 à 15 % de rendement annuel</span>.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 hero-fade" style="animation-delay: 360ms;">
+          <a
+            href="/programmes"
+            class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-[0_0_30px_rgba(0,255,128,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+          >
+            Voir nos adresses
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a
+            href="/simulateur"
+            class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md border border-border bg-transparent text-foreground font-medium hover:bg-accent hover:text-accent-foreground hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+          >
+            Simuler ma rentabilité
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div
+      aria-hidden="true"
+      class="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
+      style="background: linear-gradient(to top, hsl(210 29% 12% / 0.4), transparent);"
+    ></div>
+  </section>
+
+  <StatsSection client:visible />
+  <PourQuiSection client:visible />
+  <WhyMoodlSection client:visible />
+  <ModulesBentoSection client:visible />
+  <ProgrammesSection client:visible />
+  <TestimonialsSection client:visible />
+  <SimulatorTeaserSection client:visible />
+  <FinalCTASection client:visible />
+</Layout>
+
+<style>
+  .hero-fade {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes heroReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .hero-glow {
+    animation: heroGlow 4.5s ease-in-out infinite;
+  }
+  @keyframes heroGlow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+  }
+</style>

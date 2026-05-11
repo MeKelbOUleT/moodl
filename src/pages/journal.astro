@@ -1,0 +1,45 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout
+  title="Journal — Moodl"
+  description="Coulisses, savoir-faire et conseils d'investissement. Le journal d'un atelier qui dessine des cocons en pleine nature."
+>
+  <section class="relative pt-40 pb-20 overflow-hidden">
+    <div
+      aria-hidden="true"
+      class="absolute inset-0 pointer-events-none"
+      style="background: radial-gradient(ellipse 70% 50% at 50% 30%, hsl(150 100% 50% / 0.06), transparent 60%);"
+    ></div>
+    <div class="container mx-auto px-6 lg:px-8 text-center max-w-3xl relative">
+      <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-6">
+        Journal
+      </p>
+      <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
+        Coulisses, savoir-faire,<br />
+        <span class="font-serif-italic text-secondary">conseils.</span>
+      </h1>
+      <p class="text-lg text-muted-foreground leading-relaxed">
+        Le journal d'un atelier qui dessine des cocons en pleine nature et qui aide ses propriétaires à en tirer un revenu.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20">
+    <div class="container mx-auto px-6 lg:px-8 max-w-3xl text-center">
+      <div class="bg-card border border-dashed border-border/60 rounded-2xl p-10 lg:p-14">
+        <p class="font-display text-2xl lg:text-3xl text-muted-foreground mb-4">
+          Premiers articles bientôt en ligne.
+        </p>
+        <p class="text-muted-foreground leading-relaxed max-w-xl mx-auto">
+          Nous publions ici nos coulisses, nos retours d'expérience, et nos conseils pour bien investir dans une adresse Moodl.
+          Inscrivez-vous pour recevoir les nouveaux articles dès leur parution.
+        </p>
+        <a href="/contact" class="inline-flex items-center justify-center gap-2 h-11 px-6 mt-8 rounded-md bg-primary text-primary-foreground font-medium text-sm shadow-md hover:shadow-[0_0_30px_rgba(0,255,128,0.35)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-300">
+          M'inscrire à la newsletter
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

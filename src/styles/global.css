@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@source "../**/*.{astro,html,tsx,ts,jsx,js,mdx,md}";
+
+@theme {
+  --font-display: "Cabinet Grotesk", "Inter", system-ui, sans-serif;
+  --font-serif: "Fraunces", "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: ui-monospace, "JetBrains Mono", Menlo, monospace;
+
+  --radius: 0.75rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --color-background-secondary: var(--card);
+  --color-foreground-secondary: var(--muted-foreground);
+}
+
+:root {
+  --background: hsl(210 38% 6%);
+  --foreground: hsl(0 0% 100%);
+  --card: hsl(210 29% 9%);
+  --card-foreground: hsl(0 0% 100%);
+  --popover: hsl(210 29% 11%);
+  --popover-foreground: hsl(0 0% 100%);
+  --primary: hsl(150 100% 50%);
+  --primary-foreground: hsl(210 38% 6%);
+  --secondary: hsl(43 70% 62%);
+  --secondary-foreground: hsl(210 38% 6%);
+  --muted: hsl(210 29% 12%);
+  --muted-foreground: hsl(210 15% 68%);
+  --accent: hsl(150 100% 50%);
+  --accent-foreground: hsl(210 38% 6%);
+  --destructive: hsl(0 70% 55%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(210 29% 15%);
+  --input: hsl(210 29% 15%);
+  --ring: hsl(150 100% 50%);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    color-scheme: dark;
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  .font-serif-italic {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+  }
+  ::selection {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+}
