@@ -1,0 +1,141 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+const updatedAt = new Date().toLocaleDateString('fr-FR');
+---
+
+<Layout
+  title="Politique de confidentialité — Moodl"
+  description="Politique de confidentialité et protection des données personnelles conforme au RGPD."
+  noIndex={false}
+>
+  <section class="pt-40 pb-24">
+    <div class="container mx-auto px-6 lg:px-8 max-w-3xl">
+      <p class="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-6">
+        RGPD — Vos données
+      </p>
+      <h1 class="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-6">
+        Politique de <span class="font-serif-italic text-secondary">confidentialité</span>.
+      </h1>
+      <p class="text-base text-muted-foreground leading-relaxed mb-12">
+        Moodl prend la protection de vos données personnelles très au sérieux. Cette politique décrit les données que nous collectons, pourquoi, combien de temps elles sont conservées, et comment exercer vos droits.
+      </p>
+
+      <div class="space-y-10 text-foreground/85">
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">1. Responsable du traitement</h2>
+          <p class="leading-relaxed">
+            Moodl — [Forme juridique à compléter]<br />
+            [Adresse à compléter]<br />
+            E-mail : <a href="mailto:shelter@moodl.fr" class="text-primary hover:underline">shelter@moodl.fr</a><br />
+            Téléphone : <a href="tel:+33766873040" class="text-primary hover:underline">+33 7 66 87 30 40</a>
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">2. Données collectées</h2>
+          <p class="leading-relaxed mb-3">
+            Nous ne collectons que les données strictement nécessaires à nos échanges :
+          </p>
+          <ul class="space-y-2 list-none pl-0">
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Formulaire de contact</strong> — nom, prénom, e-mail, téléphone, message ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Simulateur</strong> — paramètres saisis (montant d'apport, durée, etc.) traités exclusivement dans votre navigateur, non transmis à nos serveurs sauf demande explicite de votre part ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Données techniques anonymes</strong> — pages visitées, durée de visite, type d'appareil (via Vercel Analytics, sans cookie et sans identifiant personnel).</span></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">3. Finalités du traitement</h2>
+          <p class="leading-relaxed mb-3">
+            Nous traitons vos données pour :
+          </p>
+          <ul class="space-y-2 list-none pl-0">
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span>répondre à vos demandes de renseignement et planifier les rendez-vous ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span>vous adresser, sur demande explicite, des informations sur les nouvelles adresses Moodl ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span>améliorer l'expérience du site (statistiques anonymes de fréquentation) ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span>satisfaire à nos obligations légales et comptables.</span></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">4. Base légale</h2>
+          <p class="leading-relaxed mb-3">
+            Conformément à l'article 6 du RGPD, nos traitements reposent sur :
+          </p>
+          <ul class="space-y-2 list-none pl-0">
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Votre consentement</strong> — pour la prise de contact volontaire ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">L'exécution d'un contrat</strong> — pour la gestion d'une réservation ou d'un programme en cours ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Notre intérêt légitime</strong> — pour mesurer l'audience anonymisée du site.</span></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">5. Durée de conservation</h2>
+          <ul class="space-y-2 list-none pl-0">
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Prospects</strong> — 3 ans à compter du dernier contact ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Clients</strong> — durée de la relation contractuelle, puis 10 ans pour les obligations légales (comptables, garanties construction) ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Audience du site</strong> — 13 mois maximum (statistiques anonymisées).</span></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">6. Destinataires de vos données</h2>
+          <p class="leading-relaxed mb-3">
+            Vos données sont accessibles uniquement aux personnes habilitées au sein de Moodl. Pour certains traitements techniques, nous recourons à des sous-traitants soumis à des engagements stricts de confidentialité :
+          </p>
+          <ul class="space-y-2 list-none pl-0">
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Vercel Inc.</strong> — hébergement du site (USA, encadrement par les clauses contractuelles types de la Commission européenne) ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Sanity.io</strong> — gestion de contenu (EU/USA, RGPD-compliant) ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span>notaire et professionnels du droit, dans le cadre de la finalisation d'une vente.</span></li>
+          </ul>
+          <p class="leading-relaxed mt-3">
+            Nous ne vendons et ne louons jamais vos données à des tiers à des fins commerciales.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">7. Vos droits</h2>
+          <p class="leading-relaxed mb-3">
+            Conformément au Règlement (UE) 2016/679 et à la Loi Informatique et Libertés, vous disposez à tout moment des droits suivants :
+          </p>
+          <ul class="space-y-2 list-none pl-0">
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Droit d'accès</strong> — connaître les données que nous détenons sur vous ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Droit de rectification</strong> — corriger toute information inexacte ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Droit à l'effacement</strong> — demander la suppression de vos données ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Droit à la portabilité</strong> — récupérer vos données dans un format structuré ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Droit d'opposition</strong> — refuser un traitement fondé sur l'intérêt légitime ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Droit de limitation</strong> — figer un traitement contesté le temps de la vérification.</span></li>
+          </ul>
+          <p class="leading-relaxed mt-3">
+            Pour exercer ces droits, écrivez à <a href="mailto:shelter@moodl.fr" class="text-primary hover:underline">shelter@moodl.fr</a> en précisant l'objet de votre demande. Nous répondons sous un mois.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">8. Réclamation auprès de la CNIL</h2>
+          <p class="leading-relaxed">
+            Si vous estimez que vos droits ne sont pas respectés, vous pouvez introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL) — 3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07 — ou en ligne sur <a href="https://www.cnil.fr" target="_blank" rel="noreferrer" class="text-primary hover:underline">www.cnil.fr</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">9. Cookies</h2>
+          <p class="leading-relaxed">
+            Le site moodl.fr n'utilise pas de cookies de suivi tiers à des fins publicitaires. Pour en savoir plus, consultez la <a href="/cookies" class="text-primary hover:underline">politique cookies</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">10. Sécurité des données</h2>
+          <p class="leading-relaxed">
+            Nous mettons en œuvre les mesures techniques et organisationnelles appropriées pour protéger vos données : chiffrement HTTPS, sauvegardes régulières, accès restreint, audit des prestataires. En cas de violation susceptible d'engendrer un risque pour vos droits, nous nous engageons à vous en informer dans les délais légaux.
+          </p>
+        </section>
+
+        <p class="text-xs text-muted-foreground italic pt-6 border-t border-border/40">
+          Dernière mise à jour : {updatedAt}.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

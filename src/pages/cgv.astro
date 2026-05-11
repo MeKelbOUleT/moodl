@@ -1,0 +1,139 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+const updatedAt = new Date().toLocaleDateString('fr-FR');
+---
+
+<Layout
+  title="CGV — Moodl"
+  description="Conditions générales de vente applicables aux programmes Moodl (terrain + habitat + intendance)."
+  noIndex={false}
+>
+  <section class="pt-40 pb-24">
+    <div class="container mx-auto px-6 lg:px-8 max-w-3xl">
+      <p class="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-6">
+        Conditions générales de vente
+      </p>
+      <h1 class="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-6">
+        Conditions <span class="font-serif-italic text-secondary">générales de vente</span>.
+      </h1>
+      <p class="text-base text-muted-foreground leading-relaxed mb-12">
+        Les présentes CGV régissent les relations entre Moodl et les acquéreurs de programmes Moodl (terrain + habitat + intendance). Le détail contractuel exact d'une opération est précisé dans le compromis de vente notarié.
+      </p>
+
+      <div class="space-y-10 text-foreground/85">
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">1. Objet</h2>
+          <p class="leading-relaxed">
+            Moodl conçoit et commercialise des programmes touristiques en pleine nature, composés d'un terrain rare, d'un habitat dessiné en atelier français, et d'une intendance déléguée (accueil, ménage, mise en location, reportings). Les présentes conditions s'appliquent à toute réservation et tout achat conclu via le site moodl.fr ou directement auprès de l'atelier Moodl.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">2. Présentation des offres</h2>
+          <p class="leading-relaxed mb-3">
+            Chaque programme Moodl fait l'objet d'une fiche détaillée précisant :
+          </p>
+          <ul class="space-y-2 list-none pl-0">
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span>la région, la commune et la situation cadastrale du terrain ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span>le modèle d'habitat retenu et ses caractéristiques techniques ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span>le prix total indicatif et les rendements visés (non garantis) ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span>la date prévisionnelle de livraison.</span></li>
+          </ul>
+          <p class="leading-relaxed mt-3">
+            Les rendements affichés sont des projections fondées sur les hypothèses de marché en vigueur (loyer moyen, taux d'occupation, charges). Ils ne constituent pas une garantie de performance future.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">3. Processus de réservation</h2>
+          <p class="leading-relaxed mb-3">
+            La réservation d'un lot suit trois étapes :
+          </p>
+          <ol class="space-y-3 list-none pl-0 counter-reset-list">
+            <li class="flex items-start gap-3">
+              <span class="font-mono text-xs font-bold text-primary mt-0.5 shrink-0 w-6">01.</span>
+              <span><strong class="text-foreground">Acompte de réservation</strong> — 5 000 € versés à la signature du bon de réservation. Cet acompte est consigné sur un compte séquestre et reste remboursable jusqu'à la signature du compromis de vente.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="font-mono text-xs font-bold text-primary mt-0.5 shrink-0 w-6">02.</span>
+              <span><strong class="text-foreground">Compromis de vente</strong> — signé devant notaire dans les 60 jours suivant la réservation. Le compromis fixe définitivement le prix, le calendrier et les modalités. À compter de la signature, l'acquéreur particulier dispose d'un délai de rétractation de 10 jours (article L. 271-1 du Code de la construction et de l'habitation).</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="font-mono text-xs font-bold text-primary mt-0.5 shrink-0 w-6">03.</span>
+              <span><strong class="text-foreground">Acte authentique</strong> — signé devant notaire à la livraison de l'habitat. L'acquéreur règle alors le solde du prix et prend possession du bien.</span>
+            </li>
+          </ol>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">4. Prix et paiement</h2>
+          <p class="leading-relaxed">
+            Le prix total indiqué pour chaque programme comprend l'acquisition du terrain, la conception et la pose de l'habitat Moodl, ainsi que la mise en route de l'intendance (mise en ligne, premier shooting, ouverture des plateformes de réservation). Les frais de notaire, de viabilisation éventuelle, et la TVA applicable sont précisés dans le compromis.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">5. Délais de livraison</h2>
+          <p class="leading-relaxed">
+            La date prévisionnelle de livraison est indiquée pour chaque programme. Moodl s'engage à informer l'acquéreur de toute évolution. Un retard imputable à des aléas externes (météo, instruction administrative, force majeure) n'ouvre pas droit à pénalités, sauf stipulation contraire au compromis.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">6. Garanties</h2>
+          <p class="leading-relaxed mb-3">
+            L'acquéreur bénéficie des garanties légales applicables à la construction :
+          </p>
+          <ul class="space-y-2 list-none pl-0">
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Garantie de parfait achèvement</strong> — 1 an à compter de la livraison ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Garantie biennale (bon fonctionnement)</strong> — 2 ans sur les éléments d'équipement dissociables ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><strong class="text-foreground">Garantie décennale</strong> — 10 ans sur les ouvrages et éléments indissociables compromettant la solidité ou la destination de l'ouvrage.</span></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">7. Intendance et mise en location</h2>
+          <p class="leading-relaxed">
+            Le mandat d'intendance et de gestion locative fait l'objet d'un contrat distinct, conclu pour une durée d'un an renouvelable. Il précise les prestations (accueil voyageurs, ménage, maintenance, mise en ligne, reportings mensuels), les commissions, et les modalités de reversement des loyers. Le propriétaire conserve à tout moment la maîtrise du calendrier (semaines bloquées pour usage personnel).
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">8. Droit de rétractation</h2>
+          <p class="leading-relaxed">
+            Conformément à l'article L. 271-1 du Code de la construction et de l'habitation, l'acquéreur non professionnel dispose d'un délai de rétractation de 10 jours à compter de la notification du compromis. La rétractation s'exerce par lettre recommandée avec accusé de réception adressée au notaire chargé de la vente.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">9. Force majeure</h2>
+          <p class="leading-relaxed">
+            Moodl ne saurait être tenue responsable d'un manquement à ses obligations résultant d'un événement de force majeure au sens de l'article 1218 du Code civil (catastrophe naturelle, conflit armé, décision administrative, pandémie, etc.).
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">10. Données personnelles</h2>
+          <p class="leading-relaxed">
+            Les modalités de traitement des données personnelles transmises à Moodl sont détaillées dans la <a href="/confidentialite" class="text-primary hover:underline">politique de confidentialité</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">11. Droit applicable et litiges</h2>
+          <p class="leading-relaxed mb-3">
+            Les présentes CGV sont régies par le droit français. En cas de litige, les parties s'efforcent de trouver une solution amiable. À défaut, le litige sera porté devant les tribunaux compétents du ressort du siège social de Moodl.
+          </p>
+          <p class="leading-relaxed">
+            Conformément aux articles L. 611-1 et suivants du Code de la consommation, le consommateur a la faculté de recourir gratuitement au médiateur de la consommation dont les coordonnées sont précisées sur demande à <a href="mailto:shelter@moodl.fr" class="text-primary hover:underline">shelter@moodl.fr</a>.
+          </p>
+        </section>
+
+        <p class="text-xs text-muted-foreground italic pt-6 border-t border-border/40">
+          Dernière mise à jour : {updatedAt}. Document susceptible d'évolution — la version applicable est celle en vigueur au jour de la réservation.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

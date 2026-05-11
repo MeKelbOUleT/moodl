@@ -1,0 +1,106 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+const updatedAt = new Date().toLocaleDateString('fr-FR');
+---
+
+<Layout
+  title="Politique cookies — Moodl"
+  description="Politique d'utilisation des cookies sur moodl.fr — minimaliste, sans suivi publicitaire."
+  noIndex={false}
+>
+  <section class="pt-40 pb-24">
+    <div class="container mx-auto px-6 lg:px-8 max-w-3xl">
+      <p class="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-6">
+        Cookies & traceurs
+      </p>
+      <h1 class="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-6">
+        Politique <span class="font-serif-italic text-secondary">cookies</span>.
+      </h1>
+      <p class="text-base text-muted-foreground leading-relaxed mb-12">
+        Notre approche est <strong class="text-foreground">minimaliste</strong> : pas de bandeau cookies tape-à-l'œil, pas de mouchards publicitaires, pas de revente de votre comportement. Voici précisément ce que nous utilisons.
+      </p>
+
+      <div class="space-y-10 text-foreground/85">
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">1. Qu'est-ce qu'un cookie ?</h2>
+          <p class="leading-relaxed">
+            Un cookie est un petit fichier déposé par un site web sur votre appareil (ordinateur, mobile, tablette) lorsque vous le consultez. Il permet par exemple de mémoriser vos préférences, de mesurer l'audience d'un site, ou — dans des usages plus intrusifs — de vous suivre d'un site à l'autre à des fins publicitaires.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">2. Cookies utilisés sur moodl.fr</h2>
+          <p class="leading-relaxed mb-5">
+            Le site moodl.fr <strong class="text-foreground">n'utilise aucun cookie publicitaire ni cookie de tracking inter-sites</strong>. Aucun consentement explicite n'est requis pour la simple consultation du site, conformément aux recommandations de la CNIL.
+          </p>
+
+          <div class="space-y-5">
+            <div class="bg-card border border-border/60 rounded-xl p-5">
+              <p class="text-[11px] uppercase tracking-widest text-primary font-medium mb-1">Strictement nécessaire</p>
+              <h3 class="font-display text-base font-bold mb-2">Cookies techniques</h3>
+              <p class="text-sm leading-relaxed">
+                Cookies déposés par notre hébergeur (Vercel) pour assurer le bon fonctionnement du site (équilibrage de charge, sécurité, protection anti-bot). Ils sont indispensables à la consultation et ne nécessitent pas de consentement.
+              </p>
+              <p class="text-xs text-muted-foreground mt-3"><span class="font-mono">Durée :</span> session — <span class="font-mono">Tiers :</span> Vercel</p>
+            </div>
+
+            <div class="bg-card border border-border/60 rounded-xl p-5">
+              <p class="text-[11px] uppercase tracking-widest text-secondary font-medium mb-1">Mesure d'audience anonyme</p>
+              <h3 class="font-display text-base font-bold mb-2">Vercel Analytics</h3>
+              <p class="text-sm leading-relaxed">
+                Statistiques de fréquentation entièrement anonymes : pages vues, pays, type d'appareil. Vercel Analytics fonctionne <strong>sans cookie</strong> et <strong>sans identifiant personnel</strong> ; un identifiant éphémère est généré côté serveur puis dégradé en heures. Pas de profiling, pas de croisement avec d'autres données.
+              </p>
+              <p class="text-xs text-muted-foreground mt-3"><span class="font-mono">Durée :</span> 24 h (identifiant éphémère) — <span class="font-mono">Tiers :</span> Vercel — <span class="font-mono">Cookie :</span> Aucun</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">3. Ce que nous n'utilisons pas</h2>
+          <p class="leading-relaxed mb-3">
+            Pour votre information, voici ce qui <strong class="text-foreground">n'est pas présent</strong> sur moodl.fr :
+          </p>
+          <ul class="space-y-2 list-none pl-0">
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">✗</span><span>Pixel Meta / Facebook ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">✗</span><span>Google Analytics, Google Ads, Google Tag Manager ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">✗</span><span>LinkedIn Insight Tag, TikTok Pixel, Pinterest Tag ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">✗</span><span>retargeting / remarketing publicitaire ;</span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">✗</span><span>partage de données avec data brokers.</span></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">4. Gérer les cookies depuis votre navigateur</h2>
+          <p class="leading-relaxed mb-3">
+            Vous pouvez à tout moment paramétrer ou supprimer les cookies depuis les réglages de votre navigateur :
+          </p>
+          <ul class="space-y-2 list-none pl-0">
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noreferrer" class="text-primary hover:underline">Chrome</a></span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><a href="https://support.mozilla.org/fr/kb/protection-renforcee-contre-pistage-firefox-ordinateur" target="_blank" rel="noreferrer" class="text-primary hover:underline">Firefox</a></span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><a href="https://support.apple.com/fr-fr/guide/safari/sfri11471/mac" target="_blank" rel="noreferrer" class="text-primary hover:underline">Safari</a></span></li>
+            <li class="flex items-start gap-3"><span class="font-mono text-xs text-primary mt-1.5">→</span><span><a href="https://support.microsoft.com/fr-fr/microsoft-edge" target="_blank" rel="noreferrer" class="text-primary hover:underline">Edge</a></span></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">5. Évolution de cette politique</h2>
+          <p class="leading-relaxed">
+            Si nous introduisons un nouveau service nécessitant un cookie non essentiel (par exemple une vidéo embarquée d'un tiers, un module de réservation externe), un bandeau de consentement explicite sera affiché conformément au RGPD et à la directive ePrivacy.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl font-bold mb-3">6. Contact</h2>
+          <p class="leading-relaxed">
+            Toute question relative à cette politique peut être adressée à <a href="mailto:shelter@moodl.fr" class="text-primary hover:underline">shelter@moodl.fr</a>.
+          </p>
+        </section>
+
+        <p class="text-xs text-muted-foreground italic pt-6 border-t border-border/40">
+          Dernière mise à jour : {updatedAt}.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
