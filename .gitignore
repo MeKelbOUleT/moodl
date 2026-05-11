@@ -22,3 +22,10 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Sanity
+.sanity/
+dist-studio/
+
+# Vercel
+.vercel

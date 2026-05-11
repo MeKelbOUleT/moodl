@@ -1,43 +1,46 @@
-# Astro Starter Kit: Minimal
+# Moodl — v3
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Site Moodl en Astro v6 + Sanity + Tailwind v4.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Stack
 
-## 🚀 Project Structure
+- **Astro 6** (SSG) + **React 19** (islands)
+- **Tailwind v4** + palette Architectural Warm (vert lime + gold + noir bleuté)
+- **Sanity CMS** standalone (Studio sur port 3333)
+- **Recharts** pour le simulateur
+- **Framer Motion** pour les animations
+- **Deploy** : Vercel (adapter installé)
 
-Inside of your Astro project, you'll see the following folders and files:
+## Commandes
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+| Commande | Action |
+|---|---|
+| `npm run dev` | Astro dev server (port 4321) |
+| `npm run studio` | Sanity Studio standalone (port 3333) |
+| `npm run build` | Build de production |
+| `npm run preview` | Preview du build local |
+| `npm run studio:deploy` | Déploie le studio sur `<project>.sanity.studio` |
+| `/moodl-blog <keyword>` | Génère un article SEO (Claude Code) |
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## CMS Sanity
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- **Project ID** : `bw1frczz`
+- **Dataset** : `production`
+- **Studio local** : `http://localhost:3333`
 
-Any static assets, like images, can be placed in the `public/` directory.
+Pour ajouter du contenu : `npm run studio` → se logger avec ton compte Sanity → créer programme / lieu / article via l'interface visuelle → publier.
 
-## 🧞 Commands
+## Déploiement (Vercel)
 
-All commands are run from the root of the project, from a terminal:
+1. Push sur GitHub
+2. Connecter le repo à Vercel
+3. Ajouter les variables d'env Vercel :
+   - `PUBLIC_SANITY_PROJECT_ID=bw1frczz`
+   - `PUBLIC_SANITY_DATASET=production`
+   - `SITE_URL=https://moodl.fr`
+4. Ajouter `https://moodl.fr` en CORS origin sur Sanity
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Voix Moodl (à respecter dans tous les contenus)
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- **Autorisé** : *cocon · adresse · habitat · intendance · atelier · signé · blottir · veille*
+- **Interdit** : ~~luxe~~ ~~hôtel~~ ~~exception~~ ~~rare~~ ~~module~~ ~~foncier~~
