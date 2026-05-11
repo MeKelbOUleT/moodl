@@ -1,82 +1,24 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import circleMain from '@/assets/circle/circle-main.png';
-import boat1 from '@/assets/loveboat/boat-1.jpg';
-import novaMain from '@/assets/nova/nova-main.png';
-import aframeMain from '@/assets/aframe/aframe-terrace.jpg';
-import nebulaMain from '@/assets/nebula/capsul-1.jpg';
+import {sanityClient, urlFor} from '@/sanity/client';
+import {lieuxAllQuery} from '@/sanity/queries';
 
-// Données placeholder — sera remplacé par Sanity
-const lieux = [
-  {
-    slug: 'nebula',
-    name: 'Nebula',
-    subtitle: 'Capsule futuriste — 37,6 m²',
-    tagline: 'Le cocon signature.',
-    description: "Architecture aluminium aviation, courbes inspirées de la nacelle spatiale, vitrages panoramiques sur trois faces. Nebula transforme le terrain en expérience contemplative — particulièrement performante en zone forestière ou bord d'eau.",
-    image: nebulaMain,
-    surface: '37,6 m²',
-    capacite: '2 à 4 personnes',
-    prix: 65000,
-    nuit: 250,
-    roi: '14 %+',
-  },
-  {
-    slug: 'love-boat',
-    name: 'Love Boat',
-    subtitle: 'Habitat flottant',
-    tagline: 'Sur l\'eau, la nuit autrement.',
-    description: "Houseboat haut de gamme amarré sur lac ou rivière calme. Terrasse panoramique, chambre suspendue au-dessus de l'eau. Demande très forte sur Annecy, Dordogne, Ardèche.",
-    image: boat1,
-    surface: '30 à 70 m²',
-    capacite: '2 à 6 personnes',
-    prix: 85000,
-    nuit: 280,
-    roi: '15 %+',
-  },
-  {
-    slug: 'circle',
-    name: 'Circle',
-    subtitle: 'Capsule panoramique 360°',
-    tagline: 'La vue, sans interruption.',
-    description: "Capsule cylindrique entièrement vitrée, terrasse couronne, jacuzzi extérieur en option. Idéale en altitude ou en clairière. La forme circulaire optimise les performances thermiques et capte la lumière toute la journée.",
-    image: circleMain,
-    surface: '20 à 45 m²',
-    capacite: '2 à 4 personnes',
-    prix: 65000,
-    nuit: 250,
-    roi: '14 %+',
-  },
-  {
-    slug: 'nova',
-    name: 'Nova',
-    subtitle: 'Architecture haut de gamme',
-    tagline: 'Le module évolutif le plus polyvalent.',
-    description: "Lignes contemporaines, façade bois, pergola intégrée. Nova s'adapte à toutes les implantations grâce à un système modulaire 25 / 50 / 80 m². Le compromis le plus équilibré.",
-    image: novaMain,
-    surface: '25 à 80 m²',
-    capacite: '2 à 6 personnes',
-    prix: 45000,
-    nuit: 200,
-    roi: '12 %+',
-  },
-  {
-    slug: 'a-frame',
-    name: 'A-Frame',
-    subtitle: 'Cabane iconique',
-    tagline: "L'archétype scandinave revisité.",
-    description: "Toiture en A descendant jusqu'au sol, façade entièrement vitrée, terrasse en porte-à-faux. Excellence sur photos et performance booking exceptionnelle en zone montagne ou forêt.",
-    image: aframeMain,
-    surface: '20 à 50 m²',
-    capacite: '2 à 4 personnes',
-    prix: 35000,
-    nuit: 180,
-    roi: '11 %+',
-  },
-];
+let lieux: any[] = [];
+try {
+  lieux = await sanityClient.fetch(lieuxAllQuery);
+} catch (e) {
+  console.warn('Sanity non disponible, page /lieux vide.', e);
+}
 
 const formatEuro = (n: number) =>
   new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(n);
+
+const surfaceLabel = (min?: number, max?: number) => {
+  if (min && max && min !== max) return `${min} à ${max} m²`;
+  if (max) return `${max} m²`;
+  if (min) return `${min} m²`;
+  return '—';
+};
 ---
 
 <Layout
@@ -103,66 +45,97 @@ const formatEuro = (n: number) =>
     </div>
   </section>
 
-  {lieux.map((lieu, i) => {
-    const reverse = i % 2 === 1;
-    return (
-      <section id={lieu.slug} class="py-20 lg:py-28 border-b border-border/50 last:border-b-0 scroll-mt-24">
-        <div class="container mx-auto px-6 lg:px-8">
-          <div class={`grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center ${reverse ? 'lg:grid-flow-col-dense' : ''}`}>
-            <div class={`lg:col-span-7 ${reverse ? 'lg:col-start-6' : ''}`}>
-              <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-muted">
-                <img src={lieu.image.src} alt={lieu.name} class="w-full h-full object-cover" loading="lazy" />
-              </div>
-            </div>
-
-            <div class={`lg:col-span-5 ${reverse ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-              <p class="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-4">
-                {lieu.subtitle}
-              </p>
-              <h2 class="font-display text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05] mb-4">
-                {lieu.name}
-              </h2>
-              <p class="font-serif-italic text-xl text-secondary mb-6">{lieu.tagline}</p>
-              <p class="text-muted-foreground leading-relaxed mb-8">{lieu.description}</p>
-
-              <dl class="grid grid-cols-2 gap-x-6 gap-y-5 mb-8 pb-8 border-b border-border/50">
-                <div>
-                  <dt class="text-xs uppercase tracking-widest text-muted-foreground mb-1">Surface</dt>
-                  <dd class="font-medium">{lieu.surface}</dd>
-                </div>
-                <div>
-                  <dt class="text-xs uppercase tracking-widest text-muted-foreground mb-1">Capacité</dt>
-                  <dd class="font-medium">{lieu.capacite}</dd>
-                </div>
-                <div>
-                  <dt class="text-xs uppercase tracking-widest text-muted-foreground mb-1">Loyer cible</dt>
-                  <dd class="font-medium">{lieu.nuit} € / nuit</dd>
-                </div>
-                <div>
-                  <dt class="text-xs uppercase tracking-widest text-muted-foreground mb-1">À partir de</dt>
-                  <dd class="font-medium">{formatEuro(lieu.prix)}</dd>
-                </div>
-              </dl>
-
-              <div class="flex items-end justify-between mb-8">
-                <div>
-                  <p class="text-xs uppercase tracking-widest text-muted-foreground mb-1">Rendement visé</p>
-                  <p class="font-display text-4xl font-bold text-primary">{lieu.roi}</p>
+  {lieux.length === 0 ? (
+    <section class="py-16 lg:py-20">
+      <div class="container mx-auto px-6 lg:px-8 max-w-3xl text-center">
+        <div class="bg-card border border-dashed border-border/60 rounded-2xl p-10 lg:p-14">
+          <p class="font-display text-2xl lg:text-3xl text-muted-foreground mb-4">
+            Catalogue d'habitats bientôt visible.
+          </p>
+          <p class="text-muted-foreground leading-relaxed max-w-xl mx-auto">
+            L'atelier finalise les fiches techniques de chaque habitat — surface, capacité, prestations, rendement indicatif.
+          </p>
+        </div>
+      </div>
+    </section>
+  ) : (
+    lieux.map((lieu: any, i: number) => {
+      const reverse = i % 2 === 1;
+      const heroUrl = lieu.hero_image ? urlFor(lieu.hero_image).width(1200).height(900).url() : null;
+      return (
+        <section id={lieu.slug} class="py-20 lg:py-28 border-b border-border/50 last:border-b-0 scroll-mt-24">
+          <div class="container mx-auto px-6 lg:px-8">
+            <div class={`grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center ${reverse ? 'lg:grid-flow-col-dense' : ''}`}>
+              <div class={`lg:col-span-7 ${reverse ? 'lg:col-start-6' : ''}`}>
+                <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-muted">
+                  {heroUrl ? (
+                    <img src={heroUrl} alt={lieu.name} class="w-full h-full object-cover" loading="lazy" />
+                  ) : (
+                    <div class="w-full h-full bg-gradient-to-br from-primary/15 via-secondary/10 to-background flex items-center justify-center">
+                      <span class="font-display text-6xl text-foreground/30">{lieu.name?.charAt(0)}</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
-              <div class="flex flex-col sm:flex-row gap-3">
-                <a href="/programmes" class="flex-1 inline-flex items-center justify-center h-12 px-6 rounded-md bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-[0_0_30px_rgba(0,255,128,0.4)] hover:scale-[1.01] transition-all duration-300">
-                  Voir les adresses {lieu.name}
-                </a>
-                <a href="/simulateur" class="inline-flex items-center justify-center h-12 px-6 rounded-md border border-border bg-transparent text-foreground font-medium hover:bg-accent hover:text-accent-foreground hover:scale-[1.01] transition-all">
-                  Simuler
-                </a>
+              <div class={`lg:col-span-5 ${reverse ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+                {lieu.subtitle && (
+                  <p class="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-4">
+                    {lieu.subtitle}
+                  </p>
+                )}
+                <h2 class="font-display text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05] mb-4">
+                  {lieu.name}
+                </h2>
+                {lieu.tagline && (
+                  <p class="font-serif-italic text-xl text-secondary mb-6">{lieu.tagline}</p>
+                )}
+
+                <dl class="grid grid-cols-2 gap-x-6 gap-y-5 mt-6 mb-8 pb-8 border-b border-border/50">
+                  <div>
+                    <dt class="text-xs uppercase tracking-widest text-muted-foreground mb-1">Surface</dt>
+                    <dd class="font-medium">{surfaceLabel(lieu.surface_min_m2, lieu.surface_max_m2)}</dd>
+                  </div>
+                  {lieu.capacite && (
+                    <div>
+                      <dt class="text-xs uppercase tracking-widest text-muted-foreground mb-1">Capacité</dt>
+                      <dd class="font-medium">{lieu.capacite}</dd>
+                    </div>
+                  )}
+                  {lieu.loyer_nuit_indicatif && (
+                    <div>
+                      <dt class="text-xs uppercase tracking-widest text-muted-foreground mb-1">Loyer indicatif</dt>
+                      <dd class="font-medium">{lieu.loyer_nuit_indicatif} € / nuit</dd>
+                    </div>
+                  )}
+                  {lieu.prix_a_partir_de && (
+                    <div>
+                      <dt class="text-xs uppercase tracking-widest text-muted-foreground mb-1">À partir de</dt>
+                      <dd class="font-medium">{formatEuro(lieu.prix_a_partir_de)}</dd>
+                    </div>
+                  )}
+                </dl>
+
+                {lieu.roi_indicatif && (
+                  <div class="mb-8">
+                    <p class="text-xs uppercase tracking-widest text-muted-foreground mb-1">Rendement indicatif</p>
+                    <p class="font-display text-4xl font-bold text-primary">{lieu.roi_indicatif}</p>
+                  </div>
+                )}
+
+                <div class="flex flex-col sm:flex-row gap-3">
+                  <a href={`/lieux/${lieu.slug}`} class="flex-1 inline-flex items-center justify-center h-12 px-6 rounded-md bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-[0_0_30px_rgba(0,255,128,0.4)] hover:scale-[1.01] transition-all duration-300">
+                    Découvrir {lieu.name}
+                  </a>
+                  <a href="/simulateur" class="inline-flex items-center justify-center h-12 px-6 rounded-md border border-border bg-transparent text-foreground font-medium hover:bg-accent hover:text-accent-foreground hover:scale-[1.01] transition-all">
+                    Simuler
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    );
-  })}
+        </section>
+      );
+    })
+  )}
 </Layout>

@@ -1,5 +1,17 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import {sanityClient, urlFor} from '@/sanity/client';
+import {articlesAllQuery} from '@/sanity/queries';
+
+let articles: any[] = [];
+try {
+  articles = await sanityClient.fetch(articlesAllQuery);
+} catch (e) {
+  console.warn('Sanity non disponible, journal vide.', e);
+}
+
+const formatDate = (iso?: string) =>
+  iso ? new Date(iso).toLocaleDateString('fr-FR', {day: 'numeric', month: 'long', year: 'numeric'}) : null;
 ---
 
 <Layout
@@ -26,20 +38,60 @@ import Layout from '@/layouts/Layout.astro';
     </div>
   </section>
 
-  <section class="py-16 lg:py-20">
-    <div class="container mx-auto px-6 lg:px-8 max-w-3xl text-center">
-      <div class="bg-card border border-dashed border-border/60 rounded-2xl p-10 lg:p-14">
-        <p class="font-display text-2xl lg:text-3xl text-muted-foreground mb-4">
-          Premiers articles bientôt en ligne.
-        </p>
-        <p class="text-muted-foreground leading-relaxed max-w-xl mx-auto">
-          Nous publions ici nos coulisses, nos retours d'expérience, et nos conseils pour bien investir dans une adresse Moodl.
-          Inscrivez-vous pour recevoir les nouveaux articles dès leur parution.
-        </p>
-        <a href="/contact" class="inline-flex items-center justify-center gap-2 h-11 px-6 mt-8 rounded-md bg-primary text-primary-foreground font-medium text-sm shadow-md hover:shadow-[0_0_30px_rgba(0,255,128,0.35)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-300">
-          M'inscrire à la newsletter
-        </a>
-      </div>
+  <section class="py-12 lg:py-20">
+    <div class="container mx-auto px-6 lg:px-8">
+      {articles.length === 0 ? (
+        <div class="max-w-2xl mx-auto bg-card border border-dashed border-border/60 rounded-2xl p-10 lg:p-14 text-center">
+          <p class="font-display text-2xl lg:text-3xl text-muted-foreground mb-4">
+            Premiers articles bientôt en ligne.
+          </p>
+          <p class="text-muted-foreground leading-relaxed max-w-xl mx-auto mb-8">
+            Nous publions ici nos coulisses, nos retours d'expérience, et nos conseils pour bien investir dans une adresse Moodl.
+            Inscrivez-vous pour recevoir les nouveaux articles dès leur parution.
+          </p>
+          <a href="/contact" class="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-md bg-primary text-primary-foreground font-medium text-sm shadow-md hover:shadow-[0_0_30px_rgba(0,255,128,0.35)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-300">
+            M'inscrire à la newsletter
+          </a>
+        </div>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
+          {articles.map((a: any) => {
+            const heroUrl = a.hero_image ? urlFor(a.hero_image).width(800).height(500).url() : null;
+            const date = formatDate(a.published_at);
+            return (
+              <a href={`/journal/${a.slug}`} class="group bg-card border border-border/60 hover:border-primary/40 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col">
+                <div class="relative aspect-[16/10] bg-muted overflow-hidden">
+                  {heroUrl ? (
+                    <img src={heroUrl} alt={a.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                  ) : (
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary/15 via-secondary/10 to-background"></div>
+                  )}
+                </div>
+                <div class="p-6 lg:p-7 flex-1 flex flex-col">
+                  {a.eyebrow && (
+                    <p class="text-[11px] uppercase tracking-widest text-primary font-medium mb-3">{a.eyebrow}</p>
+                  )}
+                  <h3 class="font-display text-xl lg:text-2xl font-bold tracking-tight leading-snug mb-3">{a.title}</h3>
+                  {a.excerpt && (
+                    <p class="text-sm text-muted-foreground leading-relaxed mb-6 line-clamp-3">{a.excerpt}</p>
+                  )}
+                  <div class="mt-auto flex items-center gap-3 text-xs text-muted-foreground">
+                    {a.author && <span>{a.author}</span>}
+                    {a.author && date && <span>·</span>}
+                    {date && <time datetime={a.published_at}>{date}</time>}
+                    {a.reading_time_min && (
+                      <>
+                        <span>·</span>
+                        <span>{a.reading_time_min} min</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      )}
     </div>
   </section>
 </Layout>
