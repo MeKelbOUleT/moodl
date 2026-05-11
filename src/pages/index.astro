@@ -30,10 +30,10 @@ import FinalCTASection from '@/components/sections/FinalCTASection';
         loading="eager"
         class="w-full h-full object-cover scale-105 hero-zoom"
       />
-      <!-- Overlay assombrissant pour la lisibilité du texte -->
-      <div class="absolute inset-0 bg-gradient-to-b from-background/55 via-background/35 to-background"></div>
-      <!-- Voile lime subtil pour cohérence palette -->
-      <div class="absolute inset-0" style="background: radial-gradient(ellipse 80% 60% at 50% 80%, hsl(150 100% 50% / 0.10), transparent 65%);"></div>
+      <!-- Overlay assombrissant gradué : laisse respirer l'aurora en haut, assombrit le bas pour lisibilité -->
+      <div class="absolute inset-0 bg-gradient-to-b from-background/20 via-background/40 to-background/95"></div>
+      <!-- Vignette centrale subtile pour focus sur le texte -->
+      <div class="absolute inset-0" style="background: radial-gradient(ellipse 70% 50% at 50% 55%, hsl(210 38% 6% / 0.45), transparent 70%);"></div>
     </div>
     <!-- Grille technique : signature architecte -->
     <div
