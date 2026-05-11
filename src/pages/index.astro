@@ -1,7 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import {Image} from 'astro:assets';
-import heroAurora from '@/assets/renders/hero-nebula-aurora.jpeg';
+import heroGarrigue from '@/assets/renders/hamlet-garrigue.jpg';
 import StatsSection from '@/components/sections/StatsSection';
 import PourQuiSection from '@/components/sections/PourQuiSection';
 import WhyMoodlSection from '@/components/sections/WhyMoodlSection';
@@ -20,21 +20,23 @@ import FinalCTASection from '@/components/sections/FinalCTASection';
   canonical="https://moodl.fr/"
 >
   <section class="relative min-h-screen flex items-center pt-32 pb-24 overflow-hidden">
-    <!-- Image hero : Nebula sous aurores boréales -->
+    <!-- Image hero : Hameau Moodl en garrigue méditerranéenne -->
     <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
       <Image
-        src={heroAurora}
+        src={heroGarrigue}
         alt=""
         width={2400}
         height={1600}
         quality={88}
         format="webp"
         loading="eager"
-        class="w-full h-full object-cover object-[center_30%] scale-105 hero-zoom"
-        style="filter: brightness(1.15) saturate(1.1);"
+        class="w-full h-full object-cover object-[center_45%] scale-105 hero-zoom"
+        style="filter: saturate(1.05) contrast(1.05);"
       />
-      <!-- Overlay graduel : très léger en haut (laisser briller l'aurora), opaque en bas pour la lisibilité texte -->
-      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/30 to-background"></div>
+      <!-- Overlay graduel renforcé : ciel clair demande un overlay plus présent pour lisibilité H1 blanc -->
+      <div class="absolute inset-0 bg-gradient-to-b from-background/55 via-background/45 to-background"></div>
+      <!-- Voile lime central pour cohérence palette (subtil) -->
+      <div class="absolute inset-0" style="background: radial-gradient(ellipse 70% 50% at 50% 50%, hsl(150 100% 50% / 0.06), transparent 65%);"></div>
     </div>
     <!-- Grille technique : signature architecte -->
     <div
