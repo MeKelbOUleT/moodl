@@ -65,7 +65,7 @@ export default function WhyMoodlSection() {
               «&nbsp;Trouver l'adresse. Convaincre la mairie. Dessiner le hameau. Tenir la maison à votre place — si vous voulez. Personne ne fait les quatre. Sauf nous.&nbsp;»
             </p>
             <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground mt-5">
-              Note d'atelier — 2026
+              — Moodl
             </p>
           </div>
         </div>
