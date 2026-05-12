@@ -68,7 +68,7 @@ export default function LeHameauSection() {
               Projection — Hameau Moodl
             </p>
             <p className="font-serif-italic text-xl lg:text-2xl text-white leading-snug max-w-2xl">
-              «&nbsp;12 habitats. Un opérateur. Une saison qui tourne, toute l'année.&nbsp;»
+              «&nbsp;Un hameau. Un opérateur. Une saison qui tourne, toute l'année.&nbsp;»
             </p>
           </div>
         </div>

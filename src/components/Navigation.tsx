@@ -47,7 +47,7 @@ export default function Navigation({pathname = '/'}: {pathname?: string}) {
           href="/"
           aria-label="Moodl — Accueil"
           onClick={() => setOpen(false)}
-          className="relative z-10 flex items-center"
+          className="relative z-10 flex items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           <img src={logoMoodl.src ?? logoMoodl} alt="Moodl" className="h-9 w-auto" width={160} height={36} />
         </a>
@@ -60,7 +60,8 @@ export default function Navigation({pathname = '/'}: {pathname?: string}) {
                 <a
                   href={link.to}
                   className={cn(
-                    'text-sm font-medium transition-colors',
+                    'text-sm font-medium transition-colors rounded-sm px-1 py-0.5',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background',
                     active ? 'text-primary' : 'text-foreground/75 hover:text-primary',
                   )}
                 >
@@ -81,7 +82,7 @@ export default function Navigation({pathname = '/'}: {pathname?: string}) {
             aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="lg:hidden relative z-10 w-11 h-11 flex items-center justify-center rounded-lg hover:bg-muted transition-colors"
+            className="lg:hidden relative z-10 w-11 h-11 flex items-center justify-center rounded-lg hover:bg-muted active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             <AnimatePresence mode="wait" initial={false}>
               {open ? (
@@ -142,7 +143,7 @@ export default function Navigation({pathname = '/'}: {pathname?: string}) {
                   <a
                     href={link.to}
                     onClick={() => setOpen(false)}
-                    className="block py-4 font-display text-3xl font-bold tracking-tight border-b border-border/40 hover:text-primary transition-colors"
+                    className="block py-4 font-display text-3xl font-bold tracking-tight border-b border-border/40 hover:text-primary transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   >
                     {link.label}
                   </a>

@@ -261,7 +261,7 @@ const Simulateur = () => {
             <div className="max-w-3xl mx-auto space-y-8">
               <h2 className="font-display text-4xl lg:text-6xl font-bold tracking-tight leading-[1.1]">Votre projet peut commencer <span className="font-serif-italic text-secondary">aujourd'hui</span>.</h2>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <NavLink to="/modules"><Button variant="moodl" size="lg" className="text-lg px-8">Choisir mon module</Button></NavLink>
+                <NavLink to="/lieux"><Button variant="moodl" size="lg" className="text-lg px-8">Choisir mon lieu</Button></NavLink>
                 <NavLink to="/contact"><Button variant="outline" size="lg" className="text-lg px-8 bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20">Parler à un expert</Button></NavLink>
               </div>
             </div>

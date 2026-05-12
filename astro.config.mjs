@@ -22,6 +22,64 @@ export default defineConfig({
     sitemap({
       changefreq: 'weekly',
       priority: 0.7,
+      serialize(item) {
+        const url = item.url.replace(/\/$/, '');
+        const path = url.replace(SITE_URL.replace(/\/$/, ''), '') || '/';
+
+        // Pages légales : priorité basse mais indexées
+        if (/^\/(cgv|cookies|confidentialite|mentions-legales)$/.test(path)) {
+          item.priority = 0.1;
+          item.changefreq = 'yearly';
+          return item;
+        }
+
+        // Home
+        if (path === '/' || path === '') {
+          item.priority = 1.0;
+          item.changefreq = 'weekly';
+          return item;
+        }
+
+        // Programmes (offre commerciale principale)
+        if (path.startsWith('/programmes/')) {
+          item.priority = 0.9;
+          item.changefreq = 'weekly';
+          return item;
+        }
+        if (path === '/programmes') {
+          item.priority = 0.9;
+          return item;
+        }
+
+        // Lieux (modèles d'habitat)
+        if (path.startsWith('/lieux/')) {
+          item.priority = 0.8;
+          return item;
+        }
+        if (path === '/lieux') {
+          item.priority = 0.8;
+          return item;
+        }
+
+        // Journal (content marketing)
+        if (path.startsWith('/journal/')) {
+          item.priority = 0.7;
+          item.changefreq = 'monthly';
+          return item;
+        }
+        if (path === '/journal') {
+          item.priority = 0.7;
+          return item;
+        }
+
+        // Pages de conversion / outil
+        if (['/simulateur', '/contact', '/investir'].includes(path)) {
+          item.priority = 0.8;
+          return item;
+        }
+
+        return item;
+      },
     }),
   ],
   vite: {

@@ -42,14 +42,14 @@ const SimulatorSlider = ({
         <div className="flex-1">
           <Label className="text-base font-semibold">{label}</Label>
           {description && (
-            <p className="text-xs text-foreground-secondary mt-1">{description}</p>
+            <p className="text-xs text-muted-foreground mt-1">{description}</p>
           )}
         </div>
         <Input
           type="text"
           value={formatValue(value)}
           onChange={handleInputChange}
-          className="w-32 text-right font-semibold bg-background-secondary border-border/50 focus:border-primary transition-all"
+          className="w-32 text-right font-semibold bg-muted/50 border-border/50 focus:border-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all"
         />
       </div>
       <Slider
@@ -60,7 +60,7 @@ const SimulatorSlider = ({
         step={step}
         className="cursor-pointer"
       />
-      <div className="flex justify-between text-xs text-foreground-secondary">
+      <div className="flex justify-between text-xs text-muted-foreground">
         <span>{formatValue(min)}</span>
         <span>{formatValue(max)}</span>
       </div>

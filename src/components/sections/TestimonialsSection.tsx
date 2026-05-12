@@ -6,7 +6,7 @@ const testimonials = [
     name: 'Camille R.',
     location: 'Paris 16',
     extract:
-      "Le module a été posé en une matinée. Trois mois plus tard on est à 78 % d'occupation, c'est au-delà de ce qu'on espérait.",
+      "L'habitat a été posé en une matinée. Trois mois plus tard on est à 78 % d'occupation, c'est au-delà de ce qu'on espérait.",
     monthly: '2 850 €',
     program: 'Dordogne',
   },
@@ -14,7 +14,7 @@ const testimonials = [
     name: 'Jean-Pierre M.',
     location: 'Lyon',
     extract:
-      "Je cherchais un placement immobilier qui ait du sens et qui rapporte. Le module dialogue avec le terrain — c'est ce qui m'a convaincu.",
+      "Je cherchais un placement immobilier qui ait du sens et qui rapporte. L'habitat dialogue avec le terrain — c'est ce qui m'a convaincu.",
     monthly: '3 120 €',
     program: 'Ardèche',
   },
@@ -22,7 +22,7 @@ const testimonials = [
     name: 'Sophie & Marc L.',
     location: 'Annecy',
     extract:
-      "On utilise le module nous-mêmes 3 semaines par an, le reste est géré par Moodl. La transparence des reportings est rare dans ce milieu.",
+      "On y va nous-mêmes 3 semaines par an, le reste tourne avec l'intendance Moodl. La transparence des reportings est rare dans ce milieu.",
     monthly: '4 480 €',
     program: 'Lac d\'Annecy',
   },
@@ -30,7 +30,7 @@ const testimonials = [
     name: 'Antoine V.',
     location: 'Bordeaux',
     extract:
-      "L'angle architecte fait la différence. Le module n'est pas posé n'importe où — il y a un vrai dialogue avec le terrain.",
+      "L'angle architecte fait la différence. L'habitat n'est pas posé n'importe où — il y a un vrai dialogue avec le terrain.",
     monthly: '2 680 €',
     program: 'Dordogne',
   },

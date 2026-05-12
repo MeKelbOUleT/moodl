@@ -40,13 +40,13 @@ const year = new Date().getFullYear();
   <div class="container mx-auto px-6 lg:px-8 py-16 lg:py-20">
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
       <div class="space-y-4">
-        <a href="/" class="inline-flex" aria-label="Moodl — Accueil">
+        <a href="/" class="inline-flex rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card" aria-label="Moodl — Accueil">
           <img src={logoMoodl.src} alt="Moodl" class="h-10 w-auto" />
         </a>
         <p class="text-muted-foreground text-sm leading-relaxed max-w-xs">
           Atelier qui trouve des lieux et y dessine des séjours pour des voyageurs singuliers et des investisseurs visionnaires.
         </p>
-        <a href="mailto:shelter@moodl.fr" class="inline-block text-sm text-foreground/85 hover:text-primary transition-colors">
+        <a href="mailto:shelter@moodl.fr" class="inline-block text-sm text-foreground/85 hover:text-primary transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card">
           shelter@moodl.fr
         </a>
       </div>
@@ -57,7 +57,7 @@ const year = new Date().getFullYear();
           <ul class="space-y-3">
             {col.links.map((link) => (
               <li>
-                <a href={link.to} class="text-foreground/85 hover:text-primary transition-colors">{link.label}</a>
+                <a href={link.to} class="text-foreground/85 hover:text-primary transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card">{link.label}</a>
               </li>
             ))}
           </ul>
@@ -68,10 +68,10 @@ const year = new Date().getFullYear();
     <div class="border-t border-border/50 mt-16 pt-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 text-xs text-muted-foreground">
       <p>© {year} Moodl — Tous droits réservés</p>
       <div class="flex flex-wrap gap-x-6 gap-y-2">
-        <a href="/mentions-legales" class="hover:text-primary transition-colors">Mentions légales</a>
-        <a href="/cgv" class="hover:text-primary transition-colors">CGV</a>
-        <a href="/confidentialite" class="hover:text-primary transition-colors">Confidentialité</a>
-        <a href="/cookies" class="hover:text-primary transition-colors">Cookies</a>
+        <a href="/mentions-legales" class="hover:text-primary transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card">Mentions légales</a>
+        <a href="/cgv" class="hover:text-primary transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card">CGV</a>
+        <a href="/confidentialite" class="hover:text-primary transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card">Confidentialité</a>
+        <a href="/cookies" class="hover:text-primary transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card">Cookies</a>
       </div>
     </div>
   </div>
