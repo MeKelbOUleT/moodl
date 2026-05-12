@@ -1,0 +1,17 @@
+---
+/**
+ * Override pour les liens dans le body PortableText.
+ * Ajoute rel + target sur les liens externes, classes Tailwind, focus ring.
+ */
+const { node } = Astro.props;
+const href: string = node?.href ?? '#';
+const isExternal = /^https?:\/\//.test(href) && !href.startsWith('https://moodl.fr');
+---
+
+<a
+  href={href}
+  class="text-primary underline decoration-primary/40 underline-offset-2 hover:decoration-primary transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+  {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+>
+  <slot />
+</a>

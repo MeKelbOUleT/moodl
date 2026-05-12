@@ -1,0 +1,73 @@
+---
+/**
+ * Fil d'Ariane : HTML visible + JSON-LD BreadcrumbList pour Google.
+ * Le dernier item n'est pas un lien (page courante).
+ *
+ * Usage :
+ *   <Breadcrumbs items={[
+ *     { label: 'Programmes', href: '/programmes' },
+ *     { label: programme.title },
+ *   ]} />
+ */
+
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+export interface Props {
+  items: BreadcrumbItem[];
+  className?: string;
+}
+
+const { items, className = '' } = Astro.props;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://moodl.fr';
+
+// Toujours préfixer avec "Accueil"
+const fullChain: BreadcrumbItem[] = [
+  { label: 'Accueil', href: '/' },
+  ...items,
+];
+
+// JSON-LD : tous les items, le dernier sans URL (recommendation Google)
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: fullChain.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.label,
+    ...(item.href ? { item: `${siteUrl}${item.href}` } : {}),
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+<nav aria-label="Fil d'Ariane" class={`text-sm ${className}`}>
+  <ol class="flex flex-wrap items-center gap-2 text-muted-foreground">
+    {fullChain.map((item, i) => {
+      const isLast = i === fullChain.length - 1;
+      return (
+        <li class="flex items-center gap-2">
+          {item.href && !isLast ? (
+            <a
+              href={item.href}
+              class="hover:text-primary transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              {item.label}
+            </a>
+          ) : (
+            <span aria-current={isLast ? 'page' : undefined} class={isLast ? 'text-foreground/80 font-medium' : ''}>
+              {item.label}
+            </span>
+          )}
+          {!isLast && (
+            <span aria-hidden="true" class="text-muted-foreground/50">/</span>
+          )}
+        </li>
+      );
+    })}
+  </ol>
+</nav>

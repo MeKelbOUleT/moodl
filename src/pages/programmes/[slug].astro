@@ -1,5 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import {sanityClient, urlFor} from '@/sanity/client';
 import {programmesAllQuery, programmeBySlugQuery} from '@/sanity/queries';
 
@@ -64,21 +65,25 @@ const listingSchema = {
 <Layout
   title={programme.meta_title ?? `${programme.title} — Moodl`}
   description={programme.meta_description ?? programme.tagline ?? `${programme.title}, programme Moodl en ${programme.region}.`}
+  ogImage={heroUrl ?? undefined}
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(listingSchema)} />
   <!-- HERO -->
   <section class="relative pt-32 pb-12 overflow-hidden">
     {heroUrl && (
       <div class="absolute inset-0">
-        <img src={heroUrl} alt={programme.title} class="w-full h-full object-cover opacity-40" />
+        <img src={heroUrl} alt={`Vue du programme ${programme.title}${programme.region ? ` en ${programme.region}` : ''}`} class="w-full h-full object-cover opacity-40" />
         <div class="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background"></div>
       </div>
     )}
     <div class="container mx-auto px-6 lg:px-8 relative pt-20">
-      <a href="/programmes" class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
-        Toutes les adresses
-      </a>
+      <Breadcrumbs
+        items={[
+          { label: 'Programmes', href: '/programmes' },
+          { label: programme.title },
+        ]}
+        className="mb-8"
+      />
       {programme.eyebrow && (
         <p class="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-4">{programme.eyebrow}</p>
       )}

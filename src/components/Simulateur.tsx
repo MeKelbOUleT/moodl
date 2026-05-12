@@ -5,6 +5,7 @@ import ResultCard from "@/components/ResultCard";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { NavLink } from "@/components/NavLink";
+import { cn } from "@/lib/utils";
 import { 
   TrendingUp, 
   DollarSign, 
@@ -154,12 +155,35 @@ const Simulateur = () => {
         </div>
       </section>
 
+      {/* Banner sticky mobile : KPIs critiques visibles pendant qu'on ajuste les sliders */}
+      <div className="lg:hidden sticky top-20 z-30 bg-background/95 backdrop-blur-md border-y border-border/60 shadow-sm">
+        <div className="container mx-auto px-4 py-3">
+          <div className="grid grid-cols-2 gap-3 text-center">
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-0.5">Cashflow / mois</p>
+              <p className={cn(
+                "font-display text-xl font-bold leading-none",
+                calculations.monthlyCashflow >= 0 ? "text-primary" : "text-destructive"
+              )}>
+                {formatCurrency(calculations.monthlyCashflow)}
+              </p>
+            </div>
+            <div className="border-l border-border/40">
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-0.5">Rendement net</p>
+              <p className="font-display text-xl font-bold text-primary leading-none">
+                {formatPercent(calculations.netYield)}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="container mx-auto px-6 lg:px-8 pb-20">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <ScrollReveal animation="fade-right">
+            <ScrollReveal animation="fade-right" className="order-2 lg:order-1">
               <div className="lg:col-span-1">
-                <Card className="p-6 lg:p-8 bg-card border-border/60 sticky top-24">
+                <Card className="p-6 lg:p-8 bg-card border-border/60 lg:sticky lg:top-24">
                   <h2 className="font-display text-2xl font-bold tracking-tight mb-6">Vos paramètres</h2>
                   <div className="space-y-6">
                     <SimulatorSlider label="Prix du Moodl" value={moodlPrice} onChange={setMoodlPrice} min={30000} max={150000} step={5000} suffix=" €" />
@@ -178,7 +202,7 @@ const Simulateur = () => {
               </div>
             </ScrollReveal>
 
-            <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-8 order-1 lg:order-2">
               <ScrollReveal animation="fade-up">
                 <div>
                   <h2 className="font-display text-3xl lg:text-4xl font-bold tracking-tight mb-6">Vos résultats</h2>
@@ -207,8 +231,8 @@ const Simulateur = () => {
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
-                      <XAxis dataKey="month" stroke="hsl(var(--foreground-secondary))" style={{ fontSize: '12px' }} />
-                      <YAxis stroke="hsl(var(--foreground-secondary))" style={{ fontSize: '12px' }} tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`} />
+                      <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" style={{ fontSize: '12px' }} />
+                      <YAxis stroke="hsl(var(--muted-foreground))" style={{ fontSize: '12px' }} tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`} />
                       <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }} formatter={(value: number) => formatCurrency(value)} />
                       <Area type="monotone" dataKey="cashflow" stroke="hsl(var(--primary))" fillOpacity={1} fill="url(#colorCashflow)" name="Cashflow cumulé" strokeWidth={2} />
                     </AreaChart>
@@ -222,13 +246,13 @@ const Simulateur = () => {
                   <ResponsiveContainer width="100%" height={350}>
                     <LineChart data={yearlyData}>
                       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
-                      <XAxis dataKey="annee" stroke="hsl(var(--foreground-secondary))" style={{ fontSize: '12px' }} />
-                      <YAxis stroke="hsl(var(--foreground-secondary))" style={{ fontSize: '12px' }} tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`} />
+                      <XAxis dataKey="annee" stroke="hsl(var(--muted-foreground))" style={{ fontSize: '12px' }} />
+                      <YAxis stroke="hsl(var(--muted-foreground))" style={{ fontSize: '12px' }} tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`} />
                       <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }} formatter={(value: number) => formatCurrency(value)} />
                       <Legend wrapperStyle={{ paddingTop: '20px' }} iconType="line" />
                       <Line type="monotone" dataKey="cashflowCumule" stroke="hsl(var(--primary))" strokeWidth={3} name="Cashflow cumulé" dot={{ r: 4 }} />
-                      <Line type="monotone" dataKey="revenusCumules" stroke="#10b981" strokeWidth={2} name="Revenus cumulés" strokeDasharray="5 5" />
-                      <Line type="monotone" dataKey="capitalRembourse" stroke="#60a5fa" strokeWidth={2} name="Capital remboursé" strokeDasharray="3 3" />
+                      <Line type="monotone" dataKey="revenusCumules" stroke="hsl(var(--secondary))" strokeWidth={2} name="Revenus cumulés" strokeDasharray="5 5" />
+                      <Line type="monotone" dataKey="capitalRembourse" stroke="hsl(var(--muted-foreground))" strokeWidth={2} name="Capital remboursé" strokeDasharray="3 3" />
                     </LineChart>
                   </ResponsiveContainer>
                 </Card>
@@ -238,12 +262,12 @@ const Simulateur = () => {
                 <Card className="p-8 bg-gradient-to-br from-primary/10 via-primary/5 to-background border-primary/30">
                   <h3 className="font-display text-2xl lg:text-3xl font-bold tracking-tight mb-6">Votre projet en un coup d'œil</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div><p className="text-sm text-foreground-secondary mb-1">Budget total</p><p className="text-2xl font-bold">{formatCurrency(calculations.totalCost)}</p></div>
-                    <div><p className="text-sm text-foreground-secondary mb-1">Revenus annuels</p><p className="text-2xl font-bold text-green-500">{formatCurrency(calculations.annualRevenue)}</p></div>
-                    <div><p className="text-sm text-foreground-secondary mb-1">Rentabilité nette</p><p className="text-2xl font-bold text-primary">{formatPercent(calculations.netYield)}</p></div>
-                    <div><p className="text-sm text-foreground-secondary mb-1">Cashflow mensuel</p><p className="text-2xl font-bold text-primary">{formatCurrency(calculations.monthlyCashflow)}</p></div>
+                    <div><p className="text-sm text-muted-foreground mb-1">Budget total</p><p className="text-2xl font-bold">{formatCurrency(calculations.totalCost)}</p></div>
+                    <div><p className="text-sm text-muted-foreground mb-1">Revenus annuels</p><p className="text-2xl font-bold text-green-500">{formatCurrency(calculations.annualRevenue)}</p></div>
+                    <div><p className="text-sm text-muted-foreground mb-1">Rentabilité nette</p><p className="text-2xl font-bold text-primary">{formatPercent(calculations.netYield)}</p></div>
+                    <div><p className="text-sm text-muted-foreground mb-1">Cashflow mensuel</p><p className="text-2xl font-bold text-primary">{formatCurrency(calculations.monthlyCashflow)}</p></div>
                   </div>
-                  <p className="text-sm text-foreground-secondary italic mb-6">
+                  <p className="text-sm text-muted-foreground italic mb-6">
                     Estimation basée sur les performances d'hébergements atypiques premium.
                   </p>
                   <NavLink to="/contact"><Button variant="moodl" size="lg" className="w-full">Planifier un appel expert</Button></NavLink>

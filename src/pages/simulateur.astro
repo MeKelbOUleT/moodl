@@ -4,8 +4,27 @@ import Simulateur from '@/components/Simulateur';
 ---
 
 <Layout
-  title="Simulateur de rentabilité — Moodl"
-  description="Calculez votre rentabilité Moodl en 60 secondes. Onze paramètres ajustables, projections sur 12 mois et 10 ans."
+  title="Simulateur de rentabilité location courte durée — Moodl"
+  description="Calculez en 60 secondes la rentabilité d'un hameau Moodl : cashflow mensuel, rendement net, projection 10 ans. 11 paramètres ajustables — apport, taux, occupation, charges."
 >
+  <!-- Contenu statique SEO : indexable même sans JavaScript -->
+  <section class="pt-40 pb-12 lg:pb-16">
+    <div class="container mx-auto px-6 lg:px-8 max-w-4xl">
+      <p class="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-6">
+        Outil — Projection chiffrée
+      </p>
+      <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight mb-6">
+        Simulez la rentabilité de votre{' '}
+        <span class="font-serif-italic text-secondary">hameau Moodl</span>.
+      </h1>
+      <p class="text-lg text-muted-foreground leading-relaxed mb-4">
+        Ajustez onze paramètres — prix d'acquisition, apport, taux d'emprunt, taux d'occupation, prix moyen par nuit, charges de copropriété, fiscalité LMNP — et obtenez en temps réel le cashflow mensuel, le rendement net annuel et la projection patrimoniale sur 10 ans.
+      </p>
+      <p class="text-sm text-muted-foreground/80 italic">
+        Outil indicatif. Les projections supposent un hameau ouvert à la location courte durée saisonnière et ne constituent pas un conseil en investissement.
+      </p>
+    </div>
+  </section>
+
   <Simulateur client:load />
 </Layout>

@@ -80,7 +80,7 @@ export default function ModulesBentoSection() {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 md:auto-rows-[260px] gap-4 lg:gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-4 md:auto-rows-[260px] lg:auto-rows-[300px] xl:auto-rows-[340px] gap-4 lg:gap-5">
           {lieux.map((lieu, i) => (
             <ScrollReveal
               key={lieu.id}

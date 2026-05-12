@@ -1,0 +1,22 @@
+---
+import { urlFor } from '@/sanity/client';
+
+/**
+ * Override pour les images Sanity dans le body PortableText.
+ */
+const { node } = Astro.props;
+const src = node ? urlFor(node).width(1200).quality(85).auto('format').url() : null;
+const alt = node?.alt ?? '';
+const caption = node?.caption;
+---
+
+{src && (
+  <figure class="my-10">
+    <img src={src} alt={alt} class="rounded-xl w-full" loading="lazy" />
+    {caption && (
+      <figcaption class="text-sm text-muted-foreground italic mt-2 text-center">
+        {caption}
+      </figcaption>
+    )}
+  </figure>
+)}

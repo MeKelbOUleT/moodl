@@ -1,0 +1,39 @@
+---
+/**
+ * Override par défaut pour les blocs de texte PortableText.
+ * Gère h1/h2/h3/h4/normal/blockquote avec styles Moodl.
+ */
+const { node } = Astro.props;
+const style = node?.style ?? 'normal';
+---
+
+{style === 'h1' && (
+  <h1 class="font-display text-4xl lg:text-5xl font-bold mt-12 mb-5 tracking-tight">
+    <slot />
+  </h1>
+)}
+{style === 'h2' && (
+  <h2 class="font-display text-3xl font-bold mt-12 mb-4 tracking-tight">
+    <slot />
+  </h2>
+)}
+{style === 'h3' && (
+  <h3 class="font-display text-2xl font-bold mt-10 mb-3 tracking-tight">
+    <slot />
+  </h3>
+)}
+{style === 'h4' && (
+  <h4 class="font-display text-xl font-bold mt-8 mb-3 tracking-tight">
+    <slot />
+  </h4>
+)}
+{style === 'blockquote' && (
+  <blockquote class="font-serif-italic border-l-4 border-secondary pl-6 italic text-foreground/85 my-8 text-xl leading-relaxed">
+    <slot />
+  </blockquote>
+)}
+{style === 'normal' && (
+  <p class="text-foreground/85 leading-relaxed mb-6">
+    <slot />
+  </p>
+)}

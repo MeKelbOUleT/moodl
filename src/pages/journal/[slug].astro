@@ -1,5 +1,11 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import {PortableText} from 'astro-portabletext';
+import PTBlock from '@/components/portable/PTBlock.astro';
+import PTLink from '@/components/portable/PTLink.astro';
+import PTImage from '@/components/portable/PTImage.astro';
+import PTCallout from '@/components/portable/PTCallout.astro';
 import {sanityClient, urlFor} from '@/sanity/client';
 import {articlesAllQuery, articleBySlugQuery} from '@/sanity/queries';
 
@@ -45,15 +51,23 @@ const articleSchema = {
 <Layout
   title={article.meta_title ?? `${article.title} — Journal Moodl`}
   description={article.meta_description ?? article.excerpt ?? article.title}
+  ogImage={heroUrl ?? undefined}
+  ogType="article"
+  articlePublishedTime={article.published_at}
+  articleModifiedTime={article._updatedAt ?? article.published_at}
+  articleAuthor={article.author ?? 'Atelier Moodl'}
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleSchema)} />
   <article>
     <header class="pt-32 pb-12 lg:pb-16">
       <div class="container mx-auto px-6 lg:px-8 max-w-3xl pt-20">
-        <a href="/journal" class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
-          Retour au Journal
-        </a>
+        <Breadcrumbs
+          items={[
+            { label: 'Journal', href: '/journal' },
+            { label: article.title },
+          ]}
+          className="mb-8"
+        />
 
         {article.eyebrow && (
           <p class="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-4">{article.eyebrow}</p>
@@ -88,31 +102,17 @@ const articleSchema = {
     )}
 
     <div class="container mx-auto px-6 lg:px-8 max-w-3xl pb-24">
-      <div class="prose prose-invert prose-lg max-w-none">
-        {article.body && article.body.map((block: any) => {
-          if (block._type === 'block') {
-            const text = block.children?.map((c: any) => c.text).join('');
-            if (block.style === 'h2') return <h2 class="font-display text-3xl font-bold mt-12 mb-4 tracking-tight">{text}</h2>;
-            if (block.style === 'h3') return <h3 class="font-display text-2xl font-bold mt-10 mb-3 tracking-tight">{text}</h3>;
-            if (block.style === 'blockquote') return <blockquote class="border-l-4 border-secondary pl-6 italic text-foreground/85 my-8">{text}</blockquote>;
-            return <p class="text-foreground/85 leading-relaxed mb-6">{text}</p>;
-          }
-          if (block._type === 'image') {
-            return (
-              <figure class="my-10">
-                <img src={urlFor(block).width(1200).url()} alt={block.alt ?? ''} class="rounded-xl w-full" />
-                {block.caption && <figcaption class="text-sm text-muted-foreground italic mt-2 text-center">{block.caption}</figcaption>}
-              </figure>
-            );
-          }
-          if (block._type === 'callout') {
-            return (
-              <aside class="my-8 p-5 rounded-xl bg-card border border-primary/30">
-                <p class="text-foreground/90">{block.text}</p>
-              </aside>
-            );
-          }
-        })}
+      <div class="max-w-none">
+        {article.body && (
+          <PortableText
+            value={article.body}
+            components={{
+              block: PTBlock,
+              mark: { link: PTLink },
+              type: { image: PTImage, callout: PTCallout },
+            }}
+          />
+        )}
       </div>
 
       {article.related_programmes && article.related_programmes.length > 0 && (

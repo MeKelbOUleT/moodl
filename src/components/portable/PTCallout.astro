@@ -1,0 +1,10 @@
+---
+/**
+ * Override pour le type custom 'callout' dans Sanity.
+ */
+const { node } = Astro.props;
+---
+
+<aside class="my-8 p-5 lg:p-6 rounded-xl bg-card border border-primary/30">
+  <p class="text-foreground/90 leading-relaxed">{node?.text}</p>
+</aside>
