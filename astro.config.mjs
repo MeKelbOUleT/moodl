@@ -22,16 +22,10 @@ export default defineConfig({
     sitemap({
       changefreq: 'weekly',
       priority: 0.7,
+      filter: (page) => !/\/(cgv|cookies|confidentialite|mentions-legales)\/?$/.test(page),
       serialize(item) {
         const url = item.url.replace(/\/$/, '');
         const path = url.replace(SITE_URL.replace(/\/$/, ''), '') || '/';
-
-        // Pages légales : priorité basse mais indexées
-        if (/^\/(cgv|cookies|confidentialite|mentions-legales)$/.test(path)) {
-          item.priority = 0.1;
-          item.changefreq = 'yearly';
-          return item;
-        }
 
         // Home
         if (path === '/' || path === '') {
