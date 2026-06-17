@@ -31,3 +31,7 @@ dist-studio/
 
 # Vercel
 .vercel
+
+# Audit reports (lighthouse, axe)
+reports/*
+!reports/.gitkeep

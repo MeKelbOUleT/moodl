@@ -1,0 +1,178 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {Download, Mail} from 'lucide-react';
+
+const downloadables = [
+  {
+    label: 'Logo Moodl SVG',
+    detail: 'Vectoriel, fond transparent. Pour print et web haute résolution.',
+    href: '/logo-moodl.svg',
+    size: 'SVG',
+  },
+  {
+    label: 'Logo Moodl PNG 2x',
+    detail: 'Bitmap haute résolution, fond transparent.',
+    href: '/logo-moodl.png',
+    size: 'PNG',
+  },
+  {
+    label: 'Charte couleurs',
+    detail: 'Palette officielle Moodl, lime primaire HSL 150 100 % 50 %, or secondaire HSL 43 70 % 62 %, fond charbon HSL 210 38 % 6 %.',
+    href: '/presse/charte-couleurs.pdf',
+    size: 'PDF',
+  },
+  {
+    label: 'Dossier de presse 2026',
+    detail: 'Présentation atelier, fondateur, programmes ouverts, photos haute résolution.',
+    href: '/presse/dossier-presse-moodl-2026.pdf',
+    size: 'PDF',
+  },
+];
+
+const factSheet = [
+  {label: 'Nom complet', value: 'Moodl, atelier de hameaux touristiques en pleine nature'},
+  {label: 'Fondateur', value: 'Olivier Bertrand'},
+  {label: 'Année de fondation', value: '2024'},
+  {label: 'Site web', value: 'moodl.fr'},
+  {label: 'E-mail presse', value: 'presse@moodl.fr'},
+  {label: 'E-mail général', value: 'shelter@moodl.fr'},
+  {label: 'Régions d\'implantation 2026', value: 'Dordogne, Ardèche, Lac d\'Annecy'},
+  {label: 'Modèles d\'habitat', value: 'Circle, Love Boat, Nova, A-Frame, Nebula'},
+  {label: 'Statut commercial', value: 'Pleine propriété, statut LMNP applicable'},
+  {label: 'Rendement annuel net visé', value: '10 à 15 pour cent (projection, non garantie)'},
+];
+
+const pitch = `Moodl est un atelier français qui conçoit et tient des hameaux touristiques en pleine nature. L'atelier réunit sous un même toit l'architecte HMO, l'urbaniste qui décrypte les PLU et la conciergerie qui accueille les voyageurs. Trois adresses sont ouvertes pour l'édition 2026, en Dordogne, en Ardèche et au bord du lac d'Annecy.`;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://moodl.fr';
+const pressContactSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPoint',
+  contactType: 'press',
+  email: 'presse@moodl.fr',
+  url: `${siteUrl}/presse`,
+  areaServed: 'FR',
+  availableLanguage: ['French'],
+};
+---
+
+<Layout
+  title="Presse et médias Moodl, kit, logos et contacts"
+  description="Espace presse Moodl : dossier de presse 2026, logos haute résolution, charte couleurs, photos atelier, contact dédié presse@moodl.fr."
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(pressContactSchema)} />
+
+  <section class="pt-40 pb-12 lg:pb-16">
+    <div class="container mx-auto px-6 lg:px-8 max-w-4xl">
+      <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-6">
+        Presse et médias
+      </p>
+      <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
+        Tout ce qu'il faut pour <span class="font-serif-italic text-secondary">en parler</span>.
+      </h1>
+      <p class="text-lg lg:text-xl text-muted-foreground leading-relaxed">
+        Logos, charte couleurs, dossier de presse, fiche signalétique, photos haute résolution. Tout est ici, libre de téléchargement pour la presse et les médias.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-muted/30 border-y border-border/60">
+    <div class="container mx-auto px-6 lg:px-8 max-w-5xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+        <div class="lg:col-span-7">
+          <h2 class="font-display text-2xl lg:text-3xl font-bold tracking-tight mb-6">
+            Pitch en une phrase
+          </h2>
+          <p class="text-base lg:text-lg text-foreground/85 leading-relaxed mb-10 font-serif-italic">
+            "{pitch}"
+          </p>
+
+          <h2 class="font-display text-2xl lg:text-3xl font-bold tracking-tight mb-6">
+            Fiche signalétique
+          </h2>
+          <dl class="space-y-3">
+            {factSheet.map((row) => (
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-border/40">
+                <dt class="text-xs uppercase tracking-widest text-muted-foreground sm:col-span-1">{row.label}</dt>
+                <dd class="font-medium sm:col-span-2">{row.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <aside class="lg:col-span-5">
+          <div class="sticky top-28 bg-card border border-border/60 rounded-2xl p-7 lg:p-8 space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+                <Mail className="w-5 h-5 text-primary" aria-hidden="true" />
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-widest text-primary font-medium">Contact presse</p>
+                <a href="mailto:presse@moodl.fr" data-analytics-cta="presse_mail" class="font-medium text-base hover:text-primary transition-colors">
+                  presse@moodl.fr
+                </a>
+              </div>
+            </div>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              Pour interviews, visites de programmes, ou demandes spécifiques (visuels, chiffres, citations), écrivez à <a href="mailto:presse@moodl.fr" class="text-primary hover:underline">presse@moodl.fr</a>. Réponse sous 48 heures ouvrées.
+            </p>
+            <p class="text-xs text-muted-foreground italic pt-3 border-t border-border/40">
+              Si vous écrivez sur un sujet immobilier ou architectural, mentionnez l'angle envisagé, l'échéance et le média.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-24 bg-background">
+    <div class="container mx-auto px-6 lg:px-8 max-w-5xl">
+      <h2 class="font-display text-3xl lg:text-4xl font-bold tracking-tight mb-10">
+        Téléchargements
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {downloadables.map((item) => (
+          <a
+            href={item.href}
+            download
+            data-analytics-cta={`presse_download_${item.size.toLowerCase()}`}
+            class="group flex items-start gap-4 bg-card border border-border/60 rounded-2xl p-6 lg:p-7 hover:-translate-y-1 hover:border-primary/40 transition-all duration-300 motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            <div class="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+              <Download className="w-5 h-5 text-primary" aria-hidden="true" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-2">
+                <p class="font-display text-base lg:text-lg font-bold tracking-tight">{item.label}</p>
+                <span class="text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full border border-border/60 text-muted-foreground">{item.size}</span>
+              </div>
+              <p class="text-sm text-muted-foreground leading-relaxed">{item.detail}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="text-xs text-muted-foreground italic mt-6">
+        Les fichiers PDF sont en cours d'activation. Si un lien retourne 404, écrivez à presse@moodl.fr pour recevoir le document par e-mail.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-24 lg:py-32 bg-muted/20 border-t border-border/60 text-center">
+    <div class="container mx-auto px-6 lg:px-8 max-w-3xl">
+      <h2 class="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-6">
+        Une interview, une visite, une démo ?
+      </h2>
+      <p class="text-lg text-muted-foreground mb-10">
+        L'atelier accueille les journalistes sur site, organise des visites virtuelles des hameaux en construction et partage des chiffres exclusifs.
+      </p>
+      <a
+        href="mailto:presse@moodl.fr"
+        data-analytics-cta="presse_cta_mail"
+        class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-[0_0_30px_rgba(0,255,128,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:hover:scale-100"
+      >
+        <Mail className="w-4 h-4" aria-hidden="true" />
+        Écrire à presse@moodl.fr
+      </a>
+    </div>
+  </section>
+</Layout>

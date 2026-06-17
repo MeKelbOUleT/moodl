@@ -41,23 +41,71 @@ const showCanonical = !noIndex;
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': `${siteUrl}/#organization`,
   name: 'Moodl',
+  alternateName: 'Atelier Moodl',
   url: siteUrl,
-  logo: `${siteUrl}/logo-moodl.png`,
-  description: 'Atelier qui conçoit des cocons en pleine nature - adresse, architecture, urbanisme, intendance. À habiter ou à louer.',
+  logo: {
+    '@type': 'ImageObject',
+    url: `${siteUrl}/logo-moodl.png`,
+    width: 512,
+    height: 512,
+  },
+  image: `${siteUrl}/og-default.jpg`,
+  description: 'Atelier qui conçoit des hameaux touristiques en pleine nature, terrain rare, architecture signée, intendance déléguée. À habiter, à louer, souvent les deux.',
   email: 'shelter@moodl.fr',
   telephone: '+33-7-66-87-30-40',
-  sameAs: [
-    'https://moodl.fr',
-  ],
-  contactPoint: {
-    '@type': 'ContactPoint',
-    contactType: 'sales',
-    email: 'shelter@moodl.fr',
-    telephone: '+33-7-66-87-30-40',
-    areaServed: 'FR',
-    availableLanguage: ['French'],
+  founder: {
+    '@type': 'Person',
+    name: 'Olivier Bertrand',
+    url: `${siteUrl}/about`,
   },
+  foundingDate: '2024',
+  foundingLocation: {
+    '@type': 'Place',
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'FR',
+    },
+  },
+  areaServed: [
+    {'@type': 'Country', name: 'France'},
+    {'@type': 'AdministrativeArea', name: 'Dordogne'},
+    {'@type': 'AdministrativeArea', name: 'Ardèche'},
+    {'@type': 'AdministrativeArea', name: 'Haute-Savoie'},
+  ],
+  sameAs: ['https://moodl.fr'],
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      contactType: 'sales',
+      email: 'shelter@moodl.fr',
+      telephone: '+33-7-66-87-30-40',
+      areaServed: 'FR',
+      availableLanguage: ['French'],
+      hoursAvailable: {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '09:00',
+        closes: '19:00',
+      },
+    },
+    {
+      '@type': 'ContactPoint',
+      contactType: 'press',
+      email: 'presse@moodl.fr',
+      areaServed: 'FR',
+      availableLanguage: ['French'],
+    },
+  ],
+  knowsAbout: [
+    'Résidences de tourisme',
+    'Hébergement insolite',
+    'Investissement immobilier LMNP',
+    'Architecture en pleine nature',
+    'Urbanisme STECAL',
+    'Conciergerie touristique',
+  ],
 };
 
 const websiteSchema = {

@@ -13,7 +13,13 @@
     "studio": "sanity dev",
     "studio:deploy": "sanity deploy",
     "studio:build": "sanity build",
-    "seed": "tsx scripts/seed.ts"
+    "seed": "tsx scripts/seed.ts",
+    "audit:lh": "lighthouse http://localhost:4321 --quiet --chrome-flags='--headless' --output=html --output-path=./reports/lighthouse.html --only-categories=performance,accessibility,best-practices,seo",
+    "audit:lh:mobile": "lighthouse http://localhost:4321 --quiet --chrome-flags='--headless' --preset=desktop --output=html --output-path=./reports/lighthouse-desktop.html --only-categories=performance,accessibility,best-practices,seo",
+    "audit:axe": "axe http://localhost:4321 --tags wcag2a,wcag2aa,wcag22aa --save ./reports/axe.json",
+    "audit:axe:pages": "axe http://localhost:4321 http://localhost:4321/investir http://localhost:4321/simulateur http://localhost:4321/contact http://localhost:4321/about http://localhost:4321/faq http://localhost:4321/modeles --tags wcag2a,wcag2aa --save ./reports/axe-full.json",
+    "audit:all": "npm run audit:lh && npm run audit:axe:pages",
+    "audit:prod": "lighthouse https://moodl.fr --quiet --chrome-flags='--headless' --output=html --output-path=./reports/lighthouse-prod.html"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.4",
@@ -52,8 +58,11 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@axe-core/cli": "^4.10.0",
+    "@sentry/astro": "^8.55.0",
     "@types/nodemailer": "^8.0.0",
     "dotenv": "^17.4.2",
+    "lighthouse": "^12.3.0",
     "tsx": "^4.21.0"
   }
 }
