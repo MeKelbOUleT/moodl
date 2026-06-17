@@ -12,11 +12,11 @@ const sansMoodl = [
 const cadre = [
   {
     titre: 'Le terrain',
-    detail: "Choisi un par un par nos experts. Vue, accès, voisinage, silence — la rareté est dans le sol, jamais reproductible ailleurs.",
+    detail: "Choisi un par un par nos experts. Vue, accès, voisinage, silence - la rareté est dans le sol, jamais reproductible ailleurs.",
   },
   {
     titre: "L'urbanisme",
-    detail: 'PLU décrypté, STECAL négocié, permis instruit. 18 mois absorbés en silence — vous n\'en voyez rien.',
+    detail: 'PLU décrypté, STECAL négocié, permis instruit. 18 mois absorbés en silence - vous n\'en voyez rien.',
   },
   {
     titre: "L'architecture",
@@ -31,13 +31,16 @@ const cadre = [
 export default function SansMoodlSection() {
   return (
     <section className="relative overflow-hidden border-y border-border/60 bg-background">
-      {/* HERO IMAGE — Le cadre privilégié */}
+      {/* HERO IMAGE - Le cadre privilégié */}
       <div className="relative h-[60vh] lg:h-[70vh] min-h-[500px] overflow-hidden">
         <img
           src={bgCadre.src}
-          alt="Cadre privilégié Moodl — habitat miroir au bord d'un étang en forêt, lumière dorée"
+          alt="Cadre privilégié Moodl, habitat miroir au bord d'un étang en forêt, lumière dorée"
+          width={2400}
+          height={1600}
           className="absolute inset-0 w-full h-full object-cover scale-[1.02]"
           loading="lazy"
+          decoding="async"
         />
         {/* Overlay très doux pour préserver l'image */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/95" />
@@ -53,7 +56,7 @@ export default function SansMoodlSection() {
                 «&nbsp;Vue. Silence. Voisinage choisi. Quatre critères. Des mois de recherche.&nbsp;»
               </p>
               <p className="text-[11px] uppercase tracking-[0.25em] text-white/80 mt-5">
-                — Moodl
+                - Moodl
               </p>
             </div>
           </div>
@@ -82,7 +85,7 @@ export default function SansMoodlSection() {
               <span className="font-serif-italic text-secondary">Et 18 mois qu'on a faits à votre place</span>.
             </h2>
             <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed">
-              Trouver un terrain qui chante demande des mois. Convertir une zone naturelle en autorisation, plus encore. Composer une architecture qui dialogue avec le sol, en faire un cadre habité — c'est un savoir-faire qui ne s'invente pas. <strong className="text-foreground">Nos experts s'en chargent.</strong> Vous, vous n'avez qu'à venir.
+              Trouver un terrain qui chante demande des mois. Convertir une zone naturelle en autorisation, plus encore. Composer une architecture qui dialogue avec le sol, en faire un cadre habité - c'est un savoir-faire qui ne s'invente pas. <strong className="text-foreground">Nos experts s'en chargent.</strong> Vous, vous n'avez qu'à venir.
             </p>
           </div>
 
@@ -92,7 +95,7 @@ export default function SansMoodlSection() {
             <div className="bg-card/40 p-7 lg:p-10">
               <div className="mb-8">
                 <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
-                  — Si vous le faisiez seul —
+                  - Si vous le faisiez seul -
                 </p>
                 <h3 className="font-display text-2xl lg:text-3xl font-bold text-foreground/70 line-through decoration-foreground/30 decoration-[1.5px]">
                   Vous, et 5 prestataires.
@@ -128,7 +131,7 @@ export default function SansMoodlSection() {
               </div>
             </div>
 
-            {/* AVEC MOODL — le cadre prêt */}
+            {/* AVEC MOODL - le cadre prêt */}
             <div className="bg-card p-7 lg:p-10 relative border-l-2 border-primary/40">
               <div
                 aria-hidden="true"
@@ -137,7 +140,7 @@ export default function SansMoodlSection() {
 
               <div className="mb-8">
                 <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-primary font-medium mb-3">
-                  — Ce qu'on a fait pour vous —
+                  - Ce qu'on a fait pour vous -
                 </p>
                 <h3 className="font-display text-2xl lg:text-3xl font-bold tracking-tight">
                   Un cadre{' '}
@@ -168,7 +171,7 @@ export default function SansMoodlSection() {
                   Vous arrivez.
                 </p>
                 <p className="text-sm text-foreground/85">
-                  <span className="text-primary font-medium">C'est prêt.</span> Le hameau tourne, ou se repose — comme vous voulez.
+                  <span className="text-primary font-medium">C'est prêt.</span> Le hameau tourne, ou se repose - comme vous voulez.
                 </p>
               </div>
             </div>
@@ -180,7 +183,7 @@ export default function SansMoodlSection() {
               «&nbsp;On a passé <strong className="not-italic text-primary">18 mois</strong> à apprendre. Pour que vous n'ayez plus à le faire.&nbsp;»
             </p>
             <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground mt-5">
-              — Moodl
+              - Moodl
             </p>
           </div>
         </div>

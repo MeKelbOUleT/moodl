@@ -8,22 +8,22 @@ const etapes = [
   {
     num: '01',
     title: 'Une parcelle rare',
-    body: "Un terrain sourcé un par un — bord de lac, clairière forestière, plateau face aux Cévennes. Vue, accès, voisinage, silence : quatre critères, des mois de recherche.",
+    body: "Un terrain sourcé un par un - bord de lac, clairière forestière, plateau face aux Cévennes. Vue, accès, voisinage, silence : quatre critères, des mois de recherche.",
   },
   {
     num: '02',
     title: 'Un hameau de 4 à 8',
-    body: "On compose le hameau pour cette parcelle précisément. Orientation, lumière, intimité de chaque lot. Plan masse signé atelier — pas un alignement de cabanes, une architecture qui dialogue avec le sol.",
+    body: "On compose le hameau pour cette parcelle précisément. Orientation, lumière, intimité de chaque lot. Plan masse signé atelier - pas un alignement de cabanes, une architecture qui dialogue avec le sol.",
   },
   {
     num: '03',
     title: "L'intendance, à la carte",
-    body: "Un opérateur unique peut s'occuper du hameau pour vous — accueil voyageurs, ménage, entretien, mise en ligne, reportings. Vous le prenez, ou vous gardez la main. Comme vous voulez.",
+    body: "Un opérateur unique peut s'occuper du hameau pour vous - accueil voyageurs, ménage, entretien, mise en ligne, reportings. Vous le prenez, ou vous gardez la main. Comme vous voulez.",
   },
   {
     num: '04',
     title: 'Habiter. Louer. Souvent les deux.',
-    body: "Vous y passez vos semaines, vos week-ends, vos étés. Le reste du temps, le lot vit — voyageurs en quête de calme, revenus locatifs reversés chaque mois. 10 à 15 % de rendement annuel quand le hameau tourne.",
+    body: "Vous y passez vos semaines, vos week-ends, vos étés. Le reste du temps, le lot vit - voyageurs en quête de calme, revenus locatifs reversés chaque mois. 10 à 15 % de rendement annuel quand le hameau tourne.",
   },
 ];
 
@@ -48,24 +48,27 @@ export default function LeHameauSection() {
             <span className="font-serif-italic text-secondary">pas une maison isolée</span>.
           </h2>
           <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed">
-            Sur une parcelle rare, <strong className="text-foreground">4 à 8 habitats Moodl</strong> composent un petit hameau touristique. Chaque lot — un habitat, sa parcelle privative, ses revenus. Une intendance commune si vous voulez.
+            Sur une parcelle rare, <strong className="text-foreground">4 à 8 habitats Moodl</strong> composent un petit hameau touristique. Chaque lot - un habitat, sa parcelle privative, ses revenus. Une intendance commune si vous voulez.
           </p>
         </div>
 
-        {/* Hero aérien — le hameau vu d'en haut */}
+        {/* Hero aérien - le hameau vu d'en haut */}
         <div className="relative rounded-3xl overflow-hidden mb-20 lg:mb-24 group">
           <div className="aspect-[16/9] lg:aspect-[21/9]">
             <img
               src={hamletAerial.src}
               alt="Vue aérienne d'un hameau Moodl en forêt, 12 habitats répartis autour d'une piscine commune"
+              width={2400}
+              height={1350}
               className="w-full h-full object-cover transition-transform duration-[1400ms] group-hover:scale-105"
               loading="lazy"
+              decoding="async"
             />
           </div>
           {/* Légende discrète en bas */}
           <div className="absolute inset-x-0 bottom-0 p-6 lg:p-10 bg-gradient-to-t from-black/85 via-black/30 to-transparent">
             <p className="text-[11px] uppercase tracking-[0.25em] text-primary font-medium mb-2">
-              Projection — Hameau Moodl
+              Projection - Hameau Moodl
             </p>
             <p className="font-serif-italic text-xl lg:text-2xl text-white leading-snug max-w-2xl">
               «&nbsp;Un hameau. Un opérateur. Une saison qui tourne, toute l'année.&nbsp;»
@@ -109,8 +112,11 @@ export default function LeHameauSection() {
               <img
                 src={img.src}
                 alt={img.alt}
+                width={800}
+                height={1000}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-4 lg:p-5">
@@ -120,6 +126,17 @@ export default function LeHameauSection() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-12 lg:mt-16 text-center">
+          <a
+            href="/programmes"
+            data-analytics-cta="hameau_voir_adresses"
+            className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-md bg-primary text-primary-foreground font-medium shadow-md hover:shadow-[0_0_30px_rgba(0,255,128,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:hover:scale-100"
+          >
+            Voir les adresses ouvertes
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
     </section>

@@ -156,7 +156,7 @@ const Simulateur = () => {
       </section>
 
       {/* Banner sticky mobile : KPIs critiques visibles pendant qu'on ajuste les sliders */}
-      <div className="lg:hidden sticky top-20 z-30 bg-background/95 backdrop-blur-md border-y border-border/60 shadow-sm">
+      <div className="lg:hidden sticky top-20 z-30 bg-background/95 backdrop-blur-md border-y border-border/60 shadow-sm min-h-[88px]">
         <div className="container mx-auto px-4 py-3">
           <div className="grid grid-cols-2 gap-3 text-center">
             <div>
@@ -222,7 +222,8 @@ const Simulateur = () => {
               <ScrollReveal animation="fade-up" delay={100}>
                 <Card className="p-6 lg:p-8 bg-card border-border/60">
                   <h3 className="font-display text-2xl font-bold tracking-tight mb-6">Projection 12 mois</h3>
-                  <ResponsiveContainer width="100%" height={300}>
+                  <div className="h-[260px] sm:h-[300px]">
+                  <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={monthlyData}>
                       <defs>
                         <linearGradient id="colorCashflow" x1="0" y1="0" x2="0" y2="1">
@@ -237,13 +238,15 @@ const Simulateur = () => {
                       <Area type="monotone" dataKey="cashflow" stroke="hsl(var(--primary))" fillOpacity={1} fill="url(#colorCashflow)" name="Cashflow cumulé" strokeWidth={2} />
                     </AreaChart>
                   </ResponsiveContainer>
+                  </div>
                 </Card>
               </ScrollReveal>
 
               <ScrollReveal animation="fade-up" delay={200}>
                 <Card className="p-6 lg:p-8 bg-card border-border/60">
                   <h3 className="font-display text-2xl font-bold tracking-tight mb-6">Projection 10 ans</h3>
-                  <ResponsiveContainer width="100%" height={350}>
+                  <div className="h-[300px] sm:h-[350px]">
+                  <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={yearlyData}>
                       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
                       <XAxis dataKey="annee" stroke="hsl(var(--muted-foreground))" style={{ fontSize: '12px' }} />
@@ -255,6 +258,7 @@ const Simulateur = () => {
                       <Line type="monotone" dataKey="capitalRembourse" stroke="hsl(var(--muted-foreground))" strokeWidth={2} name="Capital remboursé" strokeDasharray="3 3" />
                     </LineChart>
                   </ResponsiveContainer>
+                  </div>
                 </Card>
               </ScrollReveal>
 

@@ -7,7 +7,7 @@ const profiles = [
     icon: Heart,
     eyebrow: 'Le citadin',
     title: 'Vous voulez juste profiter.',
-    body: "Vendredi soir, vous arrivez. La cheminée est allumée, le frigo est plein, le lit est fait. Aucun jardinier à briefer. Aucun entretien. Aucune facture à régler. Quand vous n'y êtes pas, c'est nous qui louons — vous touchez un revenu, c'est tout.",
+    body: "Vendredi soir, vous arrivez. La cheminée est allumée, le frigo est plein, le lit est fait. Aucun jardinier à briefer. Aucun entretien. Aucune facture à régler. Quand vous n'y êtes pas, c'est nous qui louons, vous touchez un revenu, c'est tout.",
     bullets: [
       'Aucune corvée, jamais',
       "Vous arrivez, c'est prêt",
@@ -15,6 +15,7 @@ const profiles = [
     ],
     ctaLabel: 'Voir les lieux disponibles',
     ctaHref: '/programmes',
+    analyticsId: 'pourqui_citadin',
   },
   {
     icon: TrendingUp,
@@ -28,6 +29,7 @@ const profiles = [
     ],
     ctaLabel: 'Demander le dossier investisseur',
     ctaHref: '/investir',
+    analyticsId: 'pourqui_investisseur',
   },
 ];
 
@@ -89,10 +91,11 @@ export default function PourQuiSection() {
 
                   <NavLink
                     to={profile.ctaHref}
-                    className="inline-flex items-center justify-center gap-2 w-full h-11 px-6 rounded-md bg-primary text-primary-foreground font-medium text-sm shadow-md hover:shadow-[0_0_30px_rgba(0,255,128,0.35)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-300"
+                    data-analytics-cta={profile.analyticsId}
+                    className="inline-flex items-center justify-center gap-2 w-full h-11 px-6 rounded-md bg-primary text-primary-foreground font-medium text-sm shadow-md hover:shadow-[0_0_30px_rgba(0,255,128,0.35)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card motion-reduce:transition-none motion-reduce:hover:scale-100"
                   >
                     {profile.ctaLabel}
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
                   </NavLink>
                 </div>
               </ScrollReveal>

@@ -3,4 +3,75 @@ Allow: /
 Disallow: /studio/
 Disallow: /api/
 
+# AI training and citation crawlers - explicit opt-in for Moodl content.
+User-agent: GPTBot
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
+User-agent: CCBot
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
+User-agent: Bytespider
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
+User-agent: Meta-ExternalAgent
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
+User-agent: Diffbot
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
+User-agent: Omgilibot
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
 Sitemap: https://moodl.fr/sitemap-index.xml

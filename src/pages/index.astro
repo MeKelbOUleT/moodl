@@ -12,13 +12,21 @@ import ProgrammesSection from '@/components/sections/ProgrammesSection';
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import SimulatorTeaserSection from '@/components/sections/SimulatorTeaserSection';
 import FinalCTASection from '@/components/sections/FinalCTASection';
+import FAQAccordion from '@/components/FAQAccordion';
+import {getScarcitySnapshot} from '@/lib/scarcity';
+import {getFaqSubsetFor, buildFaqPageSchema} from '@/lib/faq-helpers';
+
+const scarcity = await getScarcitySnapshot();
+const faqItems = getFaqSubsetFor('home');
+const faqSchema = buildFaqPageSchema(faqItems);
 ---
 
 <Layout
-  title="Moodl — Votre cocon, en pleine nature."
+  title="Moodl - Votre cocon, en pleine nature."
   description="Une adresse choisie en pleine nature, dessinée pour s'y blottir. À habiter, à louer, souvent les deux. 10 à 15 % de rendement annuel quand vous n'y êtes pas."
   canonical="https://moodl.fr/"
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(faqSchema)} />
   <section class="relative min-h-screen flex items-center pt-32 pb-24 overflow-hidden">
     <!-- Image hero : Hameau Moodl en garrigue méditerranéenne -->
     <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
@@ -34,7 +42,7 @@ import FinalCTASection from '@/components/sections/FinalCTASection';
         style="filter: saturate(1.05) contrast(1.05);"
       />
       <!-- Overlay graduel renforcé : ciel clair demande un overlay plus présent pour lisibilité H1 blanc -->
-      <div class="absolute inset-0 bg-gradient-to-b from-background/55 via-background/45 to-background"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-background/70 via-background/55 to-background"></div>
       <!-- Voile lime central pour cohérence palette (subtil) -->
       <div class="absolute inset-0" style="background: radial-gradient(ellipse 70% 50% at 50% 50%, hsl(150 100% 50% / 0.06), transparent 65%);"></div>
     </div>
@@ -51,7 +59,7 @@ import FinalCTASection from '@/components/sections/FinalCTASection';
           À habiter. À louer. Souvent les deux.
         </p>
 
-        <h1 class="font-display text-5xl md:text-7xl lg:text-[5.5rem] font-bold leading-[1.05] tracking-tight mb-8 hero-fade" style="animation-delay: 120ms;">
+        <h1 class="font-display text-5xl md:text-7xl lg:text-[5.5rem] font-bold leading-[1.05] tracking-tight mb-8 hero-fade" style="animation-delay: 120ms; text-shadow: 0 2px 16px rgba(9, 15, 21, 0.45);">
           Votre cocon,
           <br />
           <span class="relative inline-block">
@@ -60,21 +68,29 @@ import FinalCTASection from '@/components/sections/FinalCTASection';
           </span>
         </h1>
 
-        <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed hero-fade" style="animation-delay: 240ms;">
-          Le terrain rare, le permis, les plans, l'habitat — et la conciergerie <span class="italic">si vous voulez</span>. <span class="text-foreground font-medium">Tout sur un plateau</span>. À habiter, à louer, à déléguer — comme vous voulez. Jusqu'à <span class="text-foreground font-medium">15 % de rendement annuel</span> quand le hameau tourne.
+        <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-3 leading-relaxed hero-fade" style="animation-delay: 240ms;">
+          Le terrain rare, le permis, les plans, l'habitat. Et l'intendance <span class="italic">si vous voulez</span>.
+        </p>
+        <p class="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed hero-fade" style="animation-delay: 280ms;">
+          À habiter. À louer. Jusqu'à <span class="text-foreground font-medium">15 % de rendement annuel</span> quand le hameau tourne.
+        </p>
+        <p class="text-xs uppercase tracking-[0.2em] text-muted-foreground/80 font-medium mb-10 hero-fade" style="animation-delay: 320ms;">
+          Programmes clé en main, 4 à 8 lots par adresse
         </p>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4 hero-fade" style="animation-delay: 360ms;">
           <a
             href="/programmes"
-            class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-[0_0_30px_rgba(0,255,128,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+            data-analytics-cta="hero_primary_lieux"
+            class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-[0_0_30px_rgba(0,255,128,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:hover:scale-100"
           >
             Voir les lieux Moodl
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
           <a
             href="/simulateur"
-            class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md border border-border bg-transparent text-foreground font-medium hover:bg-accent hover:text-accent-foreground hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+            data-analytics-cta="hero_secondary_simulateur"
+            class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md border border-border bg-transparent text-foreground font-medium hover:bg-accent hover:text-accent-foreground hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:hover:scale-100"
           >
             Simuler ma rentabilité
           </a>
@@ -89,8 +105,8 @@ import FinalCTASection from '@/components/sections/FinalCTASection';
     ></div>
   </section>
 
-  <StatsSection client:visible />
   <PourQuiSection client:visible />
+  <StatsSection client:visible scarcity={scarcity} />
   <SansMoodlSection />
   <WhyMoodlSection />
   <LeHameauSection />
@@ -98,7 +114,25 @@ import FinalCTASection from '@/components/sections/FinalCTASection';
   <ProgrammesSection client:visible />
   <TestimonialsSection client:visible />
   <SimulatorTeaserSection client:visible />
-  <FinalCTASection client:visible />
+
+  <section class="py-24 lg:py-32 bg-background border-t border-border/60">
+    <div class="container mx-auto px-6 lg:px-8 max-w-4xl">
+      <div class="mb-12">
+        <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-5">
+          Vous vous demandez ?
+        </p>
+        <h2 class="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
+          Cinq questions, <span class="font-serif-italic text-secondary">cinq réponses claires</span>.
+        </h2>
+      </div>
+      <FAQAccordion client:visible items={faqItems} context="home" />
+      <p class="text-sm text-muted-foreground italic mt-8">
+        Dix-sept questions supplémentaires sur <a href="/faq" class="text-primary hover:underline">la page FAQ complète</a>.
+      </p>
+    </div>
+  </section>
+
+  <FinalCTASection client:visible scarcity={scarcity} />
 </Layout>
 
 <style>

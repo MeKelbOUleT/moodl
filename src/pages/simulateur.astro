@@ -1,24 +1,30 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Simulateur from '@/components/Simulateur';
+import FAQAccordion from '@/components/FAQAccordion';
+import {getFaqSubsetFor, buildFaqPageSchema} from '@/lib/faq-helpers';
+
+const faqItems = getFaqSubsetFor('simulateur');
+const faqSchema = buildFaqPageSchema(faqItems);
 ---
 
 <Layout
-  title="Simulateur de rentabilité location courte durée — Moodl"
-  description="Calculez en 60 secondes la rentabilité d'un hameau Moodl : cashflow mensuel, rendement net, projection 10 ans. 11 paramètres ajustables — apport, taux, occupation, charges."
+  title="Simulateur de rentabilité location courte durée - Moodl"
+  description="Calculez en 60 secondes la rentabilité d'un hameau Moodl : cashflow mensuel, rendement net, projection 10 ans. 11 paramètres ajustables, apport, taux, occupation, charges."
 >
-  <!-- Contenu statique SEO : indexable même sans JavaScript -->
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(faqSchema)} />
+
+  <!-- Contenu statique SEO, indexable même sans JavaScript -->
   <section class="pt-40 pb-12 lg:pb-16">
     <div class="container mx-auto px-6 lg:px-8 max-w-4xl">
       <p class="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-6">
-        Outil — Projection chiffrée
+        Outil, projection chiffrée
       </p>
       <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight mb-6">
-        Simulez la rentabilité de votre{' '}
-        <span class="font-serif-italic text-secondary">hameau Moodl</span>.
+        Simulez la rentabilité de votre <span class="font-serif-italic text-secondary">hameau Moodl</span>.
       </h1>
       <p class="text-lg text-muted-foreground leading-relaxed mb-4">
-        Ajustez onze paramètres — prix d'acquisition, apport, taux d'emprunt, taux d'occupation, prix moyen par nuit, charges de copropriété, fiscalité LMNP — et obtenez en temps réel le cashflow mensuel, le rendement net annuel et la projection patrimoniale sur 10 ans.
+        Ajustez onze paramètres, prix d'acquisition, apport, taux d'emprunt, taux d'occupation, prix moyen par nuit, charges de copropriété, fiscalité LMNP, et obtenez en temps réel le cashflow mensuel, le rendement net annuel et la projection patrimoniale sur 10 ans.
       </p>
       <p class="text-sm text-muted-foreground/80 italic">
         Outil indicatif. Les projections supposent un hameau ouvert à la location courte durée saisonnière et ne constituent pas un conseil en investissement.
@@ -27,4 +33,22 @@ import Simulateur from '@/components/Simulateur';
   </section>
 
   <Simulateur client:load />
+
+  <!-- FAQ -->
+  <section class="py-24 lg:py-32 bg-muted/20 border-t border-border/60">
+    <div class="container mx-auto px-6 lg:px-8 max-w-4xl">
+      <div class="mb-12">
+        <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-5">
+          Questions fréquentes
+        </p>
+        <h2 class="font-display text-3xl lg:text-4xl font-bold leading-tight tracking-tight">
+          Avant de simuler, <span class="font-serif-italic text-secondary">les six réponses qui comptent</span>.
+        </h2>
+      </div>
+      <FAQAccordion client:visible items={faqItems} context="simulateur" />
+      <p class="text-sm text-muted-foreground italic mt-8">
+        Vingt-deux questions supplémentaires sur <a href="/faq" class="text-primary hover:underline">la page FAQ complète</a>.
+      </p>
+    </div>
+  </section>
 </Layout>

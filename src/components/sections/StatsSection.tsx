@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion';
+import {motion, useReducedMotion} from 'framer-motion';
 import AnimatedCounter from '@/components/AnimatedCounter';
+import {formatRelativeFromNow, type ScarcitySnapshot} from '@/lib/scarcity';
 
 type Stat = {
   numericValue: number | null;
@@ -9,66 +10,76 @@ type Stat = {
   hint?: string;
 };
 
-const stats: Stat[] = [
-  {
-    numericValue: 3,
-    displayValue: '3',
-    label: 'Adresses ouvertes en 2026',
-    hint: 'Dordogne · Ardèche · Lac d\'Annecy',
-  },
-  {
-    numericValue: 12,
-    displayValue: '12',
-    label: 'Lots disponibles à l\'instant',
-    hint: 'Sur 18 lots de l\'édition 2026',
-  },
-  {
-    numericValue: 18,
-    displayValue: '18',
-    suffix: ' mois',
-    label: 'Absorbés par l\'atelier',
-    hint: 'PLU, plans, permis, instruction',
-  },
-  {
-    numericValue: null,
-    displayValue: '10–15',
-    suffix: ' %',
-    label: 'Rendement annuel net visé',
-    hint: 'Projection — non garantie',
-  },
-];
+interface Props {
+  scarcity?: ScarcitySnapshot;
+}
 
 const containerVariants = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+    transition: {staggerChildren: 0.08, delayChildren: 0.05},
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: {opacity: 0, y: 24},
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    transition: {duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number]},
   },
 };
 
-export default function StatsSection() {
+export default function StatsSection({scarcity}: Props) {
+  const reduce = useReducedMotion();
+  const programmesCount = scarcity?.programmesCount ?? 3;
+  const availableLots = scarcity?.availableLots ?? 12;
+  const totalLots = scarcity?.totalLots ?? 18;
+  const updatedAgo = scarcity?.lastUpdated ? formatRelativeFromNow(scarcity.lastUpdated) : 'aujourd\'hui';
+
+  const stats: Stat[] = [
+    {
+      numericValue: programmesCount,
+      displayValue: String(programmesCount),
+      label: 'Adresses ouvertes en 2026',
+      hint: 'Dordogne, Ardèche, Lac d\'Annecy',
+    },
+    {
+      numericValue: availableLots,
+      displayValue: String(availableLots),
+      label: 'Lots disponibles',
+      hint: `Sur ${totalLots} lots, mis à jour ${updatedAgo}`,
+    },
+    {
+      numericValue: 18,
+      displayValue: '18',
+      suffix: ' mois',
+      label: 'Absorbés par l\'atelier',
+      hint: 'PLU, plans, permis, instruction',
+    },
+    {
+      numericValue: null,
+      displayValue: '10-15',
+      suffix: ' %',
+      label: 'Rendement annuel net visé',
+      hint: 'Projection, non garantie',
+    },
+  ];
+
   return (
-    <section className="py-20 lg:py-24 bg-muted/40 border-y border-border/60">
+    <section className="py-20 lg:py-24 bg-muted/40 border-y border-border/60" aria-label="Chiffres clés Moodl">
       <div className="container mx-auto px-6 lg:px-8">
         <motion.div
           className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-border/60"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-80px' }}
+          variants={reduce ? undefined : containerVariants}
+          initial={reduce ? false : 'hidden'}
+          whileInView={reduce ? undefined : 'show'}
+          viewport={{once: true, margin: '-80px'}}
         >
           {stats.map((stat) => (
             <motion.div
               key={stat.label}
-              variants={itemVariants}
+              variants={reduce ? undefined : itemVariants}
               className="px-4 lg:px-8 py-2"
             >
               <div className="text-center">

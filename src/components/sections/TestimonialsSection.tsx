@@ -1,4 +1,5 @@
-import { Star } from 'lucide-react';
+import {useRef} from 'react';
+import {Star, ChevronLeft, ChevronRight} from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 
 const testimonials = [
@@ -7,15 +8,15 @@ const testimonials = [
     location: 'Paris 16',
     extract:
       "L'habitat a été posé en une matinée. Trois mois plus tard on est à 78 % d'occupation, c'est au-delà de ce qu'on espérait.",
-    monthly: '2 850 €',
+    monthly: '2 850 EUR',
     program: 'Dordogne',
   },
   {
     name: 'Jean-Pierre M.',
     location: 'Lyon',
     extract:
-      "Je cherchais un placement immobilier qui ait du sens et qui rapporte. L'habitat dialogue avec le terrain — c'est ce qui m'a convaincu.",
-    monthly: '3 120 €',
+      "Je cherchais un placement immobilier qui ait du sens et qui rapporte. L'habitat dialogue avec le terrain, c'est ce qui m'a convaincu.",
+    monthly: '3 120 EUR',
     program: 'Ardèche',
   },
   {
@@ -23,15 +24,15 @@ const testimonials = [
     location: 'Annecy',
     extract:
       "On y va nous-mêmes 3 semaines par an, le reste tourne avec l'intendance Moodl. La transparence des reportings est rare dans ce milieu.",
-    monthly: '4 480 €',
+    monthly: '4 480 EUR',
     program: 'Lac d\'Annecy',
   },
   {
     name: 'Antoine V.',
     location: 'Bordeaux',
     extract:
-      "L'angle architecte fait la différence. L'habitat n'est pas posé n'importe où — il y a un vrai dialogue avec le terrain.",
-    monthly: '2 680 €',
+      "L'angle architecte fait la différence. L'habitat n'est pas posé n'importe où, il y a un vrai dialogue avec le terrain.",
+    monthly: '2 680 EUR',
     program: 'Dordogne',
   },
   {
@@ -39,7 +40,7 @@ const testimonials = [
     location: 'Genève',
     extract:
       'Investissement long terme rassurant. La conciergerie tient ses engagements, je n\'ai eu aucun appel client à gérer en 8 mois.',
-    monthly: '3 340 €',
+    monthly: '3 340 EUR',
     program: 'Ardèche',
   },
   {
@@ -47,44 +48,78 @@ const testimonials = [
     location: 'Marseille',
     extract:
       'Premier acheteur du programme Dordogne, j\'ai eu un tarif d\'amorçage. Aujourd\'hui mon ROI annoncé est conservé sur 12 mois glissants.',
-    monthly: '2 920 €',
+    monthly: '2 920 EUR',
     program: 'Dordogne',
   },
 ];
 
 export default function TestimonialsSection() {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  function scrollBy(direction: 'prev' | 'next') {
+    const node = scrollerRef.current;
+    if (!node) return;
+    const card = node.querySelector<HTMLElement>('article');
+    const step = card ? card.offsetWidth + 24 : node.clientWidth * 0.8;
+    node.scrollBy({left: direction === 'next' ? step : -step, behavior: 'smooth'});
+  }
+
   return (
     <section className="py-24 lg:py-32 bg-muted/30">
       <div className="container mx-auto px-6 lg:px-8">
         <ScrollReveal animation="fade-up">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
             <div className="max-w-2xl">
               <p className="text-xs uppercase tracking-[0.2em] text-primary font-medium mb-5">
                 Ils y vont. Ils y reviennent.
               </p>
               <h2 className="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
-                Une aventure{' '}
-                <span className="font-serif-italic text-secondary">partagée</span>.
+                Une aventure <span className="font-serif-italic text-secondary">partagée</span>.
               </h2>
             </div>
-            <p className="text-sm text-muted-foreground italic max-w-xs">
-              Témoignages issus des programmes pilotes Dordogne, Ardèche et Lac d'Annecy.
-            </p>
+            <div className="flex items-center justify-between gap-4">
+              <p className="text-sm text-muted-foreground italic max-w-xs">
+                Témoignages issus des programmes pilotes Dordogne, Ardèche et Lac d'Annecy.
+              </p>
+              <div className="flex gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => scrollBy('prev')}
+                  aria-label="Témoignage précédent"
+                  className="w-11 h-11 flex items-center justify-center rounded-full border border-border bg-background hover:bg-card hover:border-primary/50 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:active:scale-100"
+                >
+                  <ChevronLeft className="w-5 h-5" aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollBy('next')}
+                  aria-label="Témoignage suivant"
+                  className="w-11 h-11 flex items-center justify-center rounded-full border border-border bg-background hover:bg-card hover:border-primary/50 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:active:scale-100"
+                >
+                  <ChevronRight className="w-5 h-5" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
           </div>
         </ScrollReveal>
       </div>
 
       <ScrollReveal animation="fade-up" delay={200}>
-        <div className="overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory">
+        <div
+          ref={scrollerRef}
+          className="overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory"
+          aria-label="Carrousel de témoignages clients"
+          role="region"
+        >
           <div className="flex gap-5 lg:gap-6 px-6 lg:px-12 min-w-max">
             {testimonials.map((t) => (
               <article
                 key={t.name}
-                className="snap-start shrink-0 w-[320px] md:w-[380px] bg-card border border-border/60 rounded-2xl p-7 lg:p-8 hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
+                className="snap-start shrink-0 w-[320px] md:w-[380px] bg-card border border-border/60 rounded-2xl p-7 lg:p-8 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
-                <div className="flex gap-0.5 mb-5 text-secondary">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-secondary" />
+                <div className="flex gap-0.5 mb-5 text-secondary" aria-label="5 étoiles sur 5">
+                  {Array.from({length: 5}).map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-secondary" aria-hidden="true" />
                   ))}
                 </div>
                 <p className="font-serif-italic text-lg lg:text-xl leading-snug text-foreground mb-7">
@@ -94,7 +129,7 @@ export default function TestimonialsSection() {
                   <div>
                     <p className="font-medium text-sm">{t.name}</p>
                     <p className="text-xs text-muted-foreground">
-                      {t.location} · {t.program}
+                      {t.location} . {t.program}
                     </p>
                   </div>
                   <div className="text-right">

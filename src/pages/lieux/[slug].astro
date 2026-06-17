@@ -27,11 +27,11 @@ const heroUrl = lieu.hero_image ? urlFor(lieu.hero_image).width(1600).height(900
 const galerie = lieu.galerie ?? [];
 const surfaceText = lieu.surface_min_m2 && lieu.surface_max_m2 && lieu.surface_min_m2 !== lieu.surface_max_m2
   ? `${lieu.surface_min_m2} à ${lieu.surface_max_m2} m²`
-  : `${lieu.surface_max_m2 ?? lieu.surface_min_m2 ?? '—'} m²`;
+  : `${lieu.surface_max_m2 ?? lieu.surface_min_m2 ?? '-'} m²`;
 ---
 
 <Layout
-  title={lieu.meta_title ?? `${lieu.name} — Moodl`}
+  title={lieu.meta_title ?? `${lieu.name} - Moodl`}
   description={lieu.meta_description ?? lieu.subtitle ?? `${lieu.name}, habitat Moodl.`}
   ogImage={heroUrl ?? undefined}
 >
@@ -109,21 +109,39 @@ const surfaceText = lieu.surface_min_m2 && lieu.surface_max_m2 && lieu.surface_m
       </div>
 
       {lieu.description && (
-        <div class="max-w-3xl mx-auto mt-20 prose prose-invert">
-          {lieu.description.map((block: any) => block._type === 'block' && (
-            <p class="mb-4 text-muted-foreground leading-relaxed">{block.children?.map((c: any) => c.text).join('')}</p>
-          ))}
-        </div>
+        <section aria-labelledby="lieu-description" class="max-w-3xl mx-auto mt-20">
+          <h2 id="lieu-description" class="font-display text-2xl lg:text-3xl font-bold tracking-tight mb-6">
+            Le concept en détail
+          </h2>
+          <div class="prose prose-invert">
+            {lieu.description.map((block: any) => block._type === 'block' && (
+              <p class="mb-4 text-muted-foreground leading-relaxed">{block.children?.map((c: any) => c.text).join('')}</p>
+            ))}
+          </div>
+        </section>
       )}
 
       {galerie.length > 0 && (
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mt-20">
-          {galerie.map((img: any) => (
-            <div class="aspect-square rounded-xl overflow-hidden bg-muted">
-              <img src={urlFor(img).width(600).height(600).url()} alt={img.alt ?? ''} class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy" />
-            </div>
-          ))}
-        </div>
+        <section aria-labelledby="lieu-galerie" class="mt-20">
+          <h2 id="lieu-galerie" class="font-display text-2xl lg:text-3xl font-bold tracking-tight mb-6">
+            Galerie
+          </h2>
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+            {galerie.map((img: any) => (
+              <div class="aspect-square rounded-xl overflow-hidden bg-muted">
+                <img
+                  src={urlFor(img).width(600).height(600).url()}
+                  alt={img.alt ?? `${lieu.name}, vue de galerie`}
+                  width={600}
+                  height={600}
+                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            ))}
+          </div>
+        </section>
       )}
     </div>
   </section>

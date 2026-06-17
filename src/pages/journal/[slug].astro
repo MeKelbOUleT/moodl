@@ -29,16 +29,32 @@ const heroUrl = article.hero_image ? urlFor(article.hero_image).width(1600).heig
 const date = article.published_at ? new Date(article.published_at).toLocaleDateString('fr-FR', {day: 'numeric', month: 'long', year: 'numeric'}) : null;
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://moodl.fr';
+const authorName = article.author ?? 'Atelier Moodl';
+const isHouseAuthor = !article.author || article.author === 'Atelier Moodl';
+const authorSchema = isHouseAuthor
+  ? {
+      '@type': 'Organization',
+      name: 'Atelier Moodl',
+      url: `${siteUrl}/about`,
+    }
+  : {
+      '@type': 'Person',
+      name: authorName,
+      url: `${siteUrl}/about`,
+      worksFor: {'@type': 'Organization', name: 'Moodl', url: siteUrl},
+    };
+
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: article.title,
   description: article.excerpt ?? article.meta_description,
   image: heroUrl ? [heroUrl] : undefined,
-  author: {'@type': 'Person', name: article.author ?? 'Atelier Moodl'},
+  author: authorSchema,
   publisher: {
     '@type': 'Organization',
     name: 'Moodl',
+    url: siteUrl,
     logo: {'@type': 'ImageObject', url: `${siteUrl}/logo-moodl.png`},
   },
   datePublished: article.published_at,
@@ -49,7 +65,7 @@ const articleSchema = {
 ---
 
 <Layout
-  title={article.meta_title ?? `${article.title} — Journal Moodl`}
+  title={article.meta_title ?? `${article.title} - Journal Moodl`}
   description={article.meta_description ?? article.excerpt ?? article.title}
   ogImage={heroUrl ?? undefined}
   ogType="article"
@@ -115,12 +131,42 @@ const articleSchema = {
         )}
       </div>
 
+      <aside class="mt-16 pt-12 border-t border-border/40" aria-labelledby="article-author">
+        <h2 id="article-author" class="sr-only">À propos de l'auteur</h2>
+        <div class="flex items-start gap-5 bg-card border border-border/60 rounded-2xl p-6 lg:p-7">
+          <div class="w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+            <span class="font-display text-lg font-bold text-primary">
+              {authorName
+                .split(' ')
+                .map((part: string) => part.charAt(0).toUpperCase())
+                .slice(0, 2)
+                .join('')}
+            </span>
+          </div>
+          <div class="flex-1">
+            <p class="text-[11px] uppercase tracking-widest text-primary font-medium mb-1">Écrit par</p>
+            <p class="font-display text-lg lg:text-xl font-bold tracking-tight">{authorName}</p>
+            <p class="text-sm text-muted-foreground leading-relaxed mt-1">
+              {isHouseAuthor
+                ? "L'atelier Moodl conçoit et tient des résidences de tourisme en pleine nature. Architecte, urbaniste et concierge, sous un même toit."
+                : `Membre de l'atelier Moodl, qui conçoit et tient des résidences de tourisme en pleine nature.`}
+            </p>
+            <a
+              href="/about"
+              class="inline-block mt-3 text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card rounded-sm"
+            >
+              Découvrir l'atelier →
+            </a>
+          </div>
+        </div>
+      </aside>
+
       {article.related_programmes && article.related_programmes.length > 0 && (
         <div class="mt-16 pt-12 border-t border-border/40">
           <h3 class="font-display text-xl font-bold mb-6">Programmes évoqués</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             {article.related_programmes.map((p: any) => (
-              <a href={`/programmes/${p.slug}`} class="block p-5 bg-card border border-border/60 rounded-xl hover:border-primary/40 transition-colors">
+              <a href={`/programmes/${p.slug}`} class="block p-5 bg-card border border-border/60 rounded-xl hover:border-primary/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background">
                 <p class="text-xs uppercase tracking-widest text-muted-foreground mb-1">{p.region}</p>
                 <p class="font-display text-lg font-medium">{p.title}</p>
               </a>

@@ -146,3 +146,52 @@ export const temoignagesAllQuery = defineQuery(`
     "programme": programme->{title, region, "slug": slug.current}
   }
 `);
+
+// ─── Equipe ────────────────────────────────────────────────────────────────
+
+export const teamMembersAllQuery = defineQuery(`
+  *[_type == "teamMember"] | order(order asc, name asc){
+    _id,
+    name,
+    "slug": slug.current,
+    role,
+    bio,
+    photo,
+    is_founder,
+    linkedin_url,
+    order
+  }
+`);
+
+export const founderQuery = defineQuery(`
+  *[_type == "teamMember" && is_founder == true][0]{
+    _id,
+    name,
+    role,
+    bio,
+    photo,
+    linkedin_url
+  }
+`);
+
+// ─── FAQ ───────────────────────────────────────────────────────────────────
+
+export const faqsAllQuery = defineQuery(`
+  *[_type == "faq"] | order(category asc, order asc){
+    _id,
+    question,
+    answer,
+    category,
+    visible_on,
+    order
+  }
+`);
+
+export const faqsByPageQuery = defineQuery(`
+  *[_type == "faq" && $page in visible_on] | order(category asc, order asc){
+    _id,
+    question,
+    answer,
+    category
+  }
+`);

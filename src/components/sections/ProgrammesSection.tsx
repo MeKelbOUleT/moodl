@@ -63,7 +63,7 @@ export default function ProgrammesSection() {
                 <NavLink
                   key={p.slug}
                   to={`/programmes/${p.slug}`}
-                  className="group block bg-card hover:bg-card/80 border border-border/60 hover:border-secondary/50 rounded-2xl p-6 lg:p-7 transition-all"
+                  className="group block bg-card hover:bg-card/80 border border-border/60 hover:border-secondary/50 rounded-2xl p-6 lg:p-7 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 shrink-0 rounded-xl bg-secondary/15 border border-secondary/20 flex items-center justify-center transition-transform group-hover:scale-110">
@@ -95,7 +95,7 @@ export default function ProgrammesSection() {
                   </div>
                   {i === 0 && (
                     <p className="mt-4 text-xs text-secondary/90 italic">
-                      Premier programme — premiers acheteurs avantagés.
+                      Premier programme - premiers acheteurs avantagés.
                     </p>
                   )}
                 </NavLink>
@@ -170,7 +170,7 @@ export default function ProgrammesSection() {
                 ))}
               </svg>
               <p className="absolute bottom-6 left-6 text-[11px] uppercase tracking-widest text-muted-foreground">
-                Carte indicative — France métropolitaine
+                Carte indicative - France métropolitaine
               </p>
             </div>
           </ScrollReveal>

@@ -1,0 +1,184 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {sanityClient, urlFor} from '@/sanity/client';
+import {teamMembersAllQuery} from '@/sanity/queries';
+
+interface SanityTeamMember {
+  _id: string;
+  name?: string;
+  role?: string;
+  bio?: string;
+  photo?: Parameters<typeof urlFor>[0];
+  is_founder?: boolean;
+  linkedin_url?: string;
+}
+
+interface TeamMemberCard {
+  name: string;
+  role: string;
+  bio: string;
+  photoUrl: string | null;
+  is_founder: boolean;
+  linkedin_url: string | null;
+}
+
+let sanityTeam: SanityTeamMember[] = [];
+try {
+  sanityTeam = (await sanityClient.fetch(teamMembersAllQuery)) ?? [];
+} catch (err) {
+  console.error('[equipe] Sanity fetch failed', err);
+}
+
+const fallbackTeam: TeamMemberCard[] = [
+  {
+    name: 'Olivier Bertrand',
+    role: "Fondateur, direction d'atelier",
+    bio: "Conçoit des résidences de tourisme depuis quinze ans. Coordonne la sélection des terrains, le montage urbanisme et la signature architecturale.",
+    photoUrl: null,
+    is_founder: true,
+    linkedin_url: null,
+  },
+  {
+    name: 'Architecte HMO',
+    role: 'Architecte signataire',
+    bio: 'Plan masse, orientation, lumière, matière. Dessine chaque hameau pour la parcelle, jamais en série.',
+    photoUrl: null,
+    is_founder: false,
+    linkedin_url: null,
+  },
+  {
+    name: 'Urbaniste PLU',
+    role: 'Montage administratif',
+    bio: 'Décrypte les PLU, négocie les STECAL, monte les permis. Absorbe les dix-huit mois invisibles à votre place.',
+    photoUrl: null,
+    is_founder: false,
+    linkedin_url: null,
+  },
+  {
+    name: "Concierge d'adresse",
+    role: 'Intendance, accueil voyageurs',
+    bio: "Présence physique sur chaque adresse. Ménage entre séjours, accueil, maintenance, gestion des litiges.",
+    photoUrl: null,
+    is_founder: false,
+    linkedin_url: null,
+  },
+];
+
+const team: TeamMemberCard[] = sanityTeam.length > 0
+  ? sanityTeam
+      .filter((m): m is SanityTeamMember & {name: string} => Boolean(m.name))
+      .map((m) => ({
+        name: m.name as string,
+        role: m.role ?? '',
+        bio: m.bio ?? '',
+        photoUrl: m.photo ? urlFor(m.photo).width(600).height(750).url() : null,
+        is_founder: Boolean(m.is_founder),
+        linkedin_url: m.linkedin_url ?? null,
+      }))
+  : fallbackTeam;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://moodl.fr';
+const memberSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Moodl',
+  url: siteUrl,
+  member: team.map((m) => ({
+    '@type': 'Person',
+    name: m.name,
+    jobTitle: m.role,
+    ...(m.linkedin_url ? {sameAs: [m.linkedin_url]} : {}),
+  })),
+};
+---
+
+<Layout
+  title="L'équipe Moodl, architecte, urbaniste, conciergerie | À propos"
+  description="L'atelier Moodl réunit un fondateur, un architecte signataire, un urbaniste et une équipe d'intendance. Quatre métiers, un seul interlocuteur pour vous."
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(memberSchema)} />
+
+  <section class="pt-40 pb-16 lg:pb-20">
+    <div class="container mx-auto px-6 lg:px-8 max-w-4xl">
+      <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-6">
+        L'équipe
+      </p>
+      <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
+        Quatre métiers, <span class="font-serif-italic text-secondary">un seul interlocuteur</span>.
+      </h1>
+      <p class="text-lg lg:text-xl text-muted-foreground leading-relaxed">
+        L'atelier Moodl réunit sous un même toit ce que vous deviez chercher chez quatre prestataires. Vous gardez un seul interlocuteur pour toute la chaîne, du terrain rare jusqu'aux reportings mensuels.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-24 bg-muted/30 border-y border-border/60">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+        {team.map((member) => (
+          <article class="group bg-card border border-border/60 rounded-2xl overflow-hidden hover:-translate-y-1 hover:border-primary/40 transition-all duration-300 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+            <div class="aspect-[4/5] relative bg-muted">
+              {member.photoUrl ? (
+                <img
+                  src={member.photoUrl}
+                  alt={`Portrait de ${member.name}, ${member.role}`}
+                  width={600}
+                  height={750}
+                  class="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-muted via-card to-background">
+                  <p class="text-xs uppercase tracking-[0.25em] text-muted-foreground/50 px-6 text-center">
+                    Photo à venir
+                  </p>
+                </div>
+              )}
+              {member.is_founder && (
+                <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-medium">
+                  Fondateur
+                </div>
+              )}
+            </div>
+            <div class="p-6 lg:p-7">
+              <p class="text-[11px] uppercase tracking-[0.2em] text-primary font-medium mb-2">{member.role}</p>
+              <h2 class="font-display text-xl lg:text-2xl font-bold tracking-tight mb-3">{member.name}</h2>
+              {member.bio && (
+                <p class="text-sm text-muted-foreground leading-relaxed">{member.bio}</p>
+              )}
+              {member.linkedin_url && (
+                <a
+                  href={member.linkedin_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="inline-block mt-4 text-xs text-primary hover:underline"
+                >
+                  LinkedIn →
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 lg:py-32 text-center">
+    <div class="container mx-auto px-6 lg:px-8 max-w-3xl">
+      <h2 class="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-6">
+        Envie d'en parler ?
+      </h2>
+      <p class="text-lg text-muted-foreground mb-10">
+        Un appel de trente minutes avec l'atelier. Sélection de l'adresse, visite virtuelle, projection chiffrée.
+      </p>
+      <a
+        href="/contact"
+        data-analytics-cta="equipe_cta_contact"
+        class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-[0_0_30px_rgba(0,255,128,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:hover:scale-100"
+      >
+        Parler à l'atelier
+      </a>
+    </div>
+  </section>
+</Layout>

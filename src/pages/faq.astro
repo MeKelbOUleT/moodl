@@ -1,0 +1,122 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import FAQAccordion from '@/components/FAQAccordion';
+import {sanityClient} from '@/sanity/client';
+import {faqsByPageQuery} from '@/sanity/queries';
+import {FAQ_FALLBACK, flattenFAQ, type FaqGroup} from '@/lib/faq-fallback';
+
+interface SanityFaq {
+  _id: string;
+  question?: string;
+  answer?: Array<{_type?: string; children?: Array<{text?: string}>}>;
+  category?: string;
+}
+
+function plainTextFromPortableText(blocks?: SanityFaq['answer']): string {
+  if (!blocks) return '';
+  return blocks
+    .map((b) =>
+      b._type === 'block' && Array.isArray(b.children)
+        ? b.children.map((c) => c.text ?? '').join('')
+        : '',
+    )
+    .filter(Boolean)
+    .join('\n\n');
+}
+
+let sanityFaqs: SanityFaq[] = [];
+try {
+  sanityFaqs = (await sanityClient.fetch(faqsByPageQuery, {page: 'faq'})) ?? [];
+} catch (err) {
+  console.error('[faq] Sanity fetch failed', err);
+}
+
+const groups: FaqGroup[] = sanityFaqs.length > 0
+  ? FAQ_FALLBACK.map((group) => ({
+      ...group,
+      items: sanityFaqs
+        .filter((f) => f.category === group.id && f.question)
+        .map((f) => ({
+          question: f.question as string,
+          answer: plainTextFromPortableText(f.answer),
+        })),
+    })).filter((group) => group.items.length > 0)
+  : FAQ_FALLBACK;
+
+const all = flattenFAQ(groups);
+
+const faqPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: all.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {'@type': 'Answer', text: item.answer},
+  })),
+};
+---
+
+<Layout
+  title="Questions fréquentes Moodl, rendement, intendance, garanties"
+  description="Toutes les réponses sur l'investissement Moodl : rendement, fiscalité LMNP, garanties construction, conciergerie, livraison. Vingt-cinq questions, vingt-cinq réponses sourcées par l'atelier."
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(faqPageSchema)} />
+
+  <section class="pt-40 pb-12 lg:pb-16">
+    <div class="container mx-auto px-6 lg:px-8 max-w-4xl">
+      <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-6">
+        Questions fréquentes
+      </p>
+      <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
+        Tout ce que vous voulez <span class="font-serif-italic text-secondary">savoir</span>.
+      </h1>
+      <p class="text-lg lg:text-xl text-muted-foreground leading-relaxed">
+        Investissement, juridique, intendance, technique, programmes. Vingt-cinq questions, vingt-cinq réponses précises. Si la vôtre n'y est pas, écrivez à <a href="mailto:shelter@moodl.fr" class="text-primary hover:underline">shelter@moodl.fr</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="pb-24 lg:pb-32">
+    <div class="container mx-auto px-6 lg:px-8 max-w-4xl">
+      <nav aria-label="Sommaire FAQ" class="mb-12 lg:mb-16 flex flex-wrap gap-2">
+        {groups.map((g) => (
+          <a
+            href={`#${g.id}`}
+            class="inline-flex items-center px-4 py-2 rounded-full bg-card border border-border/60 text-xs uppercase tracking-widest text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            {g.label}
+          </a>
+        ))}
+      </nav>
+
+      <div class="space-y-16 lg:space-y-20">
+        {groups.map((g) => (
+          <section id={g.id} aria-labelledby={`${g.id}-title`} class="scroll-mt-28">
+            <h2 id={`${g.id}-title`} class="font-display text-3xl lg:text-4xl font-bold tracking-tight mb-6">
+              {g.label}
+            </h2>
+            <FAQAccordion client:load items={g.items} context={g.id} />
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 lg:py-32 bg-muted/20 border-t border-border/60 text-center">
+    <div class="container mx-auto px-6 lg:px-8 max-w-3xl">
+      <h2 class="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-6">
+        Votre question n'est pas listée ?
+      </h2>
+      <p class="text-lg text-muted-foreground mb-10">
+        Un appel de trente minutes avec l'atelier. Pas de présentation commerciale, juste vos questions et nos réponses.
+      </p>
+      <a
+        href="/contact"
+        data-analytics-cta="faq_cta_contact"
+        class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-[0_0_30px_rgba(0,255,128,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:hover:scale-100"
+      >
+        Parler à l'atelier
+      </a>
+    </div>
+  </section>
+</Layout>

@@ -17,7 +17,7 @@ export interface Props {
 }
 
 const {
-  title = 'Moodl — Votre cocon, en pleine nature.',
+  title = 'Moodl - Votre cocon, en pleine nature.',
   description = "Une adresse choisie en pleine nature, dessinée pour s'y blottir. À habiter, à louer, souvent les deux. 10 à 15 % de rendement annuel quand vous n'y êtes pas.",
   ogImage,
   ogType = 'website',
@@ -35,6 +35,7 @@ const ogImageUrl = ogImage
   ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`)
   : `${siteUrl}/og-default.jpg`;
 const pathname = Astro.url.pathname;
+const showCanonical = !noIndex;
 
 // JSON-LD Organization (présent sur toutes les pages)
 const organizationSchema = {
@@ -43,7 +44,7 @@ const organizationSchema = {
   name: 'Moodl',
   url: siteUrl,
   logo: `${siteUrl}/logo-moodl.png`,
-  description: 'Atelier qui conçoit des cocons en pleine nature — adresse, architecture, urbanisme, intendance. À habiter ou à louer.',
+  description: 'Atelier qui conçoit des cocons en pleine nature - adresse, architecture, urbanisme, intendance. À habiter ou à louer.',
   email: 'shelter@moodl.fr',
   telephone: '+33-7-66-87-30-40',
   sameAs: [
@@ -79,7 +80,9 @@ const websiteSchema = {
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
+    {showCanonical && <link rel="canonical" href={canonicalUrl} />}
+    {showCanonical && <link rel="alternate" hreflang="fr" href={canonicalUrl} />}
+    {showCanonical && <link rel="alternate" hreflang="x-default" href={canonicalUrl} />}
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
 
     <meta property="og:type" content={ogType} />
@@ -115,6 +118,19 @@ const websiteSchema = {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.sanity.io" />
+
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap"
+    />
+    <link
+      rel="preload"
+      as="style"
+      href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap"
+    />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap"
@@ -127,14 +143,38 @@ const websiteSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
+    {import.meta.env.PROD && !noIndex && (
+      <script
+        is:inline
+        defer
+        data-domain="moodl.fr"
+        src="https://plausible.io/js/script.tagged-events.outbound-links.js"
+      />
+    )}
+    {import.meta.env.PROD && !noIndex && (
+      <script is:inline set:html={`window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)}`} />
+    )}
+
     <slot name="head" />
   </head>
 
   <body class={`bg-background text-foreground min-h-screen ${bodyClass}`}>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-md focus:bg-primary focus:text-primary-foreground focus:font-medium focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+    >
+      Aller au contenu principal
+    </a>
     <Navigation client:load pathname={pathname} />
-    <main>
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer />
+
+    <script>
+      import {setupScrollDepth, setupCtaTracking} from '@/lib/analytics';
+      setupScrollDepth();
+      setupCtaTracking();
+    </script>
   </body>
 </html>

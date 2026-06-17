@@ -3,7 +3,7 @@ const piliers = [
     roman: 'I',
     title: "L'œil",
     line1: 'Trouver le terrain qui chante.',
-    line2: 'Vue, accès, voisinage, silence — quatre critères, des mois de recherche.',
+    line2: 'Vue, accès, voisinage, silence - quatre critères, des mois de recherche.',
   },
   {
     roman: 'II',
@@ -21,14 +21,14 @@ const piliers = [
     roman: 'IV',
     title: 'La main',
     line1: 'Vos clés, les nôtres si vous voulez.',
-    line2: 'Accueil, ménage, mise en ligne, reportings — à la carte. Vous gardez la main si vous préférez.',
+    line2: 'Accueil, ménage, mise en ligne, reportings - à la carte. Vous gardez la main si vous préférez.',
   },
 ];
 
 export default function WhyMoodlSection() {
   return (
     <section className="relative overflow-hidden py-28 lg:py-40 bg-background">
-      {/* Voile lime central — donne une lumière douce */}
+      {/* Voile lime central - donne une lumière douce */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none"
@@ -59,22 +59,22 @@ export default function WhyMoodlSection() {
             <span className="font-serif-italic text-secondary whitespace-nowrap">qui n'existait pas</span>.
           </h2>
 
-          {/* Citation en serif — note d'atelier */}
+          {/* Citation en serif - note d'atelier */}
           <div className="relative inline-block mx-auto max-w-2xl">
             <p className="font-serif-italic text-lg md:text-xl lg:text-2xl text-foreground/85 leading-relaxed">
-              «&nbsp;Trouver l'adresse. Convaincre la mairie. Dessiner le hameau. Tenir la maison à votre place — si vous voulez. Personne ne fait les quatre. Sauf nous.&nbsp;»
+              «&nbsp;Trouver l'adresse. Convaincre la mairie. Dessiner le hameau. Tenir la maison à votre place - si vous voulez. Personne ne fait les quatre. Sauf nous.&nbsp;»
             </p>
             <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground mt-5">
-              — Moodl
+              - Moodl
             </p>
           </div>
         </div>
 
-        {/* 4 piliers — numéros romains, pas de cartes */}
+        {/* 4 piliers - numéros romains, pas de cartes */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-14 lg:gap-x-14 max-w-7xl mx-auto">
           {piliers.map((p) => (
             <div key={p.roman} className="group relative">
-              {/* Numéro romain en grand, lime/gold alterné via CSS sibling pas possible — on garde lime */}
+              {/* Numéro romain en grand, lime/gold alterné via CSS sibling pas possible - on garde lime */}
               <div className="flex items-baseline gap-3 mb-5">
                 <span className="font-display text-6xl lg:text-7xl font-bold leading-none text-primary/90 group-hover:text-primary transition-colors duration-500">
                   {p.roman}
@@ -98,12 +98,22 @@ export default function WhyMoodlSection() {
           ))}
         </div>
 
-        {/* Ligne de fin — sceau de l'atelier */}
+        {/* Ligne de fin - sceau de l'atelier + CTA */}
         <div className="max-w-3xl mx-auto mt-24 lg:mt-32 text-center">
-          <div className="inline-flex items-center gap-4 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+          <div className="inline-flex items-center gap-4 text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-8">
             <span className="h-px w-12 bg-border" />
             <span>Atelier signé Moodl</span>
             <span className="h-px w-12 bg-border" />
+          </div>
+          <div>
+            <a
+              href="/investir"
+              data-analytics-cta="why_moodl_processus"
+              className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-md border border-border bg-transparent text-foreground font-medium hover:bg-accent hover:text-accent-foreground hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:hover:scale-100"
+            >
+              Voir le processus complet
+              <span aria-hidden="true">→</span>
+            </a>
           </div>
         </div>
       </div>

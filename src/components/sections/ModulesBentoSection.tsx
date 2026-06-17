@@ -67,7 +67,7 @@ export default function ModulesBentoSection() {
                 <span className="font-serif-italic text-secondary">cinq émotions</span>.
               </h2>
               <p className="text-base lg:text-lg text-muted-foreground leading-relaxed mt-5 max-w-xl">
-                Chaque habitat est dessiné pour dialoguer avec son terrain — orientation, lumière, matière, vue. Posés à la main, jamais alignés en série.
+                Chaque habitat est dessiné pour dialoguer avec son terrain - orientation, lumière, matière, vue. Posés à la main, jamais alignés en série.
               </p>
             </div>
             <NavLink
@@ -90,13 +90,17 @@ export default function ModulesBentoSection() {
             >
               <NavLink
                 to={`/lieux/${lieu.id}`}
-                className="relative block h-full w-full overflow-hidden rounded-2xl bg-foreground"
+                aria-label={`${lieu.name}, ${lieu.subtitle}, ${lieu.promise}`}
+                className="relative block h-full w-full overflow-hidden rounded-2xl bg-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 <img
                   src={lieu.image}
-                  alt={`${lieu.name} — ${lieu.subtitle}`}
+                  alt={`${lieu.name}, ${lieu.subtitle}`}
+                  width={800}
+                  height={600}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent" />
 

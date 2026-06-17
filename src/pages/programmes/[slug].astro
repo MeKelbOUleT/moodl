@@ -1,8 +1,10 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import FAQAccordion from '@/components/FAQAccordion';
 import {sanityClient, urlFor} from '@/sanity/client';
 import {programmesAllQuery, programmeBySlugQuery} from '@/sanity/queries';
+import {getFaqSubsetFor, buildFaqPageSchema} from '@/lib/faq-helpers';
 
 export async function getStaticPaths() {
   try {
@@ -30,11 +32,13 @@ const lotsRestants = programme.lots_disponibles ?? 0;
 const lotsTotal = programme.lots_total ?? 0;
 const progress = lotsTotal > 0 ? ((lotsTotal - lotsRestants) / lotsTotal) * 100 : 0;
 const rendementText = programme.rendement_min && programme.rendement_max
-  ? `${programme.rendement_min} — ${programme.rendement_max} %`
-  : programme.rendement_max ? `${programme.rendement_max} %` : '—';
+  ? `${programme.rendement_min} - ${programme.rendement_max} %`
+  : programme.rendement_max ? `${programme.rendement_max} %` : '-';
 
-// JSON-LD RealEstateListing (programme = bien immobilier vendu)
+// JSON-LD : Product (offre commerciale) + Place (situation géographique)
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://moodl.fr';
+const programmeUrl = `${siteUrl}/programmes/${programme.slug?.current ?? slug}`;
+
 const listingSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
@@ -43,31 +47,76 @@ const listingSchema = {
   image: heroUrl ? [heroUrl] : undefined,
   brand: {'@type': 'Brand', name: 'Moodl'},
   category: 'Real Estate / Tourism investment',
+  url: programmeUrl,
   offers: programme.prix_total ? {
     '@type': 'Offer',
     price: programme.prix_total,
     priceCurrency: 'EUR',
     availability: programme.status === 'ouvert' ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder',
-    url: `${siteUrl}/programmes/${programme.slug?.current ?? slug}`,
-    seller: {'@type': 'Organization', name: 'Moodl'},
+    url: programmeUrl,
+    seller: {'@type': 'Organization', name: 'Moodl', url: siteUrl},
   } : undefined,
   additionalProperty: [
     programme.region && {'@type': 'PropertyValue', name: 'Région', value: programme.region},
+    programme.commune && {'@type': 'PropertyValue', name: 'Commune', value: programme.commune},
     programme.surface_terrain_m2 && {'@type': 'PropertyValue', name: 'Surface terrain (m²)', value: programme.surface_terrain_m2},
     programme.surface_module_m2 && {'@type': 'PropertyValue', name: 'Surface habitat (m²)', value: programme.surface_module_m2},
-    rendementText !== '—' && {'@type': 'PropertyValue', name: 'Rendement annuel net visé (%)', value: rendementText},
+    rendementText !== '-' && {'@type': 'PropertyValue', name: 'Rendement annuel net visé (%)', value: rendementText},
     lotsTotal > 0 && {'@type': 'PropertyValue', name: 'Lots disponibles', value: `${lotsRestants} / ${lotsTotal}`},
     programme.date_livraison && {'@type': 'PropertyValue', name: 'Livraison', value: programme.date_livraison},
+    programme.plu_zonage && {'@type': 'PropertyValue', name: 'Zonage PLU', value: programme.plu_zonage},
   ].filter(Boolean),
 };
+
+const geoLat = programme.coordonnees_gps?.lat;
+const geoLng = programme.coordonnees_gps?.lng;
+const hasGeo = typeof geoLat === 'number' && typeof geoLng === 'number';
+
+const faqItems = getFaqSubsetFor('programme');
+const faqSchema = buildFaqPageSchema(faqItems);
+
+const modeleSlug = programme.modele?.slug;
+const modeleName = programme.modele?.name;
+
+const placeSchema = (programme.region || hasGeo) ? {
+  '@context': 'https://schema.org',
+  '@type': 'Place',
+  name: programme.title,
+  description: programme.tagline ?? programme.meta_description,
+  url: programmeUrl,
+  ...(hasGeo
+    ? {
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: geoLat,
+          longitude: geoLng,
+        },
+      }
+    : {}),
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'FR',
+    addressRegion: programme.region,
+    ...(programme.commune ? {addressLocality: programme.commune} : {}),
+  },
+  ...(heroUrl ? {image: heroUrl} : {}),
+  containedInPlace: {
+    '@type': 'Country',
+    name: 'France',
+  },
+} : null;
 ---
 
 <Layout
-  title={programme.meta_title ?? `${programme.title} — Moodl`}
+  title={programme.meta_title ?? `${programme.title} - Moodl`}
   description={programme.meta_description ?? programme.tagline ?? `${programme.title}, programme Moodl en ${programme.region}.`}
   ogImage={heroUrl ?? undefined}
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(listingSchema)} />
+  {placeSchema && (
+    <script type="application/ld+json" slot="head" set:html={JSON.stringify(placeSchema)} />
+  )}
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(faqSchema)} />
   <!-- HERO -->
   <section class="relative pt-32 pb-12 overflow-hidden">
     {heroUrl && (
@@ -99,7 +148,7 @@ const listingSchema = {
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6 mt-12">
         <div class="bg-card/80 backdrop-blur border border-border/60 rounded-2xl p-5">
           <p class="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">À partir de</p>
-          <p class="font-display text-2xl font-bold">{programme.prix_total ? formatEuro(programme.prix_total) : '—'}</p>
+          <p class="font-display text-2xl font-bold">{programme.prix_total ? formatEuro(programme.prix_total) : '-'}</p>
         </div>
         <div class="bg-card/80 backdrop-blur border border-border/60 rounded-2xl p-5">
           <p class="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">Rendement visé</p>
@@ -116,7 +165,7 @@ const listingSchema = {
         </div>
         <div class="bg-card/80 backdrop-blur border border-border/60 rounded-2xl p-5">
           <p class="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">Livraison</p>
-          <p class="font-display text-2xl font-bold">{programme.date_livraison ?? '—'}</p>
+          <p class="font-display text-2xl font-bold">{programme.date_livraison ?? '-'}</p>
         </div>
       </div>
     </div>
@@ -195,6 +244,53 @@ const listingSchema = {
           )}
         </aside>
       </div>
+    </div>
+  </section>
+
+  {modeleSlug && modeleName && (
+    <section class="py-16 lg:py-20 bg-muted/20 border-t border-border/60">
+      <div class="container mx-auto px-6 lg:px-8 max-w-3xl">
+        <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-4">Habitat retenu</p>
+        <h2 class="font-display text-3xl lg:text-4xl font-bold tracking-tight mb-4">
+          Modèle <span class="font-serif-italic text-secondary">{modeleName}</span>
+        </h2>
+        <p class="text-muted-foreground leading-relaxed mb-6">
+          Le programme {programme.title} est livré en habitat Moodl {modeleName}. Surface, capacité, finitions et prestations détaillées sur la fiche modèle.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a
+            href={`/lieux/${modeleSlug}`}
+            data-analytics-cta={`programme_link_modele_${modeleSlug}`}
+            class="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-md border border-border bg-card text-foreground font-medium hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            Voir la fiche habitat {modeleName}
+            <span aria-hidden="true">→</span>
+          </a>
+          <a
+            href="/modeles"
+            data-analytics-cta="programme_link_modeles"
+            class="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-md border border-transparent bg-transparent text-foreground/85 font-medium hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            Comparer les 5 modèles
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- FAQ -->
+  <section class="py-16 lg:py-24 bg-background">
+    <div class="container mx-auto px-6 lg:px-8 max-w-3xl">
+      <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-4">
+        Avant de réserver
+      </p>
+      <h2 class="font-display text-3xl lg:text-4xl font-bold leading-tight tracking-tight mb-8">
+        Quatre questions, <span class="font-serif-italic text-secondary">quatre réponses</span>.
+      </h2>
+      <FAQAccordion client:visible items={faqItems} context={`programme_${programme.slug?.current ?? slug}`} />
+      <p class="text-sm text-muted-foreground italic mt-6">
+        Vingt-deux questions supplémentaires sur <a href="/faq" class="text-primary hover:underline">la page FAQ complète</a>.
+      </p>
     </div>
   </section>
 

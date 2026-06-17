@@ -1,23 +1,29 @@
-import { ArrowRight, Phone } from 'lucide-react';
-import { NavLink } from '@/components/NavLink';
-import { Button } from '@/components/ui/button';
+import {ArrowRight, Phone} from 'lucide-react';
+import {NavLink} from '@/components/NavLink';
+import {Button} from '@/components/ui/button';
+import type {ScarcitySnapshot} from '@/lib/scarcity';
 
 import bgInterior from '@/assets/renders/circle-interior-night.png';
 
-export default function FinalCTASection() {
+interface Props {
+  scarcity?: ScarcitySnapshot;
+}
+
+export default function FinalCTASection({scarcity}: Props) {
+  const availableLots = scarcity?.availableLots ?? 14;
   return (
     <section className="relative overflow-hidden border-t border-border/60 py-32 lg:py-40">
-      {/* Image de fond — Circle intérieur nuit, vue lac étoilé */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
         <img
           src={bgInterior.src}
           alt=""
+          width={2400}
+          height={1600}
           className="absolute inset-0 w-full h-full object-cover scale-105"
           loading="lazy"
+          decoding="async"
         />
-        {/* Overlay assombrissant pour la lisibilité du texte */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/70 to-background/95" />
-        {/* Voile lime subtil */}
         <div
           className="absolute inset-0"
           style={{
@@ -43,27 +49,36 @@ export default function FinalCTASection() {
         </p>
 
         <p className="text-base lg:text-lg text-foreground/85 max-w-2xl mx-auto mb-12 leading-relaxed">
-          Le reste de l'année, <span className="text-primary font-medium">on s'en occupe pour vous</span> — accueil, ménage, mise en location, reportings. Vous arrivez, c'est prêt. Vous partez, ça vous rapporte.
+          Le reste de l'année, <span className="text-primary font-medium">on s'en occupe pour vous</span>, accueil, ménage, mise en location, reportings. Vous arrivez, c'est prêt. Vous partez, ça vous rapporte.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
           <NavLink to="/contact">
-            <Button variant="moodl" size="lg" className="px-8">
-              <Phone className="w-4 h-4 mr-1" />
-              Planifier un appel
-              <ArrowRight className="ml-1" />
+            <Button
+              variant="moodl"
+              size="lg"
+              className="px-8"
+              data-analytics-cta="final_cta_appel"
+            >
+              <Phone className="w-4 h-4 mr-1" aria-hidden="true" />
+              Planifier mon appel
+              <ArrowRight className="ml-1" aria-hidden="true" />
             </Button>
           </NavLink>
           <NavLink to="/simulateur">
-            <Button variant="outline" size="lg" className="px-8">
+            <Button
+              variant="outline"
+              size="lg"
+              className="px-8"
+              data-analytics-cta="final_cta_simulateur"
+            >
               Simuler ma rentabilité
             </Button>
           </NavLink>
         </div>
 
         <p className="text-sm text-muted-foreground">
-          <span className="text-foreground/90">14 lots ouverts</span> en Dordogne, Ardèche, Lac d'Annecy &middot;{' '}
-          <span className="italic">Premiers acheteurs avantagés</span>
+          <span className="text-foreground/90">{availableLots} lots ouverts</span> en Dordogne, Ardèche, Lac d'Annecy, <span className="italic">premiers acheteurs avantagés</span>
         </p>
       </div>
     </section>

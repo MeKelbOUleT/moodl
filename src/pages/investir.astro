@@ -1,8 +1,16 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import FAQAccordion from '@/components/FAQAccordion';
+import {getScarcitySnapshot, formatRelativeFromNow} from '@/lib/scarcity';
+import {getFaqSubsetFor, buildFaqPageSchema} from '@/lib/faq-helpers';
+
+const scarcity = await getScarcitySnapshot();
+const updatedAgo = formatRelativeFromNow(scarcity.lastUpdated);
+const faqItems = getFaqSubsetFor('investir');
+const faqSchema = buildFaqPageSchema(faqItems);
 
 const steps = [
-  {num: '01', title: 'Choix de l\'adresse', text: "Vous sélectionnez parmi nos lieux ouverts à la commercialisation. Vue, accès, voisinage, environnement, climat — chaque critère est documenté."},
+  {num: '01', title: 'Choix de l\'adresse', text: "Vous sélectionnez parmi nos lieux ouverts à la commercialisation. Vue, accès, voisinage, environnement, climat - chaque critère est documenté."},
   {num: '02', title: 'Réservation', text: 'Acompte de 5 000 € pour bloquer le lot. Compromis chez notaire sous 30 jours, financement bancaire en parallèle si besoin.'},
   {num: '03', title: 'Pose de l\'habitat', text: 'Préparation du terrain, fondations sur plots vissés, livraison et pose en 1 à 2 jours selon le modèle.'},
   {num: '04', title: 'Aménagement', text: 'Mobilier, literie, vaisselle, déco. Photos professionnelles drone et intérieur, tournage vidéo signature pour les annonces.'},
@@ -31,9 +39,10 @@ const included = [
 ---
 
 <Layout
-  title="Investir — Moodl"
-  description="Programmes d'investissement clé en main : adresse choisie, habitat dessiné, intendance déléguée. 10 à 15 % de rendement annuel net."
+  title="Investir avec Moodl : 5 étapes clé en main, rendement 10-15 %"
+  description="Programmes d'investissement clé en main, adresse choisie, habitat dessiné, intendance déléguée. 10 à 15 % de rendement annuel net visé, 4 garanties contractuelles."
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(faqSchema)} />
   <!-- HERO -->
   <section class="relative pt-40 pb-20 lg:pb-24 overflow-hidden">
     <div
@@ -50,8 +59,46 @@ const included = [
         <span class="font-serif-italic text-secondary">un seul interlocuteur</span>.
       </h1>
       <p class="text-lg text-muted-foreground leading-relaxed">
-        De la sélection de l'adresse à la mise en location, Moodl prend en charge la chaîne complète. Vous signez, on s'occupe du reste — et on vous tient informé chaque semaine.
+        De la sélection de l'adresse à la mise en location, Moodl prend en charge la chaîne complète. Vous signez, on s'occupe du reste - et on vous tient informé chaque semaine.
       </p>
+    </div>
+  </section>
+
+  <!-- L'ESSENTIEL, paragraphes citables LLM -->
+  <section class="py-20 lg:py-24 bg-background border-t border-border/60" aria-labelledby="essentiel-title">
+    <div class="container mx-auto px-6 lg:px-8 max-w-4xl">
+      <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-5">
+        L'essentiel à savoir
+      </p>
+      <h2 id="essentiel-title" class="font-display text-3xl lg:text-4xl font-bold leading-tight tracking-tight mb-10">
+        Quatre paragraphes, <span class="font-serif-italic text-secondary">tout est dit</span>.
+      </h2>
+      <div class="space-y-8 text-foreground/90 leading-relaxed">
+        <article>
+          <h3 class="font-display text-lg lg:text-xl font-bold tracking-tight mb-2">Ce que Moodl vend, exactement</h3>
+          <p>
+            Moodl conçoit, commercialise et tient des hameaux touristiques en pleine nature, à partir d'un terrain rare instruit en urbanisme, d'un habitat dessiné en atelier français et d'une intendance déléguée optionnelle. Chaque programme regroupe quatre à huit lots vendus en pleine propriété, sous statut LMNP (Loueur en Meublé Non Professionnel) la plupart du temps.
+          </p>
+        </article>
+        <article>
+          <h3 class="font-display text-lg lg:text-xl font-bold tracking-tight mb-2">Le rendement annuel net visé par Moodl</h3>
+          <p>
+            Moodl vise 10 à 15 pour cent de rendement annuel net après charges, conciergerie et fiscalité, sur la base des performances observées dans l'hébergement touristique premium atypique. Ces projections ne constituent pas une garantie de performance : le rendement réel dépend du taux d'occupation, du pricing dynamique et de l'évolution du marché de la location courte durée.
+          </p>
+        </article>
+        <article>
+          <h3 class="font-display text-lg lg:text-xl font-bold tracking-tight mb-2">Le délai d'instruction administrative absorbé par l'atelier</h3>
+          <p>
+            Avant de commercialiser un programme, Moodl absorbe en moyenne 18 mois d'instruction administrative : sélection du terrain, négociation avec la mairie, montage du STECAL (Secteur de Taille et de Capacité d'Accueil Limitées) inscrit au PLU, dépôt du permis et instruction par les services consultés. L'acquéreur n'intervient qu'une fois cette phase achevée.
+          </p>
+        </article>
+        <article>
+          <h3 class="font-display text-lg lg:text-xl font-bold tracking-tight mb-2">Les garanties contractuelles incluses</h3>
+          <p>
+            Le programme Moodl est couvert par les garanties légales applicables à la construction : garantie de parfait achèvement sur 1 an, garantie biennale sur les équipements dissociables sur 2 ans, garantie décennale sur les ouvrages indissociables sur 10 ans. L'acquéreur non professionnel bénéficie également d'un délai de rétractation de 10 jours après notification du compromis, conformément à l'article L. 271-1 du Code de la construction et de l'habitation.
+          </p>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -122,6 +169,24 @@ const included = [
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section class="py-24 lg:py-32 bg-background border-t border-border/60">
+    <div class="container mx-auto px-6 lg:px-8 max-w-4xl">
+      <div class="mb-12 lg:mb-16">
+        <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-5">
+          Questions fréquentes
+        </p>
+        <h2 class="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
+          Investir avec Moodl, <span class="font-serif-italic text-secondary">tout ce qu'il faut savoir</span>.
+        </h2>
+      </div>
+      <FAQAccordion client:visible items={faqItems} context="investir" />
+      <p class="text-sm text-muted-foreground italic mt-8">
+        Vingt-deux questions supplémentaires sur <a href="/faq" class="text-primary hover:underline">la page FAQ complète</a>.
+      </p>
+    </div>
+  </section>
+
   <!-- CTA FINAL -->
   <section class="py-32 lg:py-40 bg-background relative overflow-hidden border-t border-border/60 text-center">
     <div
@@ -131,21 +196,26 @@ const included = [
     ></div>
     <div class="container mx-auto px-6 lg:px-8 max-w-3xl relative">
       <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
-        Quatorze lots restants sur l'édition <span class="font-serif-italic text-secondary">2026</span>.
+        {scarcity.availableLots} lots restants sur l'édition <span class="font-serif-italic text-secondary">2026</span>.
       </h2>
-      <p class="text-lg lg:text-xl text-muted-foreground mb-10">
+      <p class="text-lg lg:text-xl text-muted-foreground mb-3">
         Premiers arrivés, premiers servis. Acompte de réservation 5 000 €, remboursable jusqu'au compromis.
+      </p>
+      <p class="text-xs uppercase tracking-widest text-muted-foreground/70 italic mb-10">
+        Sur {scarcity.totalLots} lots, mis à jour {updatedAgo}
       </p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
         <a
-          href="/contact"
-          class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-[0_0_30px_rgba(0,255,128,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+          href="/contact?type=investisseur"
+          data-analytics-cta="investir_final_reserver"
+          class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-[0_0_30px_rgba(0,255,128,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:hover:scale-100"
         >
-          Réserver un lot
+          Réserver mon lot
         </a>
         <a
           href="/simulateur"
-          class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md border border-border bg-transparent text-foreground font-medium hover:bg-accent hover:text-accent-foreground hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+          data-analytics-cta="investir_final_simulateur"
+          class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md border border-border bg-transparent text-foreground font-medium hover:bg-accent hover:text-accent-foreground hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:hover:scale-100"
         >
           Simuler ma rentabilité
         </a>

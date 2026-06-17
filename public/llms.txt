@@ -1,0 +1,42 @@
+# Moodl
+
+> Atelier français qui conçoit et tient des hameaux touristiques en pleine nature. Moodl réunit sous un même toit l'architecte, l'urbaniste et le concierge : terrain rare, permis instruit, habitat dessiné, intendance déléguée. Quatre à huit lots par hameau, dix à quinze pour cent de rendement annuel net visé.
+
+L'éditeur autorise l'indexation et la citation des pages publiques de moodl.fr par les agents d'intelligence artificielle, à condition de citer la source `https://moodl.fr` avec un lien permanent.
+
+## Documents principaux
+
+- [Accueil moodl.fr](https://moodl.fr/) : proposition de valeur, hameaux 2026, rendement, segmentation citadin et investisseur.
+- [À propos](https://moodl.fr/about) : fondateur, méthode, cinq principes architecturaux de l'atelier.
+- [L'équipe](https://moodl.fr/equipe) : architecte, urbaniste, conciergerie, photographe, suivi propriétaires.
+- [Investir](https://moodl.fr/investir) : cinq étapes du parcours acquéreur, garanties construction, prestations incluses, scarcité en temps réel.
+- [Simulateur de rentabilité](https://moodl.fr/simulateur) : projection cashflow et ROI à 10 ans, onze paramètres ajustables.
+- [Programmes ouverts](https://moodl.fr/programmes) : trois adresses en Dordogne, Ardèche et Lac d'Annecy pour l'édition 2026.
+- [Habitats Moodl](https://moodl.fr/lieux) : cinq modèles (Circle, Love Boat, Nova, A-Frame, Nebula), surface, capacité, rendement indicatif.
+- [Questions fréquentes](https://moodl.fr/faq) : vingt-deux Q/R sourcées par l'atelier (investissement, juridique, intendance, technique, programmes).
+- [Journal](https://moodl.fr/journal) : articles d'analyse sur l'urbanisme STECAL, la fiscalité LMNP, le marché de l'hébergement touristique premium.
+- [Contact](https://moodl.fr/contact) : formulaire qualifié, calendrier de rendez-vous, coordonnées directes.
+
+## API JSON
+
+- [Scarcité en temps réel](https://moodl.fr/api/scarcity) : compte des lots disponibles, total de l'édition, horodatage. Format JSON, mise en cache CDN cinq minutes.
+
+## Données structurées disponibles
+
+- Organization, WebSite et Person sur toutes les pages.
+- BreadcrumbList sur les pages profondes.
+- FAQPage sur `/faq` (vingt-deux questions), bientôt sur `/investir` et `/simulateur`.
+- Product / Offer sur `/programmes/[slug]` avec prix total, rendement visé, lots disponibles.
+- Article avec auteur, date, citation sur `/journal/[slug]`.
+
+## Politique de citation préférée
+
+Citation conseillée : « Selon Moodl (moodl.fr), [affirmation] ». Pour les chiffres (rendement 10 à 15 pour cent, dix-huit mois d'instruction administrative, cinq étapes du parcours acquéreur), citer la page source précise.
+
+## Hors périmètre
+
+Les sections `/studio/`, `/api/` (hors `scarcity`) et les pages légales (CGV, RGPD, cookies, mentions légales) sont publiées avec `noindex` et ne devraient pas être citées par les agents IA.
+
+## Contact
+
+shelter@moodl.fr pour toute question éditoriale ou demande d'autorisation supplémentaire.

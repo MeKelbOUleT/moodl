@@ -1,4 +1,4 @@
-import { motion, type Variants } from 'framer-motion';
+import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { type ReactNode } from 'react';
 
 type Animation = 'fade-up' | 'fade-right' | 'fade-left' | 'zoom-in' | 'fade';
@@ -34,6 +34,11 @@ const variantsMap: Record<Animation, Variants> = {
   },
 };
 
+const reducedVariants: Variants = {
+  hidden: { opacity: 1 },
+  visible: { opacity: 1 },
+};
+
 export default function ScrollReveal({
   children,
   animation = 'fade-up',
@@ -41,17 +46,22 @@ export default function ScrollReveal({
   duration = 700,
   className,
 }: ScrollRevealProps) {
+  const reduce = useReducedMotion();
   return (
     <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-80px' }}
-      variants={variantsMap[animation]}
-      transition={{
-        duration: duration / 1000,
-        delay: delay / 1000,
-        ease: [0.22, 1, 0.36, 1],
-      }}
+      initial={reduce ? false : 'hidden'}
+      whileInView={reduce ? undefined : 'visible'}
+      viewport={{ once: true, margin: '-60px' }}
+      variants={reduce ? reducedVariants : variantsMap[animation]}
+      transition={
+        reduce
+          ? { duration: 0 }
+          : {
+              duration: duration / 1000,
+              delay: delay / 1000,
+              ease: [0.22, 1, 0.36, 1],
+            }
+      }
       className={className}
     >
       {children}

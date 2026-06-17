@@ -1,0 +1,243 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {sanityClient, urlFor} from '@/sanity/client';
+import {lieuxAllQuery} from '@/sanity/queries';
+
+interface SanityLieu {
+  _id: string;
+  name?: string;
+  slug?: string;
+  subtitle?: string;
+  tagline?: string;
+  surface_min_m2?: number;
+  surface_max_m2?: number;
+  capacite?: string;
+  prix_a_partir_de?: number;
+  loyer_nuit_indicatif?: number;
+  roi_indicatif?: string;
+  duree_pose?: string;
+  hero_image?: Parameters<typeof urlFor>[0];
+}
+
+let sanityLieux: SanityLieu[] = [];
+try {
+  sanityLieux = (await sanityClient.fetch(lieuxAllQuery)) ?? [];
+} catch (err) {
+  console.error('[modeles] Sanity fetch failed', err);
+}
+
+interface ModeleCard {
+  name: string;
+  slug: string;
+  subtitle: string;
+  surface: string;
+  capacite: string;
+  prixAPartirDe: string;
+  loyerIndicatif: string;
+  roiIndicatif: string;
+  dureePose: string;
+  heroUrl: string | null;
+}
+
+const formatEuro = (n: number) =>
+  new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(n);
+
+const surfaceLabel = (min?: number, max?: number) => {
+  if (min && max && min !== max) return `${min} à ${max} m²`;
+  if (max) return `${max} m²`;
+  if (min) return `${min} m²`;
+  return '-';
+};
+
+const fallback: ModeleCard[] = [
+  {name: 'Circle', slug: 'circle', subtitle: 'La vue, sans interruption', surface: '28 m²', capacite: '2 personnes', prixAPartirDe: 'Sur demande', loyerIndicatif: '180 EUR / nuit', roiIndicatif: '14 %', dureePose: '1 jour', heroUrl: null},
+  {name: 'Love Boat', slug: 'love-boat', subtitle: "La nuit, posée sur l'eau", surface: '32 m²', capacite: '2 personnes', prixAPartirDe: 'Sur demande', loyerIndicatif: '220 EUR / nuit', roiIndicatif: '15 %', dureePose: '2 jours', heroUrl: null},
+  {name: 'Nova', slug: 'nova', subtitle: 'Le bois et la forêt', surface: '36 m²', capacite: '2 à 4 personnes', prixAPartirDe: 'Sur demande', loyerIndicatif: '170 EUR / nuit', roiIndicatif: '12 %', dureePose: '2 jours', heroUrl: null},
+  {name: 'A-Frame', slug: 'a-frame', subtitle: "L'épure des bois", surface: '24 m²', capacite: '2 personnes', prixAPartirDe: 'Sur demande', loyerIndicatif: '150 EUR / nuit', roiIndicatif: '11 %', dureePose: '1 jour', heroUrl: null},
+  {name: 'Nebula', slug: 'nebula', subtitle: 'Le cocon sous étoiles', surface: '30 m²', capacite: '2 personnes', prixAPartirDe: 'Sur demande', loyerIndicatif: '195 EUR / nuit', roiIndicatif: '14 %', dureePose: '2 jours', heroUrl: null},
+];
+
+const modeles: ModeleCard[] = sanityLieux.length > 0
+  ? sanityLieux
+      .filter((l): l is SanityLieu & {name: string; slug: string} => Boolean(l.name && l.slug))
+      .map((l) => ({
+        name: l.name as string,
+        slug: l.slug as string,
+        subtitle: l.subtitle ?? '',
+        surface: surfaceLabel(l.surface_min_m2, l.surface_max_m2),
+        capacite: l.capacite ?? '-',
+        prixAPartirDe: l.prix_a_partir_de ? formatEuro(l.prix_a_partir_de) : 'Sur demande',
+        loyerIndicatif: l.loyer_nuit_indicatif ? `${l.loyer_nuit_indicatif} EUR / nuit` : '-',
+        roiIndicatif: l.roi_indicatif ?? '-',
+        dureePose: l.duree_pose ?? '-',
+        heroUrl: l.hero_image ? urlFor(l.hero_image).width(800).height(600).url() : null,
+      }))
+  : fallback;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://moodl.fr';
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Habitats Moodl, le catalogue',
+  url: `${siteUrl}/modeles`,
+  description: 'Cinq modèles d\'habitat Moodl, signés en atelier français. Comparatif des surfaces, capacités, rendements indicatifs et durées de pose.',
+  isPartOf: {'@type': 'WebSite', name: 'Moodl', url: siteUrl},
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: modeles.length,
+    itemListElement: modeles.map((m, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `${siteUrl}/lieux/${m.slug}`,
+      name: m.name,
+    })),
+  },
+};
+---
+
+<Layout
+  title="Modèles d'habitats Moodl, comparatif et caractéristiques"
+  description="Cinq habitats signés Moodl, Circle, Love Boat, Nova, A-Frame, Nebula. Surface, capacité, loyer indicatif, rendement annuel net visé. Comparatif complet."
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(collectionSchema)} />
+
+  <section class="pt-40 pb-12 lg:pb-16">
+    <div class="container mx-auto px-6 lg:px-8 max-w-4xl">
+      <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-6">
+        Le catalogue
+      </p>
+      <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
+        Cinq habitats, <span class="font-serif-italic text-secondary">une signature</span>.
+      </h1>
+      <p class="text-lg lg:text-xl text-muted-foreground leading-relaxed">
+        Chaque modèle Moodl est dessiné en atelier français pour dialoguer avec un type de terrain précis. Circle pour les promontoires panoramiques, Love Boat pour les berges, Nova pour les sous-bois, A-Frame pour les clairières, Nebula pour les nuits étoilées.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-24 bg-muted/30 border-y border-border/60">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+        {modeles.map((m) => (
+          <a
+            href={`/lieux/${m.slug}`}
+            data-analytics-cta={`modeles_card_${m.slug}`}
+            class="group block bg-card border border-border/60 rounded-2xl overflow-hidden hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_8px_32px_rgba(0,255,128,0.08)] transition-all duration-300 motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            <div class="aspect-[4/3] relative bg-muted">
+              {m.heroUrl ? (
+                <img
+                  src={m.heroUrl}
+                  alt={`${m.name}, ${m.subtitle}`}
+                  width={800}
+                  height={600}
+                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/15 via-secondary/10 to-background">
+                  <span class="font-display text-6xl text-foreground/40">{m.name.charAt(0)}</span>
+                </div>
+              )}
+            </div>
+            <div class="p-6 lg:p-7">
+              <p class="text-[11px] uppercase tracking-[0.2em] text-primary font-medium mb-2">{m.subtitle}</p>
+              <h2 class="font-display text-2xl font-bold tracking-tight mb-4">{m.name}</h2>
+              <dl class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+                <div>
+                  <dt class="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Surface</dt>
+                  <dd class="font-medium">{m.surface}</dd>
+                </div>
+                <div>
+                  <dt class="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Capacité</dt>
+                  <dd class="font-medium">{m.capacite}</dd>
+                </div>
+                <div>
+                  <dt class="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Loyer indicatif</dt>
+                  <dd class="font-medium">{m.loyerIndicatif}</dd>
+                </div>
+                <div>
+                  <dt class="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Rendement</dt>
+                  <dd class="font-medium text-primary">{m.roiIndicatif}</dd>
+                </div>
+              </dl>
+              <p class="mt-5 text-sm text-primary font-medium inline-flex items-center gap-1.5 group-hover:gap-2 transition-all">
+                Voir la fiche complète
+                <span aria-hidden="true">→</span>
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-24 bg-background">
+    <div class="container mx-auto px-6 lg:px-8 max-w-6xl">
+      <h2 class="font-display text-3xl lg:text-4xl font-bold tracking-tight mb-8">
+        Comparatif rapide
+      </h2>
+      <div class="overflow-x-auto -mx-6 lg:mx-0">
+        <table class="min-w-full text-sm border-collapse">
+          <caption class="sr-only">Tableau comparatif des cinq habitats Moodl, surface, capacité, loyer indicatif, rendement annuel net visé, durée de pose</caption>
+          <thead>
+            <tr class="border-b border-border/60">
+              <th scope="col" class="text-left font-medium uppercase tracking-widest text-[11px] text-muted-foreground py-4 px-4 lg:px-6">Modèle</th>
+              <th scope="col" class="text-left font-medium uppercase tracking-widest text-[11px] text-muted-foreground py-4 px-4 lg:px-6">Surface</th>
+              <th scope="col" class="text-left font-medium uppercase tracking-widest text-[11px] text-muted-foreground py-4 px-4 lg:px-6">Capacité</th>
+              <th scope="col" class="text-left font-medium uppercase tracking-widest text-[11px] text-muted-foreground py-4 px-4 lg:px-6">Loyer indicatif</th>
+              <th scope="col" class="text-left font-medium uppercase tracking-widest text-[11px] text-muted-foreground py-4 px-4 lg:px-6">Rendement net</th>
+              <th scope="col" class="text-left font-medium uppercase tracking-widest text-[11px] text-muted-foreground py-4 px-4 lg:px-6">Pose</th>
+            </tr>
+          </thead>
+          <tbody>
+            {modeles.map((m) => (
+              <tr class="border-b border-border/40 hover:bg-muted/30 transition-colors">
+                <th scope="row" class="text-left py-4 px-4 lg:px-6">
+                  <a href={`/lieux/${m.slug}`} class="font-display font-bold text-base hover:text-primary transition-colors">{m.name}</a>
+                  <p class="text-[11px] text-muted-foreground italic mt-1">{m.subtitle}</p>
+                </th>
+                <td class="py-4 px-4 lg:px-6">{m.surface}</td>
+                <td class="py-4 px-4 lg:px-6">{m.capacite}</td>
+                <td class="py-4 px-4 lg:px-6">{m.loyerIndicatif}</td>
+                <td class="py-4 px-4 lg:px-6 font-medium text-primary">{m.roiIndicatif}</td>
+                <td class="py-4 px-4 lg:px-6">{m.dureePose}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-muted-foreground italic mt-6">
+        Rendements et loyers indicatifs. Les performances réelles dépendent de l'adresse, du taux d'occupation et de la stratégie de pricing.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-24 lg:py-32 bg-muted/20 border-t border-border/60 text-center">
+    <div class="container mx-auto px-6 lg:px-8 max-w-3xl">
+      <h2 class="font-display text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-6">
+        Quel modèle pour <span class="font-serif-italic text-secondary">votre terrain</span> ?
+      </h2>
+      <p class="text-lg text-muted-foreground mb-10">
+        L'atelier vous oriente vers le modèle qui dialogue le mieux avec votre parcelle, ou avec l'une des trois adresses ouvertes en 2026.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="/programmes"
+          data-analytics-cta="modeles_cta_programmes"
+          class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-[0_0_30px_rgba(0,255,128,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:hover:scale-100"
+        >
+          Voir les programmes ouverts
+        </a>
+        <a
+          href="/contact"
+          data-analytics-cta="modeles_cta_contact"
+          class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md border border-border bg-transparent text-foreground font-medium hover:bg-accent hover:text-accent-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        >
+          Parler à l'atelier
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

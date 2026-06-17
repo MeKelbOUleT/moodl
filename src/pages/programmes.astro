@@ -14,15 +14,15 @@ const formatEuro = (n: number) =>
   new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(n);
 
 const rendementLabel = (min?: number, max?: number) => {
-  if (min && max && min !== max) return `${min} — ${max} %`;
+  if (min && max && min !== max) return `${min} - ${max} %`;
   if (max) return `${max} %`;
   if (min) return `${min} %`;
-  return '—';
+  return '-';
 };
 ---
 
 <Layout
-  title="Nos adresses — Moodl"
+  title="Programmes Moodl : adresses Dordogne, Ardèche, Annecy"
   description="Adresses choisies en pleine nature : Dordogne, Ardèche, Lac d'Annecy. Lots disponibles, rendement visé, date de livraison."
 >
   <section class="relative pt-40 pb-16 lg:pb-20 overflow-hidden">
@@ -40,7 +40,7 @@ const rendementLabel = (min?: number, max?: number) => {
         <span class="font-serif-italic text-secondary">à demeure</span>.
       </h1>
       <p class="text-lg text-muted-foreground leading-relaxed">
-        Sélectionnées une à une — vue, accès, voisinage, environnement. La rareté est dans l'endroit, jamais reproduit ailleurs.
+        Sélectionnées une à une - vue, accès, voisinage, environnement. La rareté est dans l'endroit, jamais reproduit ailleurs.
       </p>
     </div>
   </section>
@@ -92,7 +92,7 @@ const rendementLabel = (min?: number, max?: number) => {
                   <dl class="grid grid-cols-2 gap-x-6 gap-y-3 text-sm mb-6 pb-6 border-b border-border/40">
                     <div>
                       <dt class="text-[10px] uppercase tracking-widest text-muted-foreground">À partir de</dt>
-                      <dd class="font-medium">{p.prix_total ? formatEuro(p.prix_total) : '—'}</dd>
+                      <dd class="font-medium">{p.prix_total ? formatEuro(p.prix_total) : '-'}</dd>
                     </div>
                     <div>
                       <dt class="text-[10px] uppercase tracking-widest text-muted-foreground">Rendement visé</dt>
@@ -100,7 +100,7 @@ const rendementLabel = (min?: number, max?: number) => {
                     </div>
                     <div>
                       <dt class="text-[10px] uppercase tracking-widest text-muted-foreground">Livraison</dt>
-                      <dd class="font-medium">{p.date_livraison ?? '—'}</dd>
+                      <dd class="font-medium">{p.date_livraison ?? '-'}</dd>
                     </div>
                     {total > 0 && (
                       <div>

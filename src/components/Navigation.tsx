@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Menu, X} from 'lucide-react';
-import {motion, AnimatePresence} from 'framer-motion';
+import {motion, AnimatePresence, useReducedMotion} from 'framer-motion';
 import {Button} from './ui/button';
 import {cn} from '@/lib/utils';
 
@@ -18,6 +18,9 @@ const links = [
 export default function Navigation({pathname = '/'}: {pathname?: string}) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -33,6 +36,46 @@ export default function Navigation({pathname = '/'}: {pathname?: string}) {
     };
   }, [open]);
 
+  // Focus trap + Escape close
+  useEffect(() => {
+    if (!open) return;
+
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const firstFocusable = panelRef.current?.querySelector<HTMLElement>('a, button');
+    firstFocusable?.focus();
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        toggleRef.current?.focus();
+        return;
+      }
+      if (e.key !== 'Tab' || !panelRef.current) return;
+
+      const focusables = panelRef.current.querySelectorAll<HTMLElement>(
+        'a, button, [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      previouslyFocused?.focus?.();
+    };
+  }, [open]);
+
   return (
     <header
       className={cn(
@@ -42,23 +85,31 @@ export default function Navigation({pathname = '/'}: {pathname?: string}) {
           : 'bg-transparent',
       )}
     >
-      <nav className="container mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
+      <nav className="container mx-auto px-6 lg:px-8 h-20 flex items-center justify-between" aria-label="Navigation principale">
         <a
           href="/"
-          aria-label="Moodl — Accueil"
+          aria-label="Moodl, retour à l'accueil"
           onClick={() => setOpen(false)}
           className="relative z-10 flex items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          <img src={logoMoodl.src ?? logoMoodl} alt="Moodl" className="h-9 w-auto" width={160} height={36} />
+          <img
+            src={logoMoodl.src ?? logoMoodl}
+            alt=""
+            aria-hidden="true"
+            className="h-9 w-auto"
+            width={160}
+            height={36}
+          />
         </a>
 
-        <ul className="hidden lg:flex items-center gap-8">
+        <ul className="hidden lg:flex items-center gap-8" role="list">
           {links.map((link) => {
             const active = pathname === link.to || (link.to !== '/' && pathname.startsWith(link.to));
             return (
               <li key={link.to}>
                 <a
                   href={link.to}
+                  aria-current={active ? 'page' : undefined}
                   className={cn(
                     'text-sm font-medium transition-colors rounded-sm px-1 py-0.5',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background',
@@ -78,34 +129,36 @@ export default function Navigation({pathname = '/'}: {pathname?: string}) {
           </a>
 
           <button
+            ref={toggleRef}
             type="button"
             aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
             aria-expanded={open}
+            aria-controls="mobile-menu"
             onClick={() => setOpen((v) => !v)}
-            className="lg:hidden relative z-10 w-11 h-11 flex items-center justify-center rounded-lg hover:bg-muted active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="lg:hidden relative z-10 w-12 h-12 flex items-center justify-center rounded-lg hover:bg-muted active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             <AnimatePresence mode="wait" initial={false}>
               {open ? (
                 <motion.span
                   key="close"
-                  initial={{rotate: -90, opacity: 0}}
+                  initial={reduce ? false : {rotate: -90, opacity: 0}}
                   animate={{rotate: 0, opacity: 1}}
-                  exit={{rotate: 90, opacity: 0}}
-                  transition={{duration: 0.18}}
+                  exit={reduce ? {opacity: 0} : {rotate: 90, opacity: 0}}
+                  transition={{duration: reduce ? 0 : 0.18}}
                   className="absolute inset-0 flex items-center justify-center"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5" aria-hidden="true" />
                 </motion.span>
               ) : (
                 <motion.span
                   key="open"
-                  initial={{rotate: 90, opacity: 0}}
+                  initial={reduce ? false : {rotate: 90, opacity: 0}}
                   animate={{rotate: 0, opacity: 1}}
-                  exit={{rotate: -90, opacity: 0}}
-                  transition={{duration: 0.18}}
+                  exit={reduce ? {opacity: 0} : {rotate: -90, opacity: 0}}
+                  transition={{duration: reduce ? 0 : 0.18}}
                   className="absolute inset-0 flex items-center justify-center"
                 >
-                  <Menu className="w-5 h-5" />
+                  <Menu className="w-5 h-5" aria-hidden="true" />
                 </motion.span>
               )}
             </AnimatePresence>
@@ -116,42 +169,52 @@ export default function Navigation({pathname = '/'}: {pathname?: string}) {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{opacity: 0}}
+            id="mobile-menu"
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu de navigation"
+            initial={reduce ? false : {opacity: 0}}
             animate={{opacity: 1}}
-            exit={{opacity: 0}}
-            transition={{duration: 0.2}}
+            exit={reduce ? {opacity: 0} : {opacity: 0}}
+            transition={{duration: reduce ? 0 : 0.2}}
             className="lg:hidden fixed inset-x-0 top-20 bottom-0 bg-background/95 backdrop-blur-lg overflow-y-auto"
           >
             <motion.ul
+              role="list"
               initial="hidden"
               animate="visible"
               exit="hidden"
               variants={{
-                visible: {transition: {staggerChildren: 0.05}},
+                visible: {transition: {staggerChildren: reduce ? 0 : 0.05}},
                 hidden: {},
               }}
               className="container mx-auto px-6 py-10 space-y-1"
             >
-              {links.map((link) => (
-                <motion.li
-                  key={link.to}
-                  variants={{
-                    hidden: {opacity: 0, x: -20},
-                    visible: {opacity: 1, x: 0},
-                  }}
-                >
-                  <a
-                    href={link.to}
-                    onClick={() => setOpen(false)}
-                    className="block py-4 font-display text-3xl font-bold tracking-tight border-b border-border/40 hover:text-primary transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              {links.map((link) => {
+                const active = pathname === link.to || (link.to !== '/' && pathname.startsWith(link.to));
+                return (
+                  <motion.li
+                    key={link.to}
+                    variants={{
+                      hidden: reduce ? {opacity: 1, x: 0} : {opacity: 0, x: -20},
+                      visible: {opacity: 1, x: 0},
+                    }}
                   >
-                    {link.label}
-                  </a>
-                </motion.li>
-              ))}
+                    <a
+                      href={link.to}
+                      aria-current={active ? 'page' : undefined}
+                      onClick={() => setOpen(false)}
+                      className="block py-4 font-display text-3xl font-bold tracking-tight border-b border-border/40 hover:text-primary transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    >
+                      {link.label}
+                    </a>
+                  </motion.li>
+                );
+              })}
               <motion.li
                 variants={{
-                  hidden: {opacity: 0, y: 20},
+                  hidden: reduce ? {opacity: 1, y: 0} : {opacity: 0, y: 20},
                   visible: {opacity: 1, y: 0},
                 }}
                 className="pt-8"
