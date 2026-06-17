@@ -20,7 +20,7 @@ const buttonVariants = cva(
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         moodl:
-          'bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-[0_0_30px_rgba(0,255,128,0.45)] transition-all duration-300',
+          'bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-[0_0_30px_rgba(106,142,114,0.45)] transition-all duration-300',
       },
       size: {
         default: 'h-10 px-4 py-2',

@@ -70,7 +70,7 @@ export default function SansMoodlSection() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'radial-gradient(ellipse 50% 50% at 80% 20%, hsl(150 100% 50% / 0.05), transparent 60%)',
+              'radial-gradient(ellipse 50% 50% at 80% 20%, hsl(135 18% 50% / 0.05), transparent 60%)',
           }}
         />
 

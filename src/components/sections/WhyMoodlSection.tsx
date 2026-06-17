@@ -34,7 +34,7 @@ export default function WhyMoodlSection() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 70% 50% at 50% 30%, hsl(150 100% 50% / 0.06), transparent 60%), radial-gradient(ellipse 50% 40% at 80% 80%, hsl(43 70% 62% / 0.04), transparent 55%)',
+            'radial-gradient(ellipse 70% 50% at 50% 30%, hsl(135 18% 50% / 0.06), transparent 60%), radial-gradient(ellipse 50% 40% at 80% 80%, hsl(35 38% 60% / 0.04), transparent 55%)',
         }}
       />
       {/* Étoiles très fines (suggestion de constellation, signature d'atelier) */}
@@ -43,7 +43,7 @@ export default function WhyMoodlSection() {
         className="absolute inset-0 pointer-events-none opacity-30"
         style={{
           backgroundImage:
-            'radial-gradient(circle at 12% 22%, hsl(150 100% 50% / 0.4) 0.5px, transparent 1px), radial-gradient(circle at 88% 14%, hsl(43 70% 62% / 0.5) 0.5px, transparent 1px), radial-gradient(circle at 23% 78%, hsl(150 100% 50% / 0.3) 0.5px, transparent 1px), radial-gradient(circle at 75% 88%, hsl(43 70% 62% / 0.4) 0.5px, transparent 1px), radial-gradient(circle at 50% 50%, hsl(150 100% 50% / 0.3) 0.5px, transparent 1px), radial-gradient(circle at 92% 50%, hsl(43 70% 62% / 0.3) 0.5px, transparent 1px)',
+            'radial-gradient(circle at 12% 22%, hsl(135 18% 50% / 0.4) 0.5px, transparent 1px), radial-gradient(circle at 88% 14%, hsl(35 38% 60% / 0.5) 0.5px, transparent 1px), radial-gradient(circle at 23% 78%, hsl(135 18% 50% / 0.3) 0.5px, transparent 1px), radial-gradient(circle at 75% 88%, hsl(35 38% 60% / 0.4) 0.5px, transparent 1px), radial-gradient(circle at 50% 50%, hsl(135 18% 50% / 0.3) 0.5px, transparent 1px), radial-gradient(circle at 92% 50%, hsl(35 38% 60% / 0.3) 0.5px, transparent 1px)',
           backgroundSize: '600px 400px',
         }}
       />

@@ -20,7 +20,7 @@ export default function SimulatorTeaserSection() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 60% 50% at 70% 50%, hsl(150 100% 50% / 0.08), transparent 60%)',
+            'radial-gradient(ellipse 60% 50% at 70% 50%, hsl(135 18% 50% / 0.08), transparent 60%)',
         }}
       />
 

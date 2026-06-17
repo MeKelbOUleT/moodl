@@ -28,7 +28,7 @@ export default function FinalCTASection({scarcity}: Props) {
           className="absolute inset-0"
           style={{
             background:
-              'radial-gradient(ellipse 60% 50% at 50% 50%, hsl(150 100% 50% / 0.08), transparent 65%)',
+              'radial-gradient(ellipse 60% 50% at 50% 50%, hsl(135 18% 50% / 0.08), transparent 65%)',
           }}
         />
       </div>

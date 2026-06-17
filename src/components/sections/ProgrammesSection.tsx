@@ -37,7 +37,7 @@ export default function ProgrammesSection() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 60% 50% at 75% 50%, hsl(43 70% 62% / 0.06), transparent 60%)',
+            'radial-gradient(ellipse 60% 50% at 75% 50%, hsl(35 38% 60% / 0.06), transparent 60%)',
         }}
       />
 
@@ -133,7 +133,7 @@ export default function ProgrammesSection() {
                       cx={p.coords.x}
                       cy={p.coords.y}
                       r="4"
-                      fill="hsl(43 70% 62%)"
+                      fill="hsl(35 38% 60%)"
                       opacity="0.25"
                     >
                       <animate
@@ -155,7 +155,7 @@ export default function ProgrammesSection() {
                       cx={p.coords.x}
                       cy={p.coords.y}
                       r="1.5"
-                      fill="hsl(43 70% 62%)"
+                      fill="hsl(35 38% 60%)"
                     />
                     <text
                       x={p.coords.x}

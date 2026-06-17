@@ -41,7 +41,7 @@ export default function PourQuiSection() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 50% 40% at 25% 50%, hsl(150 100% 50% / 0.04), transparent 60%), radial-gradient(ellipse 50% 40% at 75% 50%, hsl(43 70% 62% / 0.04), transparent 60%)',
+            'radial-gradient(ellipse 50% 40% at 25% 50%, hsl(135 18% 50% / 0.04), transparent 60%), radial-gradient(ellipse 50% 40% at 75% 50%, hsl(35 38% 60% / 0.04), transparent 60%)',
         }}
       />
       <div className="container mx-auto px-6 lg:px-8 relative">
@@ -62,7 +62,7 @@ export default function PourQuiSection() {
             const Icon = profile.icon;
             return (
               <ScrollReveal key={profile.title} animation="fade-up" delay={i * 100}>
-                <div className="group h-full bg-card border border-border/60 rounded-3xl p-8 lg:p-10 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_8px_32px_rgba(0,255,128,0.10)] flex flex-col">
+                <div className="group h-full bg-card border border-border/60 rounded-3xl p-8 lg:p-10 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_8px_32px_rgba(106,142,114,0.10)] flex flex-col">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center transition-transform group-hover:scale-110">
                       <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
@@ -92,7 +92,7 @@ export default function PourQuiSection() {
                   <NavLink
                     to={profile.ctaHref}
                     data-analytics-cta={profile.analyticsId}
-                    className="inline-flex items-center justify-center gap-2 w-full h-11 px-6 rounded-md bg-primary text-primary-foreground font-medium text-sm shadow-md hover:shadow-[0_0_30px_rgba(0,255,128,0.35)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card motion-reduce:transition-none motion-reduce:hover:scale-100"
+                    className="inline-flex items-center justify-center gap-2 w-full h-11 px-6 rounded-md bg-primary text-primary-foreground font-medium text-sm shadow-md hover:shadow-[0_0_30px_rgba(106,142,114,0.35)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card motion-reduce:transition-none motion-reduce:hover:scale-100"
                   >
                     {profile.ctaLabel}
                     <ArrowRight className="w-4 h-4" aria-hidden="true" />
