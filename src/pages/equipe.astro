@@ -31,32 +31,32 @@ try {
 
 const fallbackTeam: TeamMemberCard[] = [
   {
-    name: 'Olivier Bertrand',
-    role: "Fondateur, direction d'atelier",
-    bio: "Conçoit des résidences de tourisme depuis quinze ans. Coordonne la sélection des terrains, le montage urbanisme et la signature architecturale.",
+    name: "Direction d'atelier",
+    role: 'Sélection des terrains, signature architecturale',
+    bio: "Conçoit des résidences de tourisme depuis quinze ans. Coordonne la sélection des parcelles, le montage urbanisme et la signature architecturale du hameau.",
     photoUrl: null,
-    is_founder: true,
+    is_founder: false,
     linkedin_url: null,
   },
   {
     name: 'Architecte HMO',
-    role: 'Architecte signataire',
+    role: 'Conception et signature des hameaux',
     bio: 'Plan masse, orientation, lumière, matière. Dessine chaque hameau pour la parcelle, jamais en série.',
     photoUrl: null,
     is_founder: false,
     linkedin_url: null,
   },
   {
-    name: 'Urbaniste PLU',
-    role: 'Montage administratif',
+    name: 'Urbaniste',
+    role: 'Montage administratif et PLU',
     bio: 'Décrypte les PLU, négocie les STECAL, monte les permis. Absorbe les dix-huit mois invisibles à votre place.',
     photoUrl: null,
     is_founder: false,
     linkedin_url: null,
   },
   {
-    name: "Concierge d'adresse",
-    role: 'Intendance, accueil voyageurs',
+    name: "Conciergerie",
+    role: 'Intendance et accueil voyageurs',
     bio: "Présence physique sur chaque adresse. Ménage entre séjours, accueil, maintenance, gestion des litiges.",
     photoUrl: null,
     is_founder: false,
@@ -133,11 +133,6 @@ const memberSchema = {
                   <p class="text-xs uppercase tracking-[0.25em] text-muted-foreground/50 px-6 text-center">
                     Photo à venir
                   </p>
-                </div>
-              )}
-              {member.is_founder && (
-                <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-medium">
-                  Fondateur
                 </div>
               )}
             </div>

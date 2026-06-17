@@ -44,7 +44,7 @@ const testimonials = [
     program: 'Ardèche',
   },
   {
-    name: 'Olivier B.',
+    name: 'Pierre-Yves M.',
     location: 'Marseille',
     extract:
       'Premier acheteur du programme Dordogne, j\'ai eu un tarif d\'amorçage. Aujourd\'hui mon ROI annoncé est conservé sur 12 mois glissants.',

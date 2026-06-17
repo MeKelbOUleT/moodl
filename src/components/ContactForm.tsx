@@ -129,7 +129,7 @@ export default function ContactForm() {
         <Field id="contact-name" label="Nom *" error={errors.name?.message} touched={!!touchedFields.name}>
           <input
             {...register('name')}
-            placeholder="Olivier Bertrand"
+            placeholder="Votre nom et prénom"
             autoComplete="name"
             inputMode="text"
           />

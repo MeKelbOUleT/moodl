@@ -1,5 +1,5 @@
 // Static FAQ fallback used until Sanity is populated.
-// Olivier can override any item by creating a faq document with the same question text.
+// Any item can be overridden by creating a faq document in Sanity with the same question text.
 
 export interface FaqGroup {
   id: string;

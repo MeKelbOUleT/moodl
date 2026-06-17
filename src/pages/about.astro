@@ -1,28 +1,11 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import {sanityClient, urlFor} from '@/sanity/client';
-import {founderQuery} from '@/sanity/queries';
-
-let founder: {name?: string; role?: string; bio?: string; photo?: unknown; linkedin_url?: string} | null = null;
-try {
-  founder = await sanityClient.fetch(founderQuery);
-} catch (err) {
-  console.error('[about] founder fetch failed', err);
-}
-
-const founderName = founder?.name ?? 'Olivier Bertrand';
-const founderRole = founder?.role ?? "Fondateur de l'atelier Moodl";
-const founderBio = founder?.bio ?? "Après quinze ans à concevoir des résidences de tourisme, Olivier fonde Moodl pour réunir sous un même toit l'architecte, l'urbaniste et le concierge. Un atelier qui prend la chaîne entière, du terrain rare jusqu'au lit qui attend le voyageur.";
-const founderPhotoUrl = founder?.photo
-  ? urlFor(founder.photo as Parameters<typeof urlFor>[0]).width(800).height(1000).url()
-  : null;
-const founderLinkedIn = founder?.linkedin_url ?? null;
 
 const principes = [
   {
     num: 'I',
     title: 'La parcelle d\'abord',
-    body: "Le sol commande tout. Une vue, un silence, un voisinage. Moodl ne plaque pas un modèle sur un terrain, c’est le terrain qui dicte l’habitat.",
+    body: "Le sol commande tout. Une vue, un silence, un voisinage. Moodl ne plaque pas un modèle sur un terrain, c'est le terrain qui dicte l'habitat.",
   },
   {
     num: 'II',
@@ -37,34 +20,35 @@ const principes = [
   {
     num: 'IV',
     title: 'L\'intendance choisie',
-    body: "Vous reprenez la main quand vous voulez. Conciergerie en option, semaines bloquées libres, pricing dynamique transparent. Pas d’engagement à vie.",
+    body: "Vous reprenez la main quand vous voulez. Conciergerie en option, semaines bloquées libres, pricing dynamique transparent. Pas d'engagement à vie.",
   },
   {
     num: 'V',
     title: 'Le hameau, pas la maison isolée',
-    body: "Quatre à huit lots par adresse. Un hameau pour mutualiser l’accueil, la maintenance, la piscine commune. La maison isolée vit moins bien que le hameau qui tourne.",
+    body: "Quatre à huit lots par adresse. Un hameau pour mutualiser l'accueil, la maintenance, la piscine commune. La maison isolée vit moins bien que le hameau qui tourne.",
   },
 ];
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://moodl.fr';
-const personSchema = {
+const aboutSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: founderName,
-  jobTitle: founderRole,
-  description: founderBio,
-  worksFor: {'@type': 'Organization', name: 'Moodl', url: siteUrl},
+  '@type': 'AboutPage',
   url: `${siteUrl}/about`,
-  ...(founderPhotoUrl ? {image: founderPhotoUrl} : {}),
-  ...(founderLinkedIn ? {sameAs: [founderLinkedIn]} : {}),
+  name: "L'atelier Moodl",
+  description: "Atelier français qui réunit architecte, urbaniste et concierge sous un même toit, du terrain rare jusqu'au lit qui attend le voyageur.",
+  mainEntity: {
+    '@type': 'Organization',
+    name: 'Moodl',
+    url: siteUrl,
+  },
 };
 ---
 
 <Layout
   title="L'atelier Moodl, qui dessine et tient les hameaux | À propos"
-  description="Olivier Bertrand fonde Moodl pour réunir architecte, urbaniste et concierge sous un même toit. Cinq principes qui guident chaque adresse, du terrain rare jusqu'au lit qui attend le voyageur."
+  description="L'atelier Moodl réunit l'architecte, l'urbaniste et le concierge sous un même toit. Cinq principes qui guident chaque adresse, du terrain rare jusqu'au lit qui attend le voyageur."
 >
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(personSchema)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(aboutSchema)} />
 
   <!-- HERO -->
   <section class="pt-40 pb-16 lg:pb-24 relative overflow-hidden">
@@ -75,72 +59,41 @@ const personSchema = {
     ></div>
 
     <div class="container mx-auto px-6 lg:px-8 relative">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 max-w-6xl mx-auto items-center">
-        <div class="lg:col-span-7 order-2 lg:order-1">
-          <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-6">
-            L'atelier
-          </p>
-          <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
-            Trouver l'adresse. Convaincre la mairie. <span class="font-serif-italic text-secondary">Dessiner le hameau.</span>
-          </h1>
-          <p class="text-lg lg:text-xl text-muted-foreground leading-relaxed mb-6">
-            Moodl est un atelier français qui réunit l'architecte, l'urbaniste et le concierge sous un même toit. On signe le terrain, on signe les plans, on signe le hameau, et on tient la maison à votre place. Si vous voulez.
-          </p>
-          <p class="text-base text-muted-foreground leading-relaxed">
-            Trois adresses ouvertes en 2026, en Dordogne, en Ardèche et au bord du lac d'Annecy. Quatre à huit lots par hameau, dessinés pour cette parcelle précisément.
-          </p>
-        </div>
-
-        <div class="lg:col-span-5 order-1 lg:order-2">
-          <div class="relative aspect-[4/5] rounded-3xl overflow-hidden bg-muted">
-            {founderPhotoUrl ? (
-              <img
-                src={founderPhotoUrl}
-                alt={`Portrait de ${founderName}, ${founderRole}`}
-                width={800}
-                height={1000}
-                class="w-full h-full object-cover"
-                loading="eager"
-                decoding="async"
-              />
-            ) : (
-              <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-muted via-card to-background">
-                <p class="text-xs uppercase tracking-[0.25em] text-muted-foreground/60 px-6 text-center">
-                  Portrait à venir
-                </p>
-              </div>
-            )}
-            <div class="absolute inset-x-0 bottom-0 p-6 lg:p-7 bg-gradient-to-t from-black/85 via-black/30 to-transparent">
-              <p class="text-[11px] uppercase tracking-[0.25em] text-primary font-medium mb-1">{founderRole}</p>
-              <p class="font-display text-2xl font-bold text-white tracking-tight">{founderName}</p>
-              {founderLinkedIn && (
-                <a href={founderLinkedIn} target="_blank" rel="noreferrer" class="inline-block mt-3 text-xs text-white/80 hover:text-primary transition-colors">
-                  LinkedIn →
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
+      <div class="max-w-4xl">
+        <p class="text-xs uppercase tracking-[0.25em] text-primary font-medium mb-6">
+          L'atelier
+        </p>
+        <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
+          Trouver l'adresse. Convaincre la mairie. <span class="font-serif-italic text-secondary">Dessiner le hameau.</span>
+        </h1>
+        <p class="text-lg lg:text-xl text-muted-foreground leading-relaxed mb-6">
+          Moodl est un atelier français qui réunit l'architecte, l'urbaniste et le concierge sous un même toit. On signe le terrain, on signe les plans, on signe le hameau, et on tient la maison à votre place. Si vous voulez.
+        </p>
+        <p class="text-base text-muted-foreground leading-relaxed">
+          Trois adresses ouvertes en 2026, en Dordogne, en Ardèche et au bord du lac d'Annecy. Quatre à huit lots par hameau, dessinés pour cette parcelle précisément.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- BIO FOUNDER -->
+  <!-- BIO ATELIER -->
   <section class="py-20 lg:py-24 bg-muted/30 border-y border-border/60">
     <div class="container mx-auto px-6 lg:px-8 max-w-3xl">
       <p class="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6">
         Pourquoi un atelier
       </p>
       <h2 class="font-display text-3xl lg:text-4xl font-bold leading-tight tracking-tight mb-8">
-        Quinze ans à voir des résidences de tourisme qui se ressemblent <span class="font-serif-italic text-secondary">toutes</span>.
+        Voir des résidences de tourisme qui se ressemblent <span class="font-serif-italic text-secondary">toutes</span>.
       </h2>
       <div class="prose prose-invert max-w-none text-foreground/85 leading-relaxed space-y-5">
-        <p>{founderBio}</p>
         <p>
           Le problème n'est pas le voyageur. Le voyageur a soif d'adresses singulières, de matières vraies, de lieux qui ont une âme. Le problème est en amont : trouver une parcelle qui chante demande des mois. Convertir une zone naturelle en autorisation, plus encore. Composer une architecture qui dialogue avec le sol, c'est un savoir-faire qui ne s'invente pas. Tenir la maison ensuite, c'est un autre métier.
         </p>
         <p>
           Personne ne fait les quatre. Sauf Moodl. C'est ça, l'atelier.
+        </p>
+        <p>
+          L'atelier ne cherche pas la lumière. Il signe ses lieux, pas ses noms. Vous trouverez sur les fiches l'architecte HMO qui dessine, l'urbaniste qui décrypte, le concierge qui accueille. Trois métiers, un seul interlocuteur. C'est la promesse.
         </p>
       </div>
     </div>
