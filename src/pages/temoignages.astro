@@ -124,7 +124,7 @@ const organizationWithRating = {
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
         {temoignages.map((t) => (
           <article class="group bg-card border border-border/60 rounded-2xl p-7 lg:p-8 hover:-translate-y-1 hover:border-primary/40 transition-all duration-300 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-            <div class="flex gap-0.5 mb-5 text-secondary" aria-label={`${t.rating} étoiles sur 5`}>
+            <div class="flex gap-0.5 mb-5 text-secondary" role="img" aria-label={`${t.rating} étoiles sur 5`}>
               {Array.from({length: 5}).map((_, i) => (
                 <Star className={`w-4 h-4 ${i < t.rating ? 'fill-secondary' : 'opacity-30'}`} aria-hidden="true" />
               ))}
@@ -152,7 +152,7 @@ const organizationWithRating = {
               )}
             </div>
             {t.videoUrl && (
-              <a href={t.videoUrl} target="_blank" rel="noreferrer" data-analytics-cta={`temoignage_video_${t.name.toLowerCase().replace(/\W+/g, '_')}`} class="inline-block mt-4 text-xs text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card rounded-sm">
+              <a href={t.videoUrl} target="_blank" rel="noreferrer" data-analytics-cta={`temoignage_video_${t.name.toLowerCase().replace(/\W+/g, '_')}`} class="inline-block mt-4 text-xs text-primary underline underline-offset-2 decoration-1 hover:decoration-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card rounded-sm">
                 Voir la vidéo →
               </a>
             )}

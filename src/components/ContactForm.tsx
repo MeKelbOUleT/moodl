@@ -80,7 +80,7 @@ export default function ContactForm() {
         <h2 className="font-display text-3xl font-bold mb-3">Message envoyé.</h2>
         <p className="text-muted-foreground max-w-sm mx-auto">
           L'atelier vous recontacte sous 24 heures ouvrées. Si c'est urgent, écrivez à{' '}
-          <a href="mailto:shelter@moodl.fr" className="text-primary hover:underline">
+          <a href="mailto:shelter@moodl.fr" className="text-primary underline underline-offset-2 decoration-1 hover:decoration-2">
             shelter@moodl.fr
           </a>
           .

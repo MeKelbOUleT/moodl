@@ -107,7 +107,8 @@ export default function TestimonialsSection() {
       <ScrollReveal animation="fade-up" delay={200}>
         <div
           ref={scrollerRef}
-          className="overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory"
+          tabIndex={0}
+          className="overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md"
           aria-label="Carrousel de témoignages clients"
           role="region"
         >
@@ -117,7 +118,7 @@ export default function TestimonialsSection() {
                 key={t.name}
                 className="snap-start shrink-0 w-[320px] md:w-[380px] bg-card border border-border/60 rounded-2xl p-7 lg:p-8 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
-                <div className="flex gap-0.5 mb-5 text-secondary" aria-label="5 étoiles sur 5">
+                <div className="flex gap-0.5 mb-5 text-secondary" role="img" aria-label="5 étoiles sur 5">
                   {Array.from({length: 5}).map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-secondary" aria-hidden="true" />
                   ))}
